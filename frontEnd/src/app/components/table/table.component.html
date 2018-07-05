@@ -1,0 +1,49 @@
+<div class="content">
+  <div class="clearfix"></div>
+
+
+  <div class="clearfix"></div>
+  <div class="box box-primary">
+    <div class="box-body">
+      <table class="table table-responsive" id="machines-table">
+        <thead>
+          <tr>
+            <th *ngFor="let colTitle of colTitles">{{colTitle}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td *ngFor="let key of keys">
+              <i class="fa fa-circle text-green"></i> {{row.key}}</td>
+            <td>
+              <div class="btn-group">
+                <a href="http://localhost:8000/machines/1" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                  <i class="glyphicon glyphicon-info-sign"></i> Details</a>
+                <a class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;" onclick="getEditForm('http://localhost:8000/machines/1/edit', '')">
+                  <i class="glyphicon glyphicon-edit"></i> Edit</a>
+
+                <form method="POST" action="http://localhost:8000/machines/1" accept-charset="UTF-8" class="inline">
+                  <input name="_method" type="hidden" value="DELETE">
+                  <input name="_token" type="hidden" value="d8kqzq1MKNoxL3hLlKBLOxYj2GXQFHYvco5QGWBv">
+                  <button type="submit" class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                    <i class="glyphicon glyphicon-trash"></i> Delete</button>
+                </form>
+
+                <form method="GET" action="http://localhost:8000/machines/1/deactivate" accept-charset="UTF-8" class="inline">
+                  <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure?')">
+                    <i class="glyphicon glyphicon-off"></i> Deactivate</button>
+                </form>
+
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <a routerLink={{createLink}} class="btn btn-primary" >ADD NEW</a>
+</div>
