@@ -1,0 +1,39 @@
+<section class="content-header">
+    <app-statics [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+  </section>
+  
+  <section class="content">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="box box-primary">
+          <div class="box-body">
+            <div class="contents">
+              <div class="box-header with-border">
+                <h3 class="box-title" style="width: 100%;">
+                  <b>Events: </b> </h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body" style="padding-bottom: 0px;">
+                <app-details-list [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
+              </div>
+              <!-- /.box-body -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <app-details-cubes [cubesData]="cubesData" ></app-details-cubes>
+      </div>
+    </div>
+  
+    <div class="details-contents">
+      <div>
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Sessions: {{data.length}}</button>
+        <app-table [canAddNew]="true" [colTitles]="colTitlesS" [keys]="keys" [data]="data"></app-table>
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{repLength}}</button>
+        <app-table [canAddNew]="true" [colTitles]="colTitlesR" [keys]="keysR" [data]="dataR"></app-table>
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Accounts: {{data.length}}</button>
+        <app-table [canAddNew]="true" [colTitles]="colTitlesA" [keys]="keys" [data]="data"></app-table>
+      </div>
+    </div>
+  </section>

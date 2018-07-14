@@ -1,0 +1,13 @@
+
+<app-statics [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+<div [ngSwitch]="index">
+    <app-event-form *ngSwitchCase="0"></app-event-form>
+    <app-client-form *ngSwitchCase="1"></app-client-form>
+    <app-session-form *ngSwitchCase="2"></app-session-form>
+    <app-account-form *ngSwitchCase="3"></app-account-form>
+</div>
+
+<button *ngIf="index==3"class="btn btn-success" >Save</button>
+<button class="btn btn-primary" (click)="increment()" *ngIf="index<3" style="margin-left: 5px">Next</button>
+<button class="btn btn-default" (click)="decrement()" *ngIf="index>0"style="margin-left: 5px">Previous</button>
+<button class="btn btn-default" routerLink="/events" style="margin-left: 5px">Cancel</button>
