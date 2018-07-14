@@ -31,11 +31,12 @@ import { AccountFormComponent } from './components/events/create-event/account-f
 import { NewClientFormComponent } from './components/events/create-event/client-form/new-client-form/new-client-form.component';
 import { ExistingClientFormComponent } from './components/events/create-event/client-form/existing-client-form/existing-client-form.component';
 import { ClientFormComponent } from './components/events/create-event/client-form/client-form.component';
-import { EditComponent } from './components/edit/edit.component';
+import { EditMachineComponent } from './components/machines/edit-machine/edit.component';
 import { DetailsMachineComponent } from './components/machines/details-machine/detailsMachine.component';
 import { DetailsListMachineComponent } from './components/details/details-list/details-list.component';
 import { DetailsCubesMachineComponent } from './components/details/details-cubes/details-cubes.component';
 import { DetailsEventComponent } from './components/events/details-event/details-event.component';
+import { EditEventComponent } from './components/events/edit-event/edit-event.component';
 
 
 
@@ -53,7 +54,9 @@ const appRoutes: Routes = [
   { path: 'createMachine', component: CreateMachineComponent },
   { path: 'createEvent', component: CreateEventComponent },
   { path: 'machines/:id', component: DetailsMachineComponent },
-  { path: 'events/:id', component: DetailsEventComponent }
+  { path: 'events/:id', component: DetailsEventComponent },
+  { path: 'machines/edit/:id', component: EditMachineComponent },
+  { path: 'events/edit/:id', component: EditEventComponent }
 ];
 
 
@@ -82,11 +85,12 @@ const appRoutes: Routes = [
     NewClientFormComponent,
     ExistingClientFormComponent,
     ClientFormComponent,
-    EditComponent,
+    EditMachineComponent,
     DetailsMachineComponent,
     DetailsListMachineComponent,
     DetailsCubesMachineComponent,
-    DetailsEventComponent
+    DetailsEventComponent,
+    EditEventComponent
   ],
   imports: [
     BrowserModule,

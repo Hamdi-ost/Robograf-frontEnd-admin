@@ -1,0 +1,22 @@
+<h3>Edit</h3>
+<div class="box box-primary">
+  <div class="box-body">
+    <div class="row">
+      <form  accept-charset="UTF-8">
+        <!-- Name Field -->
+        <div class="form-group col-sm-12">
+          <label for="name">Name:</label>
+          <input class="form-control" name="name" [(ngModel)]="name"  type="text">
+        </div>
+
+        <!-- Type Field -->
+        <div class="form-group col-sm-12">
+          <label for="subject">Type:</label>
+          <input class="form-control" name="type" [(ngModel)]="type" type="text">
+        </div>
+        <button (click)="OnSubmit()" type="submit" class="btn btn-success" style="margin-left: 20px">Save</button>
+        <button routerLink="/machines" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

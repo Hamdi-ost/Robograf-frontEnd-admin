@@ -24,6 +24,13 @@ export class MachinesComponent implements OnInit {
       {
       this.data=data;
       this.keys=Object.keys(this.data[0]);
+      //Statics Values
+      var des=0;
+      for (var i=0;i<data.length;i++){
+        if (data[i].active==0)
+          des++
+      }
+      this.valStat[0]=des;
     })
   }
 

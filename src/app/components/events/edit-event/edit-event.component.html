@@ -1,0 +1,42 @@
+<h3>Edit</h3>
+<div class="box box-primary">
+  <div class="box-body">
+    <div class="row">
+      <form method="POST" action="http://localhost:8000/events/create" accept-charset="UTF-8">
+        <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
+
+        <!-- Name Field -->
+        <div class="form-group col-sm-12">
+          <label for="name">Name:</label>
+          <input class="form-control"  name="name" type="text" id="name" [(ngModel)]="name" required>
+        </div>
+
+        <!-- Subject Field -->
+        <div class="form-group col-sm-12">
+          <label for="subject">Activity:</label>
+          <input class="form-control" name="activity" type="text" id="subject" [(ngModel)]="activity" required>
+        </div>
+
+        <!-- Location Field -->
+        <div class="form-group col-sm-12">
+          <label for="location">Location:</label>
+          <input class="form-control"  name="location" type="text" id="location" [(ngModel)]="location" required>
+        </div>
+
+        <!-- Email Template Field -->
+        <div class="form-group col-sm-12">
+          <label for="email_template_id">Email Template:</label>
+          <input class="form-control" name="email_template_id" type="text" id="email_template_id" [(ngModel)]="email_template_id" required>
+        </div>
+
+        <!-- Description Field -->
+        <div class="form-group col-sm-12 col-lg-12">
+          <label for="description">Description:</label>
+          <textarea class="form-control" name="description" cols="50" rows="10" id="description" [(ngModel)]="description" ></textarea>
+        </div>
+        <button (click)="OnSubmit()" type="submit" class="btn btn-success" style="margin-left: 20px">Save</button>
+        <button routerLink="/events" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

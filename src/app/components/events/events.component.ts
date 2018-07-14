@@ -20,6 +20,8 @@ export class EventsComponent implements OnInit {
     this.eventService.getEvent()
     .subscribe(data=>
       {
+      
+      this.valStat[0]=data.length
       this.data=data;
       this.keys=Object.keys(this.data[0]);
     

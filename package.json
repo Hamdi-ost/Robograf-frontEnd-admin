@@ -25,8 +25,10 @@
     "angular-calendar": "^0.25.2",
     "angular2-flash-messages": "^2.0.5",
     "angularx-flatpickr": "^6.0.0",
+    "bootstrap": "^4.1.2",
     "core-js": "^2.5.4",
     "flatpickr": "^4.5.1",
+    "jquery": "^3.3.1",
     "ng-modal": "^1.0.2",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
