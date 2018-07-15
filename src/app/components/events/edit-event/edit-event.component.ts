@@ -32,6 +32,10 @@ export class EditEventComponent implements OnInit {
     console.log('j')
   }
 
+  back(){
+    window.history.back();
+  }
+
   ngOnInit() {
   }
 

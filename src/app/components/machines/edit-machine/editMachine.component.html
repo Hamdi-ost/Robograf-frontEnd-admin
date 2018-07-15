@@ -15,7 +15,7 @@
           <input class="form-control" name="type" [(ngModel)]="type" type="text">
         </div>
         <button (click)="OnSubmit()" type="submit" class="btn btn-success" style="margin-left: 20px">Save</button>
-        <button routerLink="/machines" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+        <button (click)="back()" class="btn btn-default" style="margin-left: 5px">Cancel</button>
       </form>
     </div>
   </div>

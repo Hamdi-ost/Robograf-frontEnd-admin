@@ -35,7 +35,7 @@
           <textarea class="form-control" name="description" cols="50" rows="10" id="description" [(ngModel)]="description" ></textarea>
         </div>
         <button (click)="OnSubmit()" type="submit" class="btn btn-success" style="margin-left: 20px">Save</button>
-        <button routerLink="/events" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+        <button (click)="back()" class="btn btn-default" style="margin-left: 5px">Cancel</button>
       </form>
     </div>
   </div>

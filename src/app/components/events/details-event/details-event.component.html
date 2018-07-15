@@ -14,7 +14,7 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body" style="padding-bottom: 0px;">
-                <app-details-list [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
+                <app-details-list [title]="titleForListDetails" [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
               </div>
               <!-- /.box-body -->
             </div>
@@ -28,11 +28,11 @@
   
     <div class="details-contents">
       <div>
-        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Sessions: {{data.length}}</button>
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Sessions: {{dataSessions.length}}</button>
         <app-table [canAddNew]="true" [colTitles]="colTitlesS" [keys]="keys" [data]="data"></app-table>
-        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{repLength}}</button>
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{dataRepresentants.length}}</button>
         <app-table [canAddNew]="true" [colTitles]="colTitlesR" [keys]="keysR" [data]="dataR"></app-table>
-        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Accounts: {{data.length}}</button>
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Accounts: {{dataAccounts.length}}</button>
         <app-table [canAddNew]="true" [colTitles]="colTitlesA" [keys]="keys" [data]="data"></app-table>
       </div>
     </div>

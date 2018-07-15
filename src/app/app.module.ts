@@ -37,6 +37,8 @@ import { DetailsListMachineComponent } from './components/details/details-list/d
 import { DetailsCubesMachineComponent } from './components/details/details-cubes/details-cubes.component';
 import { DetailsEventComponent } from './components/events/details-event/details-event.component';
 import { EditEventComponent } from './components/events/edit-event/edit-event.component';
+import { EditSessionComponent } from './components/sessions/edit-session/edit-session.component';
+import { DetailsSessionComponent } from './components/sessions/details-session/details-session.component';
 
 
 
@@ -56,7 +58,9 @@ const appRoutes: Routes = [
   { path: 'machines/:id', component: DetailsMachineComponent },
   { path: 'events/:id', component: DetailsEventComponent },
   { path: 'machines/edit/:id', component: EditMachineComponent },
-  { path: 'events/edit/:id', component: EditEventComponent }
+  { path: 'events/edit/:id', component: EditEventComponent },
+  { path: 'sessions/:id', component: DetailsSessionComponent },
+  { path: 'sessions/edit/:id', component: EditSessionComponent }
 ];
 
 
@@ -90,7 +94,9 @@ const appRoutes: Routes = [
     DetailsListMachineComponent,
     DetailsCubesMachineComponent,
     DetailsEventComponent,
-    EditEventComponent
+    EditEventComponent,
+    EditSessionComponent,
+    DetailsSessionComponent
   ],
   imports: [
     BrowserModule,

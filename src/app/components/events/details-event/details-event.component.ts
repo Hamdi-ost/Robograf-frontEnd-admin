@@ -9,7 +9,7 @@ import { Event } from '../../../models/event'
   styleUrls: ['./details-event.component.css']
 })
 export class DetailsEventComponent implements OnInit {
-
+  titleForListDetails="events"
   //stat variables
   stat = ["Total Event", "Total Sessions", "Total Participants", "Total Photos"]
   valStat = [1, 2, 3, 4];
@@ -19,11 +19,12 @@ export class DetailsEventComponent implements OnInit {
   colTitlesR = ["First Name", "Last Name", "Company", "Email", "Phone"]
   colTitlesA = ["Username", "Link", "Event", "Author", "Permissions"]
   repLength;
-  data: any[]=[];
-  dataR: any[]=[]
-  keys: any[];
-  keysR: any[];
-  
+  dataSessions: any[]=[];
+  dataRepresentants: any[]=[]
+  dataAccounts: any[]=[]
+  keySessions: any[];
+  keyRepresentatnts: any[];
+  keyAccounts: any[];
 
   //cubes variables
   cubesData=[];
@@ -39,41 +40,36 @@ export class DetailsEventComponent implements OnInit {
         this.eventService.getEventDetails(params['id'])
         .subscribe(data => {
           //list
-          this.dataList= Event.map(data.events)
-          this.dataList.push(data.entreprises_array)
-          delete this.dataList [0]['participants']
-          delete this.dataList [0]['sessions']
-          delete this.dataList [0]['id']
-          delete this.dataList [0]['accounts']
-          delete this.dataList [0]['email_template_id']
-          this.dataListKeys=Object.keys(this.dataList[0])
-          this.dataListKeys.push(this.dataList[1])
-          //tabl
-           //session
-          this.repLength= data.representants.length;
-          if(data.sessions.length>0){
-          delete data.sessions [0]['created_at']
-          delete data.sessions [0]['deleted_at']
-          delete data.sessions[0]['id']
-          delete data.sessions [0]['updated_at']
-          delete data.sessions [0]['pivot']
-          this.data=data.sessions
-          this.keys=Object.keys(this.data[0]);
-          console.log(this.data)
-          }
-           //reprsentant
-           if(data.representants.length>0){
-            delete data.representants [0]['created_at']
-            delete data.representants [0]['deleted_at']
-            delete data.representants [0]['id']
-            delete data.representants [0]['updated_at']
-            delete data.representants [0]['pivot']
-            this.dataR=data.representants
-            this.keysR=Object.keys(this.dataR[0]);
-            console.log(this.keysR)
-            }
+          this.dataList= data.events[0]
+          delete this.dataList ['event_id']
+          delete this.dataList ['created_at']
+          delete this.dataList ['deleted_at']
+          delete this.dataList ['photos']
+          delete this.dataList ['participants']
+          delete this.dataList ['email_template_id']
+          delete this.dataList ['updated_at']
+          this.dataListKeys=Object.keys(this.dataList)
+          console.log(this.dataList)
           //cubes
-          this.cubesData.push(data.events_count,data.nextSession,data.photos_count,data.next_available_date)
+          this.cubesData.push(data.remaining_sessions_count,data.nextSession,data.photos_count,data.participants_count)
+          //tables
+           //Sessions
+             this.dataSessions=data.sessions
+             delete this.dataSessions[0] ['description']
+             delete this.dataSessions [0]['event_id']
+             delete this.dataSessions [0]['created_at']
+             delete this.dataSessions [0]['deleted_at']
+             delete this.dataSessions [0]['photos']
+             delete this.dataSessions [0]['machines']
+             delete this.dataSessions [0]['updated_at']
+             this.keySessions=Object.keys(this.dataSessions[0])
+             console.log(this.dataSessions)
+           //Representatnts
+             this.dataRepresentants=data.representants
+             this.keyRepresentatnts=Object.keys(this.dataRepresentants[0])
+           //Accounts
+             this.dataAccounts=data.accounts
+             this.keyAccounts=Object.keys(this.dataAccounts[0])  
         })
       })
     }

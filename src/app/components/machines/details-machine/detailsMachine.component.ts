@@ -8,7 +8,7 @@ import { Machine } from '../../../models/machine';
   templateUrl: './detailsMachine.component.html',
 })
 export class DetailsMachineComponent implements OnInit {
-  
+  title="sessions";
   //stat variables
   stat = ["Total Event", "Total Sessions", "Total Participants", "Total Photos"]
   valStat = [1, 2, 3, 4];
@@ -19,6 +19,7 @@ export class DetailsMachineComponent implements OnInit {
   keys: any[];
   //cubes variables
   cubesData=[];
+  cubesTitle=["Event","Next Session","Photos","Next Available Date"]
   //list variables
   dataList;
   dataListKeys;
@@ -34,15 +35,13 @@ export class DetailsMachineComponent implements OnInit {
           this.dataList= data.machines
           delete this.dataList ['created_at']
           delete this.dataList ['deleted_at']
-          delete this.dataList ['id']
           delete this.dataList ['updated_at']
           this.dataListKeys=Object.keys(this.dataList)
-          this.dataListKeys.splice(2,2,'status')
+          this.dataListKeys.splice(3,3,'status')
           //table
           if(data.sessions.length>0){
           delete data.sessions [0]['created_at']
           delete data.sessions [0]['deleted_at']
-          delete data.sessions[0]['id']
           delete data.sessions [0]['updated_at']
           delete data.sessions [0]['pivot']
           this.data=data.sessions

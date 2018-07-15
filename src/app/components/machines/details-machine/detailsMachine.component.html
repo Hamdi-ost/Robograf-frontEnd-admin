@@ -14,7 +14,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="padding-bottom: 0px;">
-              <app-details-list [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
+              <app-details-list [title]="title" [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
             </div>
             <!-- /.box-body -->
           </div>
@@ -22,14 +22,14 @@
       </div>
     </div>
     <div class="col-lg-6">
-      <app-details-cubes [cubesData]="cubesData" ></app-details-cubes>
+      <app-details-cubes [cubesTitle]="cubesTitle" [cubesData]="cubesData" ></app-details-cubes>
     </div>
   </div>
 
   <div class="details-contents">
     <div>
       <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Sessions: {{data.length}}</button>
-      <app-table [colTitles]="colTitles" [keys]="keys" [data]="data"></app-table>
+      <app-table [title]="title" [colTitles]="colTitles" [keys]="keys" [data]="data"></app-table>
     </div>
   </div>
 </section>

@@ -11,7 +11,7 @@ export class EventsComponent implements OnInit {
   stat=["Total Event","Total Sessions","Total Participants","Total Photos"]
   valStat=[1,2,3,4];
   icon = ["fa fa-list","fa fa-cubes","fa fa-users","fa fa-picture-o"]
-  colTitles=["ID","Name","Subject","Location","Company","Contact","Author"]
+  colTitles=["Name","Subject","Location","Company","Contact","Author"]
   data:any[];
   keys:any[];
   createLink="/createEvent"

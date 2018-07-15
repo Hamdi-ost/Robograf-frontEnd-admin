@@ -14,6 +14,7 @@ export class Machine {
             delete obj[i]['created_at'];
             delete obj[i]['deleted_at'];
             delete obj[i]['updated_at'];
+            delete obj[i]['pivot'];
             resultat.push(obj[i]);
         }
         resultat.splice(0, 1)

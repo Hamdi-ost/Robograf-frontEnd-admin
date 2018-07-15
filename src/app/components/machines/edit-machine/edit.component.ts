@@ -24,4 +24,8 @@ export class EditMachineComponent implements OnInit {
   ngOnInit() {
   }
 
+  back(){
+    window.history.back();
+  }
+
 }

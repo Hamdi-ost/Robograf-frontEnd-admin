@@ -12,4 +12,8 @@ export class SessionsService {
   getSessions(): Observable<any>{
     return this.http.get('http://localhost:8000/sessions/')
   }
+
+  getSessionDetails(id): Observable<any>{
+    return this.http.get('http://localhost:8000/sessions/'+id)
+  }
 }

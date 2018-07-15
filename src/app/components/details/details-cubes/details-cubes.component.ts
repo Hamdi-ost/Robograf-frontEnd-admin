@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./details-cubes.component.css']
 })
 export class DetailsCubesMachineComponent implements OnInit {
+  @Input() cubesTitle;
   @Input() cubesData;
   
   constructor() { }

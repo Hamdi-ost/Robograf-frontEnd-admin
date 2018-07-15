@@ -9,7 +9,7 @@ export class DetailsListMachineComponent implements OnInit {
   @Input() dataList;
   @Input() dataListIcons;
   @Input() dataListKeys;
-  
+  @Input() title;
   constructor() { }
 
   ngOnInit() {
