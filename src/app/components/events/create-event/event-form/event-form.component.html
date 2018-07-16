@@ -8,31 +8,31 @@
         <!-- Name Field -->
         <div class="form-group col-sm-12">
           <label for="name">Name:</label>
-          <input class="form-control" required="" name="name" type="text" id="name">
+          <input class="form-control" required="" name="name" type="text" [(ngModel)]="event.name" >
         </div>
 
         <!-- Subject Field -->
         <div class="form-group col-sm-12">
           <label for="subject">Activity:</label>
-          <input class="form-control" name="subject" type="text" id="subject">
+          <input class="form-control" name="subject" type="text" id="subject" [(ngModel)]="event.subject">
         </div>
 
         <!-- Location Field -->
         <div class="form-group col-sm-12">
           <label for="location">Location:</label>
-          <input class="form-control" required="" name="location" type="text" id="location">
+          <input class="form-control" required="" name="location" type="text" id="location" [(ngModel)]="event.location">
         </div>
 
         <!-- Email Template Field -->
         <div class="form-group col-sm-12">
           <label for="email_template_id">Email Template:</label>
-          <input class="form-control" name="email_template_id" type="text" id="email_template_id">
+          <input class="form-control" name="email_template_id" type="text" id="email_template_id" [(ngModel)]="event.emailTemplateId">
         </div>
 
         <!-- Description Field -->
         <div class="form-group col-sm-12 col-lg-12">
           <label for="description">Description:</label>
-          <textarea class="form-control" name="description" cols="50" rows="10" id="description"></textarea>
+          <textarea class="form-control" name="description" cols="50" rows="10" id="description" [(ngModel)]="event.description"></textarea>
         </div>
 
       </form>

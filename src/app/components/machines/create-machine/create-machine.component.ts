@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { MachinesService } from '../../../services/machines.service'
-import { ValidateService } from '../../../services/validate.service'
+import { MachinesService } from '../../../services/machines.service';
+import { ValidateService } from '../../../services/validate.service';
 import { Machine } from '../../../models/machine';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-machine',
@@ -12,32 +13,36 @@ import { Machine } from '../../../models/machine';
 export class CreateMachineComponent implements OnInit {
   name: string;
   type: string;
-  active: number = 1;
+  active = 1;
   machine: Machine = new Machine();
 
   constructor(
     private flashMessages: FlashMessagesService,
     private machineService: MachinesService,
-    private validateService: ValidateService) { }
+    private validateService: ValidateService,
+    private router: Router) { }
 
   ngOnInit() {
   }
 
   OnSubmit() {
-    
-    //Fill the object
-    this.machine.name = this.name
-    this.machine.type = this.type
-    this.machine.active = this.active
 
-    //Required  Fields
+    // Fill the object
+    this.machine.name = this.name;
+    this.machine.type = this.type;
+    this.machine.active = this.active;
+
+    // Required  Fields
     if (!this.validateService.validateRegister(this.machine)) {
-      this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 })
+      this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
 
-    //Add machine
+    // Add machine
     this.machineService.addMachine(this.machine)
-    .subscribe(data =>   console.log(data)  )
+    .subscribe(data => this.router.navigateByUrl('/machines'));
+
+
+
   }
 }

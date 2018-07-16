@@ -6,18 +6,12 @@ export class Machine {
 
 
     static map(obj) {
-        var resultat: Machine[] = [
-            { 'id': 1, 'name': "", 'type': "", 'active': 1 }
-        ];
-        var i;
-        for (i = 0; i < obj.length; i++) {
-            delete obj[i]['created_at'];
-            delete obj[i]['deleted_at'];
-            delete obj[i]['updated_at'];
-            delete obj[i]['pivot'];
-            resultat.push(obj[i]);
-        }
-        resultat.splice(0, 1)
+
+        const resultat = new Machine ();
+        resultat.id = obj.id;
+        resultat.name = obj.name;
+        resultat.type = obj.type;
+        resultat.active = obj.active;
         return resultat;
     }
 }

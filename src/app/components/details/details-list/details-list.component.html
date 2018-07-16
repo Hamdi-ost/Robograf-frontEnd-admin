@@ -1,21 +1,21 @@
 <ng-container *ngFor="let key of dataListKeys; let i=index">
-<div *ngIf="key !== 'id'">
-  <strong >
-    <i  class={{dataListIcons[i]}}></i> {{key | uppercase}}:
-  </strong>
-  <span class="text-muted" style="margin-left: 15px;">
-    {{dataList[key]}}
-  </span>
-  <!--Active machine part-->
-  <span *ngIf="key=='status' && dataList.active" class="text-muted" style="margin-left: 15px;">
+  <div *ngIf="key !== 'id'">
+    <strong>
+      <i class={{dataListIcons[i]}}></i> {{key | uppercase}}:
+    </strong>
+    <span class="text-muted" style="margin-left: 15px;">
+      {{dataList[key]}}
+    </span>
+    <!--Active machine part-->
+    <span *ngIf="key=='status' && dataList.active" class="text-muted" style="margin-left: 15px;">
       Active
-  </span>
-  <span *ngIf="key=='status' && !dataList.active" class="text-muted" style="margin-left: 15px;">
+    </span>
+    <span *ngIf="key=='status' && !dataList.active" class="text-muted" style="margin-left: 15px;">
       Inactive
-  </span>
-  <!---->
-  <hr>
-</div>
+    </span>
+    <!---->
+    <hr>
+  </div>
 </ng-container>
 <div class="row" style="margin-top:15px;">
 
@@ -24,11 +24,8 @@
       <i class="glyphicon glyphicon-edit"></i> Edit</a>
   </div>
   <div class="col-sm-6" style="padding:0px; padding-right:5px;">
-    <form method="POST" action="http://localhost:8000/machines/1" accept-charset="UTF-8">
-      <input name="_method" type="hidden" value="DELETE">
-      <input name="_token" type="hidden" value="OqGcpDmeKTWjgrlHTuJVMuuFvfcJv3J8nhhjz9T3">
-      <button type="submit" class="btn btn-danger btn-sm" style="width:100%;border-radius:0px;">
-        <i class="glyphicon glyphicon-trash"></i> Delete</button>
-    </form>
+    <button type="submit" (click)="delete(dataList.id)" class="btn btn-danger btn-sm" style="width:100%;border-radius:0px;">
+      <i class="glyphicon glyphicon-trash"></i> Delete</button>
   </div>
 </div>
+

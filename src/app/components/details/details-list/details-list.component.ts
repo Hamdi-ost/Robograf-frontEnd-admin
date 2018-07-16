@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-details-list',
@@ -10,9 +10,15 @@ export class DetailsListMachineComponent implements OnInit {
   @Input() dataListIcons;
   @Input() dataListKeys;
   @Input() title;
+  @Output() deleteX = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  delete (id) {
+    this.deleteX.emit(id);
   }
 
 }

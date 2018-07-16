@@ -25,6 +25,8 @@ export class EditSessionComponent implements OnInit {
         this.endTime=data.sessions[0].end_time
         this.description=data.sessions[0].description
       })
+      //session getAssignedMachines()
+      // machine  getAvailableAsync()
    })
   }
 

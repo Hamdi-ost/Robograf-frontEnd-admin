@@ -10,7 +10,8 @@
       [keys]="keys" 
       [data]="data" 
       [createLink]="createLink"
-      [canAddNew]="true">
+      [canAddNew]="true"
+      (deleteX)="deleteEvent($event)">
     </app-table>
   </div>
 

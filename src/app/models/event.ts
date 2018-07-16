@@ -3,22 +3,20 @@ export class Event {
     id: number;
     subject: string;
     location: string;
-    //company : string;
-    contact: string;
-    author_id : number;
+    description;
+    email_template_id;
+    // company : string;
+    author_id: number;
 
     static map(obj) {
-        var resultat: Event[] = [
-            {"id":1,"name":"Event1","subject":"Activity1","location":"location1","author_id":1,"contact":"email1"}
-        ];
-        var i;
-        for (i = 0; i < obj.length; i++) {
-            delete obj[i]['created_at'];
-            delete obj[i]['deleted_at'];
-            delete obj[i]['updated_at'];
-            resultat.push(obj[i]);
-        }
-        resultat.splice(0, 1)
+        const resultat = new Event ();
+        resultat.id = obj.id;
+        resultat.name = obj.name;
+        resultat.subject = obj.subject;
+        resultat.location = obj.location;
+        resultat.email_template_id = obj.email_template_id;
+        resultat.author_id = obj.author_id;
         return resultat;
     }
+
 }

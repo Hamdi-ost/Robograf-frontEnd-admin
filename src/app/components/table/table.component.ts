@@ -1,5 +1,6 @@
-import { Component, OnInit , Input} from '@angular/core';
+import { Component, OnInit , Output, Input, EventEmitter} from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { MachinesService } from '../../services/machines.service';
 
 @Component({
   selector: 'app-table',
@@ -9,14 +10,20 @@ import { Title } from '@angular/platform-browser';
 export class TableComponent implements OnInit {
   @Input() title;
   @Input() colTitles;
-  @Input() data:any[];
-  @Input() keys:any[];
+  @Input() data: any[];
+  @Input() keys: any[];
   @Input() createLink;
   @Input() canBeDesactivated;
   @Input() canAddNew;
-  constructor() { }
+  @Output() deleteX = new EventEmitter();
+
+  constructor(private machineService: MachinesService) { }
 
   ngOnInit() {
+  }
+
+  delete (row) {
+    this.deleteX.emit(row.id);
   }
 
 }

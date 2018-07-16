@@ -14,7 +14,7 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body" style="padding-bottom: 0px;">
-                <app-details-list [title]="titleForListDetails" [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
+                <app-details-list  (deleteX)="deleteEvent($event)" [title]="titleForListDetails" [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
               </div>
               <!-- /.box-body -->
             </div>
@@ -22,18 +22,18 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <app-details-cubes [cubesData]="cubesData" ></app-details-cubes>
+        <!--<app-details-cubes [cubesData]="cubesData" ></app-details-cubes>-->
       </div>
     </div>
   
     <div class="details-contents">
       <div>
         <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Sessions: {{dataSessions.length}}</button>
-        <app-table [canAddNew]="true" [colTitles]="colTitlesS" [keys]="keys" [data]="data"></app-table>
+        <app-table [canBeDesactivated]="false" [title]="title" [canAddNew]="true" [colTitles]="colTitlesS" [keys]="keySessions" [data]="dataSessions" (deleteX)="deleteSession($event)"></app-table>
         <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{dataRepresentants.length}}</button>
-        <app-table [canAddNew]="true" [colTitles]="colTitlesR" [keys]="keysR" [data]="dataR"></app-table>
+        <app-table [canAddNew]="true" [colTitles]="colTitlesR" [keys]="keyRepresentatnts" [data]="dataRepresentants" (deleteX)="deleteRepresentant($event)"></app-table>
         <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Accounts: {{dataAccounts.length}}</button>
-        <app-table [canAddNew]="true" [colTitles]="colTitlesA" [keys]="keys" [data]="data"></app-table>
+        <app-table [canAddNew]="true" [colTitles]="colTitlesA" [keys]="keyAccounts" [data]="dataAccounts" (deleteX)="deleteAccount($event)"></app-table>
       </div>
     </div>
   </section>
