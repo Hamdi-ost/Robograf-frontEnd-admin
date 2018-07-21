@@ -19,9 +19,7 @@ export class EventsComponent implements OnInit {
   constructor(private eventService: EventsService) {
     this.eventService.getEvent()
     .subscribe(data => {
-      this.valStat[0] = data.length;
       this.data = data;
-      console.log(data);
       this.keys = Object.keys(this.data[0]);
         }
       );

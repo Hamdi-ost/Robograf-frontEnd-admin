@@ -16,9 +16,10 @@
           <tr *ngFor="let row of data">
             <ng-container *ngFor="let key of keys">
               <td  *ngIf="key !== 'id'">
-                <i *ngIf="canBeDesactivated && row['active'] && key==='name'" class="fa fa-circle text-green" style="margin-right: 2px"></i>
-                <i *ngIf="canBeDesactivated && !row['active'] && key==='name'" class="fa fa-circle text-red" style="margin-right: 2px"></i>
-                  <span *ngIf="key!=='active'">{{row[key]}}</span>
+                <i *ngIf="canBeDesactivated && row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-green" style="margin-right: 2px"></i>
+                <i *ngIf="canBeDesactivated && !row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-red" style="margin-right: 2px"></i>
+                <a routerLink="/users" *ngIf="key=='author'">{{row[key]}}</a>  
+                <span *ngIf="key!=='active' && key!=='author'">{{row[key]}}</span>
                   <span *ngIf="key=='active' && row.active"  style="margin-left: 15px;">
                       Active
                   </span>
@@ -51,5 +52,5 @@
       </div>
     </div>
   </div>
-  <a routerLink={{createLink}} class="btn btn-primary" *ngIf="canAddNew" style="float: right;">ADD NEW</a>
+  <a  routerLink={{createLink}} class="btn btn-primary" *ngIf="canAddNew" style="float: right;">ADD NEW</a>
 </div>

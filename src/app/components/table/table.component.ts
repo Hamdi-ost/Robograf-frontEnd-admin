@@ -10,14 +10,14 @@ import { MachinesService } from '../../services/machines.service';
 export class TableComponent implements OnInit {
   @Input() title;
   @Input() colTitles;
-  @Input() data: any[];
-  @Input() keys: any[];
+  @Input() data;
+  @Input() keys;
   @Input() createLink;
   @Input() canBeDesactivated;
   @Input() canAddNew;
   @Output() deleteX = new EventEmitter();
 
-  constructor(private machineService: MachinesService) { }
+  constructor(private machineService: MachinesService) {}
 
   ngOnInit() {
   }

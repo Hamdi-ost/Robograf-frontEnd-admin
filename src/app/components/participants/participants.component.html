@@ -1,0 +1,17 @@
+<div class="content-header">
+  <app-statics [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+  <h3>Participants</h3>
+</div>
+<div class="content">
+  <app-table 
+    [title]="title" 
+    [canBeDesactivated]="false" 
+    [colTitles]="colTitles" 
+    [keys]="keys" 
+    [data]="data" 
+    [createLink]="createLink"
+    [canAddNew]="true"
+    (deleteX)="deleteParticipant($event)">
+  </app-table>
+</div>
+

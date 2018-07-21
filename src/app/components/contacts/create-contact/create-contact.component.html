@@ -1,0 +1,52 @@
+<h3>Add New Representant:</h3>
+
+<div class="box box-primary">
+
+  <div class="box-body">
+    <div class="row">
+      <form method="POST" action="http://localhost:8000/representants" accept-charset="UTF-8">
+        <input name="_token" type="hidden" value="1hsIdL2kJtz0iQQ2Nb1JgQtgkXiP1C3Xx2VHC94G">
+
+        <!-- First Name Field -->
+        <div class="form-group col-sm-6">
+          <label for="first_name">First Name:</label>
+          <input class="form-control" required="" name="first_name" type="text" [(ngModel)]="firstName">
+        </div>
+
+        <!-- Last Name Field -->
+        <div class="form-group col-sm-6">
+          <label for="last_name">Last Name:</label>
+          <input class="form-control" required="" name="last_name" type="text" id="last_name" [(ngModel)]="lastName">
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group col-sm-6">
+          <label for="email">Email:</label>
+          <input class="form-control" required="" name="email" type="email" id="email" [(ngModel)]="email">
+        </div>
+
+        <!-- Phone Field -->
+        <div class="form-group col-sm-6">
+          <label for="phone">Phone:</label>
+          <input class="form-control" name="phone" type="text" [(ngModel)]="phone">
+        </div>
+
+        <div id="entreprise_id_field" class="form-group col-sm-6">
+          <label for="entreprise_id">Company:</label>
+          <select class="form-control" id="entreprise_id" [(ngModel)]="entreprise_id">
+            <option value="1">company1</option>
+            <option value="2">company2</option>
+            <option value="3">clientName 8</option>
+          </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <!-- Submit Field -->
+          <button (click)="OnSubmit()" type="submit" class="btn btn-success" style="margin-left: 20px">ADD</button>
+          <button routerLink="/representants" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

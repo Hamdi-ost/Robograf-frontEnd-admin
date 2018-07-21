@@ -6,17 +6,27 @@ export class Event {
     description;
     email_template_id;
     // company : string;
-    author_id: number;
+    author;
 
-    static map(obj) {
-        const resultat = new Event ();
-        resultat.id = obj.id;
-        resultat.name = obj.name;
-        resultat.subject = obj.subject;
-        resultat.location = obj.location;
-        resultat.email_template_id = obj.email_template_id;
-        resultat.author_id = obj.author_id;
-        return resultat;
+    static map(rep, users) {
+        const resultats = new Array(new Event());
+        for (const obj of rep) {
+            const resultat = new Event();
+            resultat.id = obj.id;
+            resultat.name = obj.name;
+            resultat.subject = obj.subject;
+            resultat.location = obj.location;
+            resultat.email_template_id = obj.email_template_id;
+            for (const user of users) {
+                if (obj.author_id === user.id) {
+                    resultat.author = user.name;
+                }
+            }
+            resultats.push(resultat);
+        }
+        resultats.splice(0, 1);
+        return resultats;
     }
+
 
 }

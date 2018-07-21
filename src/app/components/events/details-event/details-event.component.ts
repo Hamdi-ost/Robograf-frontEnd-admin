@@ -4,6 +4,12 @@ import { EventsService } from '../../../services/events.service';
 import { RepresentantsService } from '../../../services/representants.service';
 import { AccountsService } from '../../../services/accounts.service';
 import { SessionsService } from '../../../services/sessions.service';
+import { Event } from '../../../models/event';
+import { UsersService } from '../../../services/users.service';
+import { Session } from '../../../models/session';
+import { Account } from '../../../models/account';
+import { CompaniesService } from '../../../services/companies.service';
+import { Representant } from '../../../models/representant';
 
 
 @Component({
@@ -14,23 +20,28 @@ import { SessionsService } from '../../../services/sessions.service';
 export class DetailsEventComponent implements OnInit {
   title = 'sessions';
   titleForListDetails = 'events';
+  titleForRepresentant = 'representants';
+  titleForAccount = 'accounts';
+  createLinkEvent = '/createEvent';
+  createLinkRepresentant = '/createRepresentant';
+  createLinkAccount = '/createAccount';
   // stat variables
   stat = ['Total Event', 'Total Sessions', 'Total Participants', 'Total Photos'];
   valStat = [1, 2, 3, 4];
   icon = ['fa fa-list', 'fa fa-cubes', 'fa fa-users', 'fa fa-picture-o'];
   // table variables
-  colTitlesS = ['Number', 'Start Date', 'Start Time', 'End Time', 'Description', 'Event', 'End Time'];
-  colTitlesR = ['First Name', 'Last Name', 'Company', 'Email', 'Phone'];
-  colTitlesA = ['Username', 'Link', 'Event', 'Author', 'Permissions'];
+  colTitlesS = ['Number', 'Start Data', 'Start Time', 'End Time', 'End Date', 'Description', 'Event'];
+  colTitlesR = ['First Name', 'Last Name', 'Email', 'Phone', 'Company'];
+  colTitlesA = ['Username', 'Link', 'Author', 'Event', 'Permissions'];
   repLength;
-  dataSessions: any[] = [];
-  dataRepresentants: any[] = [];
-  dataAccounts: any[] = [];
+  dataSessions = [];
+  dataRepresentants = [];
+  dataAccounts = [];
   keySessions: any[];
   keyRepresentatnts: any[];
   keyAccounts: any[];
   // cubes variables
-  cubesData  = [];
+  cubesData = [];
   cubesTitle = ['Remaining sessions', 'Next session', 'Photos', 'Participants', 'Templates'];
   // list variables
   dataList;
@@ -40,74 +51,67 @@ export class DetailsEventComponent implements OnInit {
   constructor(
     private router: Router,
     private eventService: EventsService,
-    private representantService: RepresentantsService,
+    private representantsService: RepresentantsService,
     private accountService: AccountsService,
+    private companiesService: CompaniesService,
     private sessionService: SessionsService,
+    private usersService: UsersService,
     private route: ActivatedRoute) {
-      this.route.params.subscribe(params => {
-        this.eventService.getEventDetails(params['id'])
+    this.route.params.subscribe(params => {
+      this.eventService.getEventDetails(params['id'])
         .subscribe(data => {
-          // list
-          this.dataList = data.events[0];
-          delete this.dataList ['event_id'];
-          delete this.dataList ['created_at'];
-          delete this.dataList ['deleted_at'];
-          delete this.dataList ['photos'];
-          delete this.dataList ['participants'];
-          delete this.dataList ['email_template_id'];
-          delete this.dataList ['updated_at'];
-          this.dataListKeys = Object.keys(this.dataList);
-          // cubes
-         // this.cubesData.push(data.remaining_sessions_count,data.nextSession,data.photos_count,data.participants_count)
-          // tables
-           // Sessions
-             this.dataSessions = data.sessions;
-             delete this.dataSessions[0] ['description'];
-             delete this.dataSessions [0]['event_id'];
-             delete this.dataSessions [0]['created_at'];
-             delete this.dataSessions [0]['deleted_at'];
-             delete this.dataSessions [0]['photos'];
-             delete this.dataSessions [0]['machines'];
-             delete this.dataSessions [0]['updated_at'];
-             this.keySessions = Object.keys(this.dataSessions[0]);
-             console.log(this.keySessions);
-           // Representatnts
-             this.dataRepresentants = data.representants;
-             this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
-           // Accounts
-             this.dataAccounts = data.accounts;
-             this.keyAccounts = Object.keys(this.dataAccounts[0])  ;
+          this.usersService.getUsers().subscribe(user => {
+              this.companiesService.getCompany().subscribe(company => {
+              const companies = company;
+              const users = user;
+              // list
+                this.dataList = Event.map(data.events, users);
+                this.dataListKeys = Object.keys(this.dataList[0]);
+                // cubes
+                this.cubesData.push(data.remaining_sessions_count, data.nextSession, data.photos_count, data.participants_count);
+                // tables
+                  // Sessions
+                  this.dataSessions = Session.map(data.sessions, data.events);
+                  this.keySessions = Object.keys(this.dataSessions[0]);
+                  // Representatnts
+                  this.dataRepresentants = Representant.map(data.representants, companies);
+                  this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
+                  // Accounts
+                  this.dataAccounts = Account.map(data.accounts, data.events, users);
+                  this.keyAccounts = Object.keys(this.dataAccounts[0]);
+            });
+          });
         });
       });
-    }
+  }
 
   ngOnInit() {
   }
 
-  deleteSession (id) {
+  deleteSession(id) {
     this.sessionService.deleteSession(id)
-    .subscribe(data => {
+      .subscribe(data => {
         this.dataSessions.splice(this.dataSessions.indexOf(id), 1);
-    });
+      });
   }
 
-  deleteRepresentant (id) {
-    this.representantService.deleteRepresentant(id)
-    .subscribe(data => {
+  deleteRepresentant(id) {
+    this.representantsService.deleteRepresentant(id)
+      .subscribe(data => {
         this.dataRepresentants.splice(this.dataRepresentants.indexOf(id), 1);
-    });
+      });
   }
 
-  deleteAccount (id) {
+  deleteAccount(id) {
     this.accountService.deleteAccount(id)
-    .subscribe(data => {
+      .subscribe(data => {
         this.dataAccounts.splice(this.dataAccounts.indexOf(id), 1);
-    });
+      });
   }
 
-  deleteEvent (id) {
+  deleteEvent(id) {
     this.eventService.deleteEvent(id)
-    .subscribe(data => this.router.navigateByUrl('/events'));
+      .subscribe(data => this.router.navigateByUrl('/events'));
   }
 
 }

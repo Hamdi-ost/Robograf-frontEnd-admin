@@ -25,7 +25,7 @@ export class CreateEventComponent implements OnInit {
   }
 
   addEvent() {
-    //this.eventService.addEvent(this.event)
+    // bthis.eventService.addEvent(this.event)
   }
 
   OnEventChanged(event) {

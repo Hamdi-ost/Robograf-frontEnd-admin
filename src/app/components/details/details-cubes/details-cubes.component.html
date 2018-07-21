@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6" *ngIf="cubesTitle.length>3">
         <div class="info-box">
           <span class="info-box-icon bg-green">
             <i class="fa fa-calendar-o"></i>
@@ -48,7 +48,7 @@
           <!-- /.info-box-content -->
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6" *ngIf="cubesTitle.length>2">
         <div class="info-box">
           <span class="info-box-icon bg-aqua">
             <i class="fa fa-picture-o"></i>

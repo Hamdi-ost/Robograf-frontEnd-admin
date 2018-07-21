@@ -1,0 +1,35 @@
+<section class="content-header">
+  <app-statics [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="box box-primary">
+        <div class="box-body">
+          <div class="contents">
+            <div class="box-header with-border">
+              <h3 class="box-title" style="width: 100%;">
+                <b></b> </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="padding-bottom: 0px;">
+              <app-details-list  (deleteX)="deleteParticipant($event)" [title]="title" [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <app-details-cubes [cubesTitle]="cubesTitle" [cubesData]="cubesData" ></app-details-cubes>
+    </div>
+  </div>
+
+  <div class="details-contents">
+    <div>
+      <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Photos: {{dataPhoto.length}}</button>
+      <app-table  [canBeDesactivated]="false" [title]="titleForPhotos" [colTitles]="colTitlesPhotos" [keys]="keyAccounts" [data]="dataPhoto" (deleteX)="deletePhoto($event)"></app-table>
+    </div>
+  </div>
+</section>

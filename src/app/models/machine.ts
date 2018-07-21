@@ -5,13 +5,17 @@ export class Machine {
     active: number;
 
 
-    static map(obj) {
-
-        const resultat = new Machine ();
-        resultat.id = obj.id;
-        resultat.name = obj.name;
-        resultat.type = obj.type;
-        resultat.active = obj.active;
-        return resultat;
+    static map(rep) {
+        const resultats = new Array(new Machine());
+        for (const obj of rep) {
+            const resultat = new Machine();
+            resultat.id = obj.id;
+            resultat.name = obj.name;
+            resultat.type = obj.type;
+            resultat.active = obj.active;
+            resultats.push(resultat);
+        }
+        resultats.splice(0, 1);
+        return resultats;
     }
 }

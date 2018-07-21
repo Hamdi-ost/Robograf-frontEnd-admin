@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-new-client-form',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-client-form.component.css']
 })
 export class NewClientFormComponent implements OnInit {
-
+  @Input() hidden;
   constructor() { }
 
   ngOnInit() {

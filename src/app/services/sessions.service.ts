@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -19,6 +19,13 @@ export class SessionsService {
 
   deleteSession(id) {
     return this.http.delete('http://localhost:8000/api/sessions/' + id);
+  }
+
+
+  editSession(id, modifiedSession) {
+    const header = new HttpHeaders ();
+    header.append('Content-Type', 'application/json');
+    return this.http.patch('http://localhost:8000/api/sessions/' + id, modifiedSession, {headers: header});
   }
 
 }

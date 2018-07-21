@@ -1,0 +1,39 @@
+<h3>Edit User: </h3>
+<div class="box box-primary">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <!-- Name Field -->
+          <div class="form-group col-sm-12">
+            <label for="name">Name:</label>
+            <input class="form-control" name="name" type="text" [(ngModel)]="name">
+          </div>
+  
+          <!-- Email Field -->
+          <div class="form-group col-sm-12">
+            <label for="email">Email:</label>
+            <input class="form-control" name="email" type="email" [(ngModel)]="email">
+          </div>
+  
+          <!-- Password Field -->
+          <div class="form-group col-sm-12">
+            <label for="password">Password:</label>
+            <input class="form-control" name="password" type="password" value="" [(ngModel)]="password">
+          </div>
+        </div>
+        <!-- SELECT ROLES -->
+        <div class="col-sm-6">
+          <!-- Roles Field -->
+          <div class="form-group col-sm-12">
+            <label for="roles">Roles:</label>
+          </div>
+        </div>
+  
+        <!-- Submit Field -->
+        <div class="form-group col-sm-12">
+          <button (click)="Update()" type="submit" class="btn btn-success" style="margin-left: 20px">Update</button>
+          <button (click)="back()" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>

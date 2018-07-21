@@ -6,9 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  stat=["Events","Sessions","Clients","Machines"]
-  valStat=[1,2,3,4];
-  icon = ["fa fa-power-off","fa fa-calendar-check-o","fa fa-chack","fa fa-gears"]
+  stat = ['Events', 'Sessions', 'Clients', 'Machines'];
+  valStat = [1, 2, 3, 4];
+  icon = ['fa fa-power-off', 'fa fa-calendar-check-o', 'fa fa-chack', 'fa fa-gears'];
 
   constructor() { }
 

@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DetailsCubesMachineComponent implements OnInit {
   @Input() cubesTitle;
   @Input() cubesData;
-  
+
   constructor() { }
 
   ngOnInit() {

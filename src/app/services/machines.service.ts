@@ -20,7 +20,7 @@ export class MachinesService {
 
   getMachines() {
     return this.http.get<any[]>('http://localhost:8000/machines')
-    .pipe(map(res =>  res.map(el => Machine.map(el))));
+    .pipe(map(res => Machine.map(res)));
   }
 
   getMachineDetails(id): Observable<any> {
@@ -29,6 +29,12 @@ export class MachinesService {
 
   deleteMachine(id) {
     return this.http.delete('http://localhost:8000/api/machines/' + id);
+  }
+
+  editMachine(id, modifiedMachine) {
+    const header = new HttpHeaders ();
+    header.append('Content-Type', 'application/json');
+    return this.http.patch('http://localhost:8000/api/machines/' + id, modifiedMachine, {headers: header});
   }
 
 }

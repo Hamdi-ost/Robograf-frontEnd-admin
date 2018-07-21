@@ -11,7 +11,7 @@ export class EditSessionComponent implements OnInit {
   startTime;
   startDate;
   endDate;
-  endTime
+  endTime;
   description;
 
   constructor(private sessionService: SessionsService,
@@ -19,21 +19,21 @@ export class EditSessionComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.sessionService.getSessionDetails(params['id'])
       .subscribe(data => {
-        this.startTime=data.sessions[0].start_time
-        this.startDate=data.sessions[0].date
-        this.endDate=data.sessions[0].end_date
-        this.endTime=data.sessions[0].end_time
-        this.description=data.sessions[0].description
-      })
-      //session getAssignedMachines()
+        this.startTime = data.sessions[0].start_time;
+        this.startDate = data.sessions[0].date;
+        this.endDate = data.sessions[0].end_date;
+        this.endTime = data.sessions[0].end_time;
+        this.description = data.sessions[0].description;
+      });
+      // session getAssignedMachines()
       // machine  getAvailableAsync()
-   })
+   });
   }
 
   ngOnInit() {
   }
 
-  back(){
+  back() {
     window.history.back();
   }
 

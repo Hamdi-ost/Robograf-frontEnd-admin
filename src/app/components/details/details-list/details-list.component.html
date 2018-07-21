@@ -3,14 +3,14 @@
     <strong>
       <i class={{dataListIcons[i]}}></i> {{key | uppercase}}:
     </strong>
-    <span class="text-muted" style="margin-left: 15px;">
-      {{dataList[key]}}
+    <span *ngFor="let row of dataList" class="text-muted" style="margin-left: 15px;">
+      {{row[key]}}
     </span>
     <!--Active machine part-->
-    <span *ngIf="key=='status' && dataList.active" class="text-muted" style="margin-left: 15px;">
+    <span *ngIf="key=='status' && dataList[0].active" class="text-muted" style="margin-left: 15px;">
       Active
     </span>
-    <span *ngIf="key=='status' && !dataList.active" class="text-muted" style="margin-left: 15px;">
+    <span *ngIf="key=='status' && !dataList[0].active" class="text-muted" style="margin-left: 15px;">
       Inactive
     </span>
     <!---->
@@ -20,11 +20,11 @@
 <div class="row" style="margin-top:15px;">
 
   <div class="col-sm-6" style="padding:0px; padding-left:5px;">
-    <a class="btn btn-default btn-sm" style="width:100%;border-radius:0px;" routerLink="/{{title}}/edit/{{dataList.id}}">
+    <a class="btn btn-default btn-sm" style="width:100%;border-radius:0px;" routerLink="/{{title}}/edit/{{dataList[0].id}}">
       <i class="glyphicon glyphicon-edit"></i> Edit</a>
   </div>
   <div class="col-sm-6" style="padding:0px; padding-right:5px;">
-    <button type="submit" (click)="delete(dataList.id)" class="btn btn-danger btn-sm" style="width:100%;border-radius:0px;">
+    <button type="submit" (click)="delete(dataList[0].id)" class="btn btn-danger btn-sm" style="width:100%;border-radius:0px;">
       <i class="glyphicon glyphicon-trash"></i> Delete</button>
   </div>
 </div>

@@ -40,7 +40,10 @@ export class CreateMachineComponent implements OnInit {
 
     // Add machine
     this.machineService.addMachine(this.machine)
-    .subscribe(data => this.router.navigateByUrl('/machines'));
+    .subscribe(data => {
+      this.router.navigateByUrl('/machines');
+      this.flashMessages.show('Machine created !!', { cssClass: 'alert-success', timeout: 3000 });
+    });
 
 
 
