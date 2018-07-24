@@ -1,5 +1,5 @@
 <section class="content-header">
-  <app-statics [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+  <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
 </section>
 
 <section class="content">
@@ -29,12 +29,12 @@
   <div class="details-contents">
     <div>
       <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Machines: {{dataMachines.length}}</button>
-      <app-table [title]="title1" [colTitles]="colTitlesMachines" [keys]="keysMachines" [data]="dataMachines" [canBeDesactivated]="true" [canAddNew]="true" createLink="/createMachine"></app-table>
+      <app-table [createLink]="createMachine" [title]="title1" [colTitles]="colTitlesMachines" [keys]="keysMachines" [data]="dataMachines" [canBeDesactivated]="true" [canAddNew]="true" createLink="/createMachine"></app-table>
       <br><br>
       <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Participants: {{dataParticipants.length}}</button>
-      <app-table [title]="title" [colTitles]="colTitlesParticipants" [keys]="keysParticipants" [data]="dataParticipants" [canAddNew]="true"></app-table>
+      <app-table [createLink]="createParticipant" [title]="title2" [colTitles]="colTitlesParticipants" [keys]="keysParticipants" [data]="dataParticipants" [canAddNew]="true"></app-table>
       <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Photos: {{dataPhotos.length}}</button>
-      <app-table [title]="title" [colTitles]="colTitlesPhotos" [keys]="keysPhotos" [data]="dataPhotos" ></app-table>
+      <app-table [title]="title3" [colTitles]="colTitlesPhotos" [keys]="keysPhotos" [data]="dataPhotos" ></app-table>
     </div>
   </div>
 </section>

@@ -3,6 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ParticipantsService } from '../../../services/participants.service';
 import { Participant } from '../../../models/participant';
 import { EventsService } from '../../../services/events.service';
+import { Photo } from '../../../models/photo';
+import { MachinesService } from '../../../services/machines.service';
+import { SessionsService } from '../../../services/sessions.service';
+import { PhotosService } from '../../../services/photos.service';
 
 @Component({
   selector: 'app-details-participant',
@@ -16,12 +20,13 @@ export class DetailsParticipantComponent implements OnInit {
 
   // stat variables
   stat = ['Total Event', 'Total Sessions', 'Total Participants', 'Total Photos'];
+  titleStat = ['events', 'sessions', 'participants', 'photos'];
   valStat = [1, 2, 3, 4];
   icon = ['fa fa-list', 'fa fa-cubes', 'fa fa-users', 'fa fa-picture-o'];
   // table variables
   colTitlesPhotos = ['Url', 'Photo Time', 'Machine', 'Event', 'Session', 'Participant'];
   dataPhoto = [];
-  keyAccounts: any[];
+  keysPhoto: any[];
   // cubes variables
   cubesData = [];
   cubesTitle = ['Photos', 'Events'];
@@ -33,36 +38,46 @@ export class DetailsParticipantComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private photosService: PhotosService,
     private eventsService: EventsService,
     private participantsService: ParticipantsService,
+    private machinesService: MachinesService,
+    private sessionsService: SessionsService,
     private route: ActivatedRoute) {
+    let machines, sessions;
+    this.sessionsService.getSessions().subscribe(data => sessions = data);
+    this.machinesService.getMachines().subscribe(data => machines = data);
     this.route.params.subscribe(params => {
       this.participantsService.getParticipantDetails(params['id'])
         .subscribe(data => {
           this.eventsService.getEvent().subscribe(event => {
             const events = event;
-              // list
-                this.dataList = Participant.map(data.participants, events);
-                this.dataListKeys = Object.keys(this.dataList[0]);
-                // cubes
-                  this.cubesData.push(this.dataPhoto.length, this.dataPhoto.length);
-                // tables
-                  // Photos
-                 // this.dataPhoto = Session.map(data.sessions, data.events);
-                  // this.keySessions = Object.keys(this.dataPhoto[0]);
+            // list
+            this.dataList = Participant.map(data.participants, events);
+            this.dataListKeys = Object.keys(this.dataList[0]);
+            // cubes
+            this.cubesData.push(this.dataPhoto.length, this.dataPhoto.length);
+            // tables
+            // Photos
+            this.dataPhoto = Photo.map(data.photos, machines, sessions.sessions, this.dataList);
+            this.keysPhoto = Object.keys(this.dataPhoto[0]);
           });
         });
-      });
+    });
   }
 
   ngOnInit() {
   }
 
-  /*deletePhoto(id) {
-    this.sessionService.deleteSession(id)
+  deletePhoto(id) {
+    this.photosService.deletePhoto(id)
       .subscribe(data => {
-        this.dataSessions.splice(this.dataSessions.indexOf(id), 1);
+        this.dataPhoto.splice(this.dataPhoto.indexOf(id), 1);
       });
-  }*/
+  }
 
+  deleteParticipant(id) {
+    this.participantsService.deleteParticipant(id)
+      .subscribe(data => this.router.navigateByUrl('/participants'));
+  }
 }

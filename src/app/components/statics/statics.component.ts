@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-statics',
@@ -9,6 +9,7 @@ export class StaticsComponent implements OnInit {
   @Input() stat;
   @Input() valStat;
   @Input() icon;
+  @Input() titleStat;
   constructor() { }
 
   ngOnInit() {

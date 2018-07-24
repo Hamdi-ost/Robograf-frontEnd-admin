@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { LoginRegisterService } from '../../services/login-register.service';
+import { TokenService } from '../../services/token.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-login',
@@ -13,21 +18,32 @@ export class LoginComponent implements OnInit {
     password : null
   };
 
-  public error = null;
+  public error = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private loginRegisterService: LoginRegisterService,
+    private tokenService: TokenService,
+  private router: Router,
+  private authService: AuthService) { }
 
   ngOnInit() {
   }
 
   onSubmit() {
-    return this.http.post('http://localhost:8000/login', this.form).subscribe(
-      data => console.log(data),
-      error => this.handleError(error));
+    this.loginRegisterService.login(this.form).subscribe(
+      data => this.handleResponse(data),
+      error => {
+        this.handleError(error);
+      });
   }
 
   handleError(error) {
-    this.error = error.error.error;
+    this.error = error.error.errors;
+  }
+
+  handleResponse(data) {
+    this.tokenService.handle(data.access_token);
+    this.authService.changeAuthStatus(true);
+    this.router.navigateByUrl('/dashboard');
   }
 
 }

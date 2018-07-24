@@ -10,11 +10,11 @@ export class SessionsService {
   constructor(private http: HttpClient) { }
 
   getSessions(): Observable<any> {
-    return this.http.get('http://localhost:8000/sessions/');
+    return this.http.get('http://localhost:8000/api/sessions/');
   }
 
   getSessionDetails(id): Observable<any> {
-    return this.http.get('http://localhost:8000/sessions/' + id );
+    return this.http.get('http://localhost:8000/api/sessions/' + id );
   }
 
   deleteSession(id) {

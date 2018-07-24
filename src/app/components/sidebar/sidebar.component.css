@@ -1,0 +1,9 @@
+.main-sidebar {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    max-width:100%;
+    margin-right: auto;
+  }
+
+

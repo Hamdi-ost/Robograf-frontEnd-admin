@@ -1,7 +1,7 @@
 <div class="content">
   <div class="clearfix"></div>
 
-
+  
   <div class="clearfix"></div>
   <div class="box box-primary">
     <div class="box-body">
@@ -16,10 +16,11 @@
           <tr *ngFor="let row of data">
             <ng-container *ngFor="let key of keys">
               <td  *ngIf="key !== 'id'">
+                <a (click)="open()" *ngIf="key==='url'" class="glyphicon glyphicon-eye-open"></a>
                 <i *ngIf="canBeDesactivated && row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-green" style="margin-right: 2px"></i>
                 <i *ngIf="canBeDesactivated && !row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-red" style="margin-right: 2px"></i>
                 <a routerLink="/users" *ngIf="key=='author'">{{row[key]}}</a>  
-                <span *ngIf="key!=='active' && key!=='author'">{{row[key]}}</span>
+                <span *ngIf="key!=='active' && key!=='author' && key!=='url'">{{row[key]}}</span>
                   <span *ngIf="key=='active' && row.active"  style="margin-left: 15px;">
                       Active
                   </span>
@@ -32,15 +33,21 @@
               <div class="btn-group">
                 <a routerLink="/{{title}}/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
                   <i class="glyphicon glyphicon-info-sign"></i> Details</a>
-                <a routerLink="/{{title}}/edit/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                
+                  <a *ngIf="title!=='templates'" routerLink="/{{title}}/edit/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
                   <i class="glyphicon glyphicon-edit"></i> Edit</a>
-
                
-                  <button (click)="delete(row)" type="submit" class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                  <button *ngIf="title!=='templates'" (click)="delete(row)" type="submit" class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
                   <i class="glyphicon glyphicon-trash"></i> Delete</button>
                
-                  <button *ngIf="canBeDesactivated" type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure?')">
+                  <button *ngIf="title=='templates'" type="submit" class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                    <i class="fa fa-times"></i>Close</button>
+
+                  <button *ngIf="canBeDesactivated && row.active" type="submit" class="btn btn-danger btn-xs" (click)="desactivateMachine(row)">
                   <i class="glyphicon glyphicon-off"></i> Deactivate</button>
+
+                  <button *ngIf="canBeDesactivated && !row.active" type="submit" class="btn btn-success btn-xs" (click)="activateMachine(row)">
+                    <i class="glyphicon glyphicon-on"></i> Activate</button>
 
               </div>
             </td>
@@ -54,3 +61,5 @@
   </div>
   <a  routerLink={{createLink}} class="btn btn-primary" *ngIf="canAddNew" style="float: right;">ADD NEW</a>
 </div>
+
+

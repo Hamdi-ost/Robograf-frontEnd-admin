@@ -6,6 +6,7 @@ import { MachinesService } from '../../../services/machines.service';
 import { Session } from '../../../models/session';
 import { EventsService } from '../../../services/events.service';
 import { Participant } from '../../../models/participant';
+import { Photo } from '../../../models/photo';
 
 @Component({
   selector: 'app-details-session',
@@ -15,8 +16,14 @@ import { Participant } from '../../../models/participant';
 export class DetailsSessionComponent implements OnInit {
   titleForListDetails = 'sessions';
   title1 = 'machines';
+  title2 = 'participants';
+  title3 = 'photos';
+  createMachine = '/createMachine';
+  createParticipant = '/createParticipant';
+
   // stat variables
   stat = ['Total Event', 'Total Sessions', 'Total Participants', 'Total Photos'];
+  titleStat = ['events', 'sessions', 'participants', 'photos'];
   valStat = [1, 2, 3, 4];
   icon = ['fa fa-list', 'fa fa-cubes', 'fa fa-users', 'fa fa-picture-o'];
   // table variables
@@ -29,7 +36,7 @@ export class DetailsSessionComponent implements OnInit {
   dataParticipants: any[] = [];
   keysParticipants: any[];
   // Photos
-  colTitlesPhotos = ['Url', 'Photo Time', 'Machine', 'Event', 'Session', 'Participant'];
+  colTitlesPhotos = ['Url', 'Photo Time', 'Event', 'Machine', 'Session', 'Participant'];
   dataPhotos: any[] = [];
   keysPhotos: any[];
   // cubes variables
@@ -64,7 +71,7 @@ export class DetailsSessionComponent implements OnInit {
             this.dataParticipants = Participant.map(data.participants, events);
             this.keysParticipants = Object.keys(this.dataParticipants[0]);
             // Photos
-            this.dataPhotos = data.photos;
+            this.dataPhotos = Photo.map(data.photos, data.machines, data.sessions, this.dataParticipants);
             this.keysPhotos = Object.keys(this.dataPhotos[0]);
       });
     });

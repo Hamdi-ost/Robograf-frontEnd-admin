@@ -10,6 +10,7 @@ export class ParticipantsComponent implements OnInit {
 
   title = 'participants';
   stat = ['Total Event', 'Total Sessions', 'Total Participants', 'Total Photos'];
+  titleStat = ['events', 'sessions', 'participants', 'photos'];
   valStat = [1, 2, 3, 4];
   icon = ['fa fa-list', 'fa fa-cubes', 'fa fa-users', 'fa fa-picture-o'];
   colTitles = ['Name', 'last Name', 'Gender', 'Email', 'Age', 'Phone', 'Event'];
@@ -20,7 +21,6 @@ export class ParticipantsComponent implements OnInit {
   constructor(private participantsService: ParticipantsService) {
     this.participantsService.getParticipant()
     .subscribe(data => {
-      console.log(data);
       this.data = data;
       this.keys = Object.keys(this.data[0]);
         }

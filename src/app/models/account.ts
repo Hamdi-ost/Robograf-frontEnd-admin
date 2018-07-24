@@ -2,6 +2,7 @@ export class Account {
 
     id;
     username;
+    password;
     link;
     event;
     author;
@@ -22,6 +23,9 @@ export class Account {
             for (const event of events) {
                 if (obj.event_id === event.id) {
                     resultat.event = event.name;
+                }
+                if (event.author === users) {
+                    resultat.author = event.author;
                 }
             }
             resultats.push(resultat);

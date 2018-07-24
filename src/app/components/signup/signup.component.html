@@ -1,0 +1,35 @@
+<div style="background-image: url(../assets/images/background.jpg.jpg);" class="body">
+
+</div>
+<div class="grad"></div>
+<div class="header">
+  <div>Robo
+    <span>graf</span>
+  </div>
+</div>
+<br>
+<form class="login" #signupForm=ngForm>
+  <input type="text" placeholder="name" name="name" [(ngModel)]="form.name" required>
+  <br>
+  <input type="email" placeholder="email" name="email" [(ngModel)]="form.email" required>
+
+  <div class="alert alert-danger" role="alert" [hidden]="!error.email">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Error!</strong> {{error.email}}
+  </div>
+  <br>
+  <input type="password" placeholder="password" name="password" [(ngModel)]="form.password" required>
+  <br>
+  <div class="alert alert-danger" role="alert" [hidden]="!error.password">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Error!</strong> {{error.password}}
+  </div>
+  <input type="password" placeholder="Confirmation" name="confirmPassword" [(ngModel)]="form.password_confirmation" required>
+  <br>
+  <input (click)="onSubmit()" type="button" value="Register" [disabled]="!signupForm.valid">
+  <input type="button" value="Login" routerLink="/login">
+</form>

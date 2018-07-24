@@ -18,7 +18,7 @@ export class UsersService {
   }
 
   getUserDetails(id): Observable<any> {
-    return this.http.get('http://localhost:8000/users/' + id);
+    return this.http.get('http://localhost:8000/api/users/' + id);
   }
 
   deleteUser(id) {
@@ -26,7 +26,7 @@ export class UsersService {
   }
 
   getUsers() {
-    return this.http.get<any[]>('http://localhost:8000/users')
+    return this.http.get<any[]>('http://localhost:8000/api/users')
     .pipe(map(res =>  res.map(el => User.map(el))));
   }
 

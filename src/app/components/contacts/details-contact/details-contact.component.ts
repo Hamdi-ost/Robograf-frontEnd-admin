@@ -19,6 +19,7 @@ export class DetailsContactComponent implements OnInit {
   titleForEditCompany = 'companies';
   // stat variables
   stat = ['Total Companies', 'Total Contact', 'Total Accounts'];
+  titleStat = ['companies', 'representants', 'accounts'];
   valStat = [1, 2, 3];
   icon = ['fa fa-building', 'fa fa-male', 'fa fa-sign-in'];
   // table variables

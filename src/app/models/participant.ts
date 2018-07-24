@@ -9,7 +9,6 @@ export class Participant {
    event;
 
     static map(rep, events) {
-
         const resultats = new Array(new Participant());
         for (const obj of rep) {
             const resultat = new Participant();

@@ -22,13 +22,13 @@ export class ParticipantsService {
   getParticipant() {
     let events;
     this.eventsService.getEvent().subscribe(data => events = data);
-    return this.http.get<any[]>('http://localhost:8000/participants')
+    return this.http.get<any[]>('http://localhost:8000/api/participants')
     .pipe(map(res  => Participant.map(res, events))
     );
   }
 
   getParticipantDetails(id): Observable<any> {
-    return this.http.get('http://localhost:8000/participants/' + id );
+    return this.http.get('http://localhost:8000/api/participants/' + id );
   }
 
   deleteParticipant(id) {

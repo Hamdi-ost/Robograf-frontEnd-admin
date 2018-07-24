@@ -11,21 +11,27 @@
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top">
+  <nav class="navbar navbar-fixed-top navbar-static-top">
     <!-- Sidebar toggle button-->
-    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+    <a *ngIf="loggedIn" href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
     </a>
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Control Sidebar Toggle Button -->
-        <li>
-          <a href="http://localhost:4200/login" data-toggle="control-sidebar">
+        <li *ngIf="loggedIn">
+          <a href="#" (click)="logout($event)" data-toggle="control-sidebar">
             <i class="fa fa-fw fa-power-off"></i>
             <span><b>Log Out</b></span> 
           </a>
         </li>
+        <li *ngIf="!loggedIn">
+            <a routerLink="login" data-toggle="control-sidebar">
+              <i class="fa fa-fw fa-sign-in"></i>
+              <span><b>Log In</b></span> 
+            </a>
+          </li>
       </ul>
     </div>
 

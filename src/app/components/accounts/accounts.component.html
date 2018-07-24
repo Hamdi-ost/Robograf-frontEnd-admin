@@ -1,3 +1,16 @@
-<p>
-  accounts works!
-</p>
+<div class="content-header">
+  <h3>Accounts</h3>
+</div>
+<div class="content">
+  <app-table 
+    [title]="title" 
+    [canBeDesactivated]="false" 
+    [colTitles]="colTitles" 
+    [keys]="keys" 
+    [data]="data" 
+    [createLink]="createLink"
+    [canAddNew]="true"
+    (deleteX)="deleteAccount($event)">
+  </app-table>
+</div>
+

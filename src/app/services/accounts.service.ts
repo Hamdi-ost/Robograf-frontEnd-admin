@@ -17,28 +17,31 @@ export class AccountsService {
   addAccount(account) {
     const header = new HttpHeaders();
     header.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:8000/api/entreprises', account, { headers: header });
+    return this.http.post('http://localhost:8000/api/accounts', account, { headers: header });
   }
 
+
   getAccount() {
-    let users;
-    this.usersService.getUsers().subscribe(data => users = data);
+    let user;
     let events;
-    this.eventsService.getEvent().subscribe(data => events = data);
-    return this.http.get<any[]>('http://localhost:8000/entreprises')
-      .pipe(map(res => Account.map(res, events, users))
-      );
+    this.eventsService.getEvent().subscribe(re => {
+      events = re;
+      re.map(el => user = el.author);
+    });
+
+    return this.http.get<any[]>('http://localhost:8000/api/accounts')
+      .pipe(map(res => Account.map(res, events, user)));
   }
 
   getAccountDetails(id): Observable<any> {
-    return this.http.get('http://localhost:8000/entreprises/' + id);
+    return this.http.get('http://localhost:8000/api/accounts/' + id);
   }
 
 
   editAccount(id, modifiedAccount) {
     const header = new HttpHeaders();
     header.append('Content-Type', 'application/json');
-    return this.http.patch('http://localhost:8000/api/entreprises/' + id, modifiedAccount, { headers: header });
+    return this.http.patch('http://localhost:8000/api/accounts/' + id, modifiedAccount, { headers: header });
   }
 
   deleteAccount(id) {

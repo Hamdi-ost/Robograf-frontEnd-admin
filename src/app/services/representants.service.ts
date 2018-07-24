@@ -23,12 +23,12 @@ export class RepresentantsService {
   getRepresentant() {
     let companies;
     this.companiesService.getCompany().subscribe(data => companies = data);
-    return this.http.get<any[]>('http://localhost:8000/representants')
+    return this.http.get<any[]>('http://localhost:8000/api/representants')
     .pipe(map(res => Representant.map(res, companies)));
   }
 
   getRepresentantDetails(id): Observable<any> {
-    return this.http.get('http://localhost:8000/representants/' + id );
+    return this.http.get('http://localhost:8000/api/representants/' + id );
   }
 
   editRepresentant(id, modifiedRepresentant) {

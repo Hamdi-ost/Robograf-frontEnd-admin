@@ -16,6 +16,7 @@ export class DetailsMachineComponent implements OnInit {
   titleForEditSession = 'sessions';
   // stat variables
   stat = ['Total Event', 'Total Sessions', 'Total Participants', 'Total Photos'];
+  titleStat = ['events', 'sessions', 'participants', 'photos'];
   valStat = [1, 2, 3, 4];
   icon = ['fa fa-list', 'fa fa-cubes', 'fa fa-users', 'fa fa-picture-o'];
   // table variables

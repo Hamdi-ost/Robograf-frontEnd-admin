@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { CommonModule } from '@angular/common';
 // components
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -56,61 +57,77 @@ import { DetailsParticipantComponent } from './components/participants/details-p
 import { EditParticipantComponent } from './components/participants/edit-participant/edit-participant.component';
 import { CreateSessionComponent } from './components/sessions/create-session/create-session.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
-import { CreateAccountsComponent } from './components/create-accounts/create-accounts.component';
-import { DetailsAccountsComponent } from './components/details-accounts/details-accounts.component';
-import { EditAccountsComponent } from './components/edit-accounts/edit-accounts.component';
+import { CreateAccountsComponent } from './components/accounts/create-accounts/create-accounts.component';
+import { DetailsAccountsComponent } from './components/accounts/details-accounts/details-accounts.component';
+import { EditAccountsComponent } from './components/accounts/edit-accounts/edit-accounts.component';
 import { SessionsComponent } from './components/sessions/sessions.component';
+import { PhotosComponent } from './components/photos/photos.component';
+import { CreatePhotoComponent } from './components/photos/create-photo/create-photo.component';
+import { DetailsPhotoComponent } from './components/photos/details-photo/details-photo.component';
+import { EditPhotoComponent } from './components/photos/edit-photo/edit-photo.component';
+import { TemplateDetailsComponent } from './components/templates/template-details/template-details.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { BeforeLoginService } from './services/before-login.service';
+import { AfterLoginService } from './services/after-login.service';
 
 
 
 
 const appRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'templates', component: TemplatesComponent },
+  { path: 'dashboard', component: DashboardComponent,  canActivate: [AfterLoginService] },
+  { path: '', component: LoginComponent, canActivate: [BeforeLoginService]  },
 
-  { path: 'errors', component: ErrorsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
+  { path: 'templates', component: TemplatesComponent,  canActivate: [AfterLoginService] },
+  { path: 'templates/:id', component: TemplateDetailsComponent,  canActivate: [AfterLoginService] },
 
-  { path: 'participants', component: ParticipantsComponent },
-  { path: 'createParticipant', component: CreateParticipantComponent },
-  { path: 'participants/:id', component: DetailsParticipantComponent },
-  { path: 'participants/edit/:id', component: EditParticipantComponent },
+  { path: 'errors', component: ErrorsComponent, canActivate: [AfterLoginService] },
+  { path: 'login', component: LoginComponent, canActivate: [BeforeLoginService] },
+  { path: 'signup', component: SignupComponent,  canActivate: [BeforeLoginService] },
 
-  { path: 'accounts', component: AccountsComponent },
-  { path: 'createAccount', component: CreateAccountsComponent },
-  { path: 'accounts/:id', component: DetailsAccountsComponent },
-  { path: 'accounts/edit/:id', component: EditAccountsComponent },
+  { path: 'photos', component: PhotosComponent,  canActivate: [AfterLoginService] },
+  { path: 'createPhoto', component: CreatePhotoComponent,  canActivate: [AfterLoginService] },
+  { path: 'photos/:id', component: DetailsPhotoComponent,  canActivate: [AfterLoginService] },
+  { path: 'photos/edit/:id', component: EditPhotoComponent,  canActivate: [AfterLoginService] },
 
-  { path: 'machines', component: MachinesComponent },
-  { path: 'createMachine', component: CreateMachineComponent },
-  { path: 'machines/:id', component: DetailsMachineComponent },
-  { path: 'machines/edit/:id', component: EditMachineComponent },
+  { path: 'participants', component: ParticipantsComponent,  canActivate: [AfterLoginService] },
+  { path: 'createParticipant', component: CreateParticipantComponent,  canActivate: [AfterLoginService] },
+  { path: 'participants/:id', component: DetailsParticipantComponent,  canActivate: [AfterLoginService] },
+  { path: 'participants/edit/:id', component: EditParticipantComponent,  canActivate: [AfterLoginService] },
 
-  { path: 'events', component: EventsComponent },
-  { path: 'createEvent', component: CreateEventComponent },
-  { path: 'events/:id', component: DetailsEventComponent },
-  { path: 'events/edit/:id', component: EditEventComponent },
+  { path: 'accounts', component: AccountsComponent,  canActivate: [AfterLoginService] },
+  { path: 'createAccount', component: CreateAccountsComponent,  canActivate: [AfterLoginService] },
+  { path: 'accounts/:id', component: DetailsAccountsComponent,  canActivate: [AfterLoginService] },
+  { path: 'accounts/edit/:id', component: EditAccountsComponent,  canActivate: [AfterLoginService] },
 
-  { path: 'sessions', component: SessionsComponent },
-  { path: 'sessions/:id', component: DetailsSessionComponent },
-  { path: 'sessions/edit/:id', component: EditSessionComponent },
-  { path: 'createSession', component: CreateSessionComponent },
+  { path: 'machines', component: MachinesComponent,  canActivate: [AfterLoginService] },
+  { path: 'createMachine', component: CreateMachineComponent,  canActivate: [AfterLoginService] },
+  { path: 'machines/:id', component: DetailsMachineComponent,  canActivate: [AfterLoginService] },
+  { path: 'machines/edit/:id', component: EditMachineComponent,  canActivate: [AfterLoginService] },
 
-  { path: 'users', component: UsersComponent },
-  { path: 'createUser', component: CreateUserComponent },
-  { path: 'users/:id', component: DetailsUserComponent },
-  { path: 'users/edit/:id', component: EditUserComponent },
+  { path: 'events', component: EventsComponent,  canActivate: [AfterLoginService] },
+  { path: 'createEvent', component: CreateEventComponent ,  canActivate: [AfterLoginService]},
+  { path: 'events/:id', component: DetailsEventComponent,  canActivate: [AfterLoginService] },
+  { path: 'events/edit/:id', component: EditEventComponent,  canActivate: [AfterLoginService] },
 
-  { path: 'representants', component: ContactsComponent },
-  { path: 'createRepresentant', component: CreateContactComponent },
-  { path: 'representants/:id', component: DetailsContactComponent },
-  { path: 'representants/edit/:id', component: EditContactComponent },
+  { path: 'sessions', component: SessionsComponent,  canActivate: [AfterLoginService] },
+  { path: 'sessions/:id', component: DetailsSessionComponent ,  canActivate: [AfterLoginService]},
+  { path: 'sessions/edit/:id', component: EditSessionComponent,  canActivate: [AfterLoginService] },
+  { path: 'createSession', component: CreateSessionComponent,  canActivate: [AfterLoginService] },
 
-  { path: 'companies', component: CompaniesComponent },
-  { path: 'createCompany', component: CreateCompanyComponent },
-  { path: 'companies/:id', component: CompanyDetailsComponent },
-  { path: 'companies/edit/:id', component: EditCompanyComponent }
+  { path: 'users', component: UsersComponent,  canActivate: [AfterLoginService] },
+  { path: 'createUser', component: CreateUserComponent,  canActivate: [AfterLoginService] },
+  { path: 'users/:id', component: DetailsUserComponent,  canActivate: [AfterLoginService] },
+  { path: 'users/edit/:id', component: EditUserComponent,  canActivate: [AfterLoginService] },
+
+  { path: 'representants', component: ContactsComponent,  canActivate: [AfterLoginService] },
+  { path: 'createRepresentant', component: CreateContactComponent,  canActivate: [AfterLoginService] },
+  { path: 'representants/:id', component: DetailsContactComponent,  canActivate: [AfterLoginService] },
+  { path: 'representants/edit/:id', component: EditContactComponent,  canActivate: [AfterLoginService] },
+
+  { path: 'companies', component: CompaniesComponent,  canActivate: [AfterLoginService] },
+  { path: 'createCompany', component: CreateCompanyComponent,  canActivate: [AfterLoginService]},
+  { path: 'companies/:id', component: CompanyDetailsComponent,  canActivate: [AfterLoginService] },
+  { path: 'companies/edit/:id', component: EditCompanyComponent,  canActivate: [AfterLoginService] }
 ];
 
 
@@ -166,12 +183,20 @@ const appRoutes: Routes = [
     CreateAccountsComponent,
     DetailsAccountsComponent,
     EditAccountsComponent,
-    SessionsComponent
+    SessionsComponent,
+    PhotosComponent,
+    CreatePhotoComponent,
+    DetailsPhotoComponent,
+    EditPhotoComponent,
+    TemplateDetailsComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
+    NgbModalModule.forRoot(),
     FlashMessagesModule.forRoot(),
     FormsModule,
     CalendarModule.forRoot(),

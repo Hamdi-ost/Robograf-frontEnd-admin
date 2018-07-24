@@ -24,6 +24,7 @@ export class CompanyDetailsComponent implements OnInit {
   createLink = 'createRepresentant';
   // stat variables
   stat = ['Total Companies', 'Total Contact', 'Total Account'];
+  titleStat = ['companies', 'representants', 'accounts'];
   valStat = [1, 2, 3];
   icon = ['fa fa-building', 'fa fa-male', 'fa fa-sign-in'];
   // table variables

@@ -1,0 +1,17 @@
+<div class="content-header">
+  <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+  <h3>Photos</h3>
+</div>
+<div class="content">
+  <app-table 
+    [title]="title" 
+    [canBeDesactivated]="false" 
+    [colTitles]="colTitles" 
+    [keys]="keys" 
+    [data]="data" 
+    [createLink]="createLink"
+    [canAddNew]="true"
+    (deleteX)="deletePhoto($event)">
+  </app-table>
+</div>
+

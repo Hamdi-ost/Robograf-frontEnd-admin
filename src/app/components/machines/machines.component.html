@@ -1,5 +1,5 @@
 <div class="content-header">
-    <app-statics [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+    <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
     <h3>Machines</h3>
   </div>
   <div class="content">
@@ -11,6 +11,8 @@
       [data]="data" 
       [createLink]="createLink"
       [canAddNew]="true"
-      (deleteX)="deleteMachine($event)">
+      (deleteX)="deleteMachine($event)"
+      (activate)="activateMachine($event)"
+      (desactivate)="desactivateMachine($event)">
     </app-table>
   </div>

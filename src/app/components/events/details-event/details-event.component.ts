@@ -27,6 +27,7 @@ export class DetailsEventComponent implements OnInit {
   createLinkAccount = '/createAccount';
   // stat variables
   stat = ['Total Event', 'Total Sessions', 'Total Participants', 'Total Photos'];
+  titleStat = ['events', 'sessions', 'participants', 'photos'];
   valStat = [1, 2, 3, 4];
   icon = ['fa fa-list', 'fa fa-cubes', 'fa fa-users', 'fa fa-picture-o'];
   // table variables
@@ -61,28 +62,34 @@ export class DetailsEventComponent implements OnInit {
       this.eventService.getEventDetails(params['id'])
         .subscribe(data => {
           this.usersService.getUsers().subscribe(user => {
-              this.companiesService.getCompany().subscribe(company => {
+            this.companiesService.getCompany().subscribe(company => {
               const companies = company;
               const users = user;
               // list
-                this.dataList = Event.map(data.events, users);
-                this.dataListKeys = Object.keys(this.dataList[0]);
-                // cubes
-                this.cubesData.push(data.remaining_sessions_count, data.nextSession, data.photos_count, data.participants_count);
-                // tables
-                  // Sessions
-                  this.dataSessions = Session.map(data.sessions, data.events);
+              this.dataList = Event.map(data.events, users);
+              this.dataListKeys = Object.keys(this.dataList[0]);
+              // cubes
+              this.cubesData.push(data.remaining_sessions_count, data.nextSession, data.photos_count, data.participants_count);
+              // tables
+                // Sessions
+                this.dataSessions = Session.map(data.sessions, data.events);
+                if (this.dataSessions.length > 0) {
                   this.keySessions = Object.keys(this.dataSessions[0]);
-                  // Representatnts
-                  this.dataRepresentants = Representant.map(data.representants, companies);
+                }
+                // Representatnts
+                this.dataRepresentants = Representant.map(data.representants, companies);
+                if (this.dataRepresentants.length > 0) {
                   this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
-                  // Accounts
-                  this.dataAccounts = Account.map(data.accounts, data.events, users);
+                }
+                // Accounts
+                this.dataAccounts = Account.map(data.accounts, data.events, users);
+                if (this.dataAccounts.length > 0) {
                   this.keyAccounts = Object.keys(this.dataAccounts[0]);
+                }
             });
           });
         });
-      });
+    });
   }
 
   ngOnInit() {

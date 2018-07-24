@@ -11,6 +11,7 @@ import { Representant } from '../../models/representant';
 export class ContactsComponent implements OnInit {
 
   stat = ['Total Companies', 'Total Contacts', 'Total Accounts'];
+  titleStat = ['companies', 'representants', 'accounts'];
   valStat = [1, 2, 3];
   icon = ['fa fa-building', 'fa fa-male', 'fa fa-sign-in'];
   colTitles = ['First Name', 'Last Name', 'Email', 'phone', 'company'];

@@ -11,6 +11,7 @@ import { Company } from '../../models/company';
 export class CompaniesComponent implements OnInit {
   title = 'companies';
   stat = ['Total Companies', 'Total Contacts', 'Total Accounts'];
+  titleStat = ['companies', 'representants', 'accounts'];
   valStat = [1, 2, 3];
   icon = ['fa fa-building', 'fa fa-male', 'fa fa-sign-in'];
   colTitles = ['Matricule', 'Name', 'Activity'];

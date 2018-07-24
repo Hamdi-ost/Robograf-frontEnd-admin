@@ -2,7 +2,7 @@ export class Machine {
     id: number;
     name: string;
     type: string;
-    active: number;
+    active;
 
 
     static map(rep) {

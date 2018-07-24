@@ -23,6 +23,14 @@ export class ValidateService {
     }
   }
 
+  validateAccountRegister (account) {
+    if (account.username === undefined || account.password === undefined ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   valideEventRegister(event) {
     // tslint:disable-next-line:max-line-length
     if (event.name === undefined || event.subject === undefined || event.location === undefined || event.description === undefined || event.email_template_id === undefined) {

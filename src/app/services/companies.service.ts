@@ -18,13 +18,13 @@ export class CompaniesService {
   }
 
   getCompany() {
-    return this.http.get<any[]>('http://localhost:8000/entreprises')
+    return this.http.get<any[]>('http://localhost:8000/api/entreprises')
     .pipe(map(res => Company.map(res))
     );
   }
 
   getCompanyDetails(id): Observable<any> {
-    return this.http.get('http://localhost:8000/entreprises/' + id );
+    return this.http.get('http://localhost:8000/api/entreprises/' + id );
   }
 
   deleteCompany(id) {

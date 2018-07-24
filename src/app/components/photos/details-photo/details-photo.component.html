@@ -1,0 +1,39 @@
+<section class="content-header">
+  <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="box box-primary">
+        <div class="box-body">
+          <div class="contents">
+            <div class="box-header with-border">
+              <h3 class="box-title" style="width: 100%;">
+                <b>Events: </b> </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="padding-bottom: 0px;">
+              <app-details-list  (deleteX)="deleteEvent($event)" [title]="titleForListDetails" [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+     <!-- <app-details-cubes [cubesTitle]="cubesTitle" [cubesData]="cubesData" ></app-details-cubes>-->
+    </div>
+  </div>
+
+  <div class="details-contents">
+    <div>
+      <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Session:</button>
+      <app-table  [canBeDesactivated]="false" [title]="titleForSession"  [colTitles]="colTitlesS" [keys]="keySession" [data]="dataSession" (deleteX)="deleteSession($event)"></app-table>
+      <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Event:</button>
+      <app-table  [title]="titleForEvent"  [colTitles]="colTitlesE" [keys]="keyEvent" [data]="dataEvent" (deleteX)="deleteEvent($event)"></app-table>
+      <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Paricipant:</button>
+      <app-table  [title]="titleForParticipant" [colTitles]="colTitlesP" [keys]="keyParticipant" [data]="dataParticipant" (deleteX)="deleteParticipant($event)"></app-table>
+    </div>
+  </div>
+</section>

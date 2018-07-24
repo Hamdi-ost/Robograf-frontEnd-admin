@@ -19,12 +19,12 @@ export class MachinesService {
   }
 
   getMachines() {
-    return this.http.get<any[]>('http://localhost:8000/machines')
+    return this.http.get<any[]>('http://localhost:8000/api/machines')
     .pipe(map(res => Machine.map(res)));
   }
 
   getMachineDetails(id): Observable<any> {
-    return this.http.get('http://localhost:8000/machines/' + id);
+    return this.http.get('http://localhost:8000/api/machines/' + id);
   }
 
   deleteMachine(id) {
@@ -35,6 +35,14 @@ export class MachinesService {
     const header = new HttpHeaders ();
     header.append('Content-Type', 'application/json');
     return this.http.patch('http://localhost:8000/api/machines/' + id, modifiedMachine, {headers: header});
+  }
+
+  activateMachine(id) {
+    return this.http.get('http://localhost:8000/api/machines/' + id + 'activate');
+  }
+
+  desactivateMachine(id) {
+    return this.http.get('http://localhost:8000/api/machines/' + id + 'desactivate');
   }
 
 }

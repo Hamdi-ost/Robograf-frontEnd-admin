@@ -22,9 +22,9 @@ export class EditMachineComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.machineService.getMachineDetails(params['id'])
         .subscribe(data => {
-          this.name = data.machines.name;
-          this.type = data.machines.type;
-          this.active = data.machines.active;
+          this.name = data.machines[0].name;
+          this.type = data.machines[0].type;
+          this.active = data.machines[0].active;
          console.log(this.active);
         });
     });

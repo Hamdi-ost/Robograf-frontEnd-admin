@@ -1,6 +1,4 @@
 import { Component, OnInit , Output, Input, EventEmitter} from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { MachinesService } from '../../services/machines.service';
 
 @Component({
   selector: 'app-table',
@@ -16,14 +14,29 @@ export class TableComponent implements OnInit {
   @Input() canBeDesactivated;
   @Input() canAddNew;
   @Output() deleteX = new EventEmitter();
+  @Output() activate = new EventEmitter();
+  @Output() desactivate = new EventEmitter();
 
-  constructor(private machineService: MachinesService) {}
+  constructor() {}
 
   ngOnInit() {
   }
 
   delete (row) {
     this.deleteX.emit(row.id);
+  }
+
+  activateMachine (row) {
+    this.activate.emit(row.id);
+  }
+
+  desactivateMachine (row) {
+    this.desactivate.emit(row.id);
+  }
+
+
+  open() {
+    console.log('ok');
   }
 
 }
