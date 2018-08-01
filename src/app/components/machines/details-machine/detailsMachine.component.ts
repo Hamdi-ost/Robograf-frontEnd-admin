@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Machine } from '../../../models/machine';
 import { Session } from '../../../models/session';
 import { EventsService } from '../../../services/events.service';
+import { StaticService } from '../../../services/static.service';
 
 
 @Component({
@@ -27,15 +28,22 @@ export class DetailsMachineComponent implements OnInit {
   cubesData = [];
   cubesTitle = ['Event', 'Next Session', 'Photos', 'Next Available Date'];
   // list variables
-  dataList;
-  dataListKeys;
+  dataList = [];
+  dataListKeys = [];
   dataListIcons = ['fa fa-gear', 'fa fa-gears', 'fa fa-times-circle'];
 
   constructor(
     private router: Router,
     private machineService: MachinesService,
     private eventsServie: EventsService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private staticService: StaticService) {
+          // stat
+    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+
     this.route.params.subscribe(params => {
       this.eventsServie.getEvent().subscribe(event => {
         const events = event;
@@ -47,7 +55,9 @@ export class DetailsMachineComponent implements OnInit {
             this.dataListKeys.splice(3, 3, 'status');
             // table
             this.data = Session.map(data.sessions, events);
+            if (this.data.length > 0) {
             this.keys = Object.keys(this.data[0]);
+            }
             // cubes
             this.cubesData.push(data.events_count, data.nextSession, data.photos_count, data.next_available_date);
           });

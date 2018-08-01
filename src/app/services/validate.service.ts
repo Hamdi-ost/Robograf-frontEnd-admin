@@ -49,12 +49,14 @@ export class ValidateService {
 
   validateRepresentant(representant) {
     // tslint:disable-next-line:max-line-length
-    if (representant.firstName === undefined || representant.lastName === undefined || representant.email === undefined || representant.phone === undefined) {
+    if (representant.first_name === undefined || representant.last_name === undefined || representant.email === undefined || representant.phone === undefined || representant.entreprise_id === undefined) {
       return false;
     } else {
       return true;
     }
   }
+
+
   validateCompany(company) {
     if (company.name === undefined || company.matricule === undefined || company.activity === undefined) {
       return false;

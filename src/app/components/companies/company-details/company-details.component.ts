@@ -9,6 +9,7 @@ import { Event } from '../../../models/event';
 import { Representant } from '../../../models/representant';
 import { UsersService } from '../../../services/users.service';
 import { Account } from '../../../models/account';
+import { StaticService } from '../../../services/static.service';
 
 @Component({
   selector: 'app-company-details',
@@ -53,7 +54,13 @@ export class CompanyDetailsComponent implements OnInit {
     private companiesService: CompaniesService,
     private usersService: UsersService,
     private route: ActivatedRoute,
-    private eventsService: EventsService) {
+    private staticService: StaticService) {
+
+        // stat
+    this.staticService.getTotalCompany().then(total => this.valStat[0] = total);
+    this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
+    this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
+
     this.route.params.subscribe(params => {
       this.companiesService.getCompanyDetails(params['id'])
         .subscribe(data => {
@@ -67,13 +74,19 @@ export class CompanyDetailsComponent implements OnInit {
             // tables
             // Events
             this.dataEvents = Event.map(data.events, users);
+            if (this.dataEvents.length > 0) {
             this.keyEvents = Object.keys(this.dataEvents[0]);
+            }
             // Representatnts
             this.dataRepresentants = Representant.map(data.representants, data.entreprises);
+            if (this.dataRepresentants.length > 0) {
             this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
+            }
             // Accounts
             this.dataAccounts = Account.map(data.accounts, data.events, users);
+            if (this.dataAccounts.length > 0) {
             this.keyAccounts = Object.keys(this.dataAccounts[0]);
+            }
           });
         });
     });

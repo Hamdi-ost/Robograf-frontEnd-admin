@@ -66,13 +66,19 @@ export class DetailsSessionComponent implements OnInit {
             // tables
             // machines
             this.dataMachines = Machine.map(data.machines);
+            if (this.dataMachines.length > 0) {
             this.keysMachines = Object.keys(this.dataMachines[0]);
+            }
             // Participants
             this.dataParticipants = Participant.map(data.participants, events);
+            if (this.dataParticipants.length > 0) {
             this.keysParticipants = Object.keys(this.dataParticipants[0]);
+            }
             // Photos
             this.dataPhotos = Photo.map(data.photos, data.machines, data.sessions, this.dataParticipants);
+            if (this.dataPhotos.length > 0) {
             this.keysPhotos = Object.keys(this.dataPhotos[0]);
+            }
       });
     });
   });

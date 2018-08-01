@@ -10,10 +10,19 @@
 <!-- Tab panes -->
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane fade in active" id="new">
-      <app-new-client-form></app-new-client-form>
+    <app-new-client-form (newRepresentantForm)="companyRepresentantSubmit($event)"></app-new-client-form>
+    <div *ngIf="confirm === true" class="box box-primary">
+      <div class="box-body">
+        <div>
+          confirm ??
+          <button class="btn btn-success" (click)="newRepresentantFormSubmit()" style="margin-left: 5px; margin-bottom: 5px">Confirm</button>
+        </div>
+      </div>
+    </div>
+
   </div>
   <div role="tabpanel" class="tab-pane fade" id="exist">
-      <app-existing-client-form></app-existing-client-form>
+    <app-existing-client-form></app-existing-client-form>
   </div>
 
 </div>

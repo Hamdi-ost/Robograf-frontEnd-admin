@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TemplatesService } from '../../services/templates.service';
+import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-templates',
@@ -9,26 +10,40 @@ import { TemplatesService } from '../../services/templates.service';
 export class TemplatesComponent implements OnInit {
   title = 'templates';
   colTitles = ['state', 'Event', 'Validated Templates'];
-  data: any[];
-  keys: any[];
+  data: any[] = [];
+  keys: any[] = [];
 
-  constructor(private templatesService: TemplatesService) {
+  constructor(private templatesService: TemplatesService, private flashMessageService: FlashMessagesService) {
     this.templatesService.getTemplates()
-    .subscribe(data => {
-      console.log(data);
-      this.data = data;
-      this.keys = Object.keys(this.data[0]);
-        }
+      .subscribe(data => {
+        this.data = data.reverse();
+        this.keys = Object.keys(this.data[0]);
+      }
       );
   }
 
   ngOnInit() {
   }
 
-  deleteTemplate (id) {
+  deleteTemplate(id) {
     this.templatesService.deleteTemplate(id)
-    .subscribe(data => {
-        this.data.splice(this.data.indexOf(id), 1);
+      .subscribe(data => {
+        this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+      });
+  }
+
+  closeTemplate(id) {
+    this.templatesService.close(id).subscribe(data => {
+      this.flashMessageService.show('Template closed', { cssClass: 'alert-danger', timeout: 3000 });
+      this.data.find(template => template.id === id).state = 'Closed';
     });
   }
+
+  openTemplate(id) {
+    this.templatesService.open(id).subscribe(data => {
+      this.flashMessageService.show('Template opened', { cssClass: 'alert-success', timeout: 3000 });
+      this.data.find(template => template.id === id).state = 'Open';
+    });
+  }
+
 }

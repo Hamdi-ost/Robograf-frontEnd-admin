@@ -1,61 +1,55 @@
-<div class="box box-primary" >
-<div class="box-body">
-  <div class="row" [hidden]="hidden">
-    <form method="POST" action="http://localhost:8000/entreprises" accept-charset="UTF-8">
-      <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
+<div class="box box-primary" [hidden]="afterSend">
+  <div class="box-body">
+    <div >
+      <div class="row" [hidden]="hidden">
+        <!-- Matricule Field -->
+        <div class="form-group col-sm-6">
+          <label for="matricule">Matricule:</label>
+          <input class="form-control" required="" name="matricule" type="text" [(ngModel)]="companyRepresentant.matricule">
+        </div>
 
-      <!-- Matricule Field -->
-      <div class="form-group col-sm-6">
-        <label for="matricule">Matricule:</label>
-        <input class="form-control" required="" name="matricule" type="text" id="matricule">
+        <!-- Name Field -->
+        <div class="form-group col-sm-6">
+          <label for="name">Name:</label>
+          <input class="form-control" required="" name="name" type="text" [(ngModel)]="companyRepresentant.name">
+        </div>
+
+        <!-- Activity Field -->
+        <div class="form-group col-sm-6">
+          <label for="activity">Activity:</label>
+          <input class="form-control" required name="activity" type="text" [(ngModel)]="companyRepresentant.activity">
+        </div>
       </div>
 
-      <!-- Name Field -->
-      <div class="form-group col-sm-6">
-        <label for="name">Name:</label>
-        <input class="form-control" required="" name="name" type="text" id="name">
-      </div>
+      <hr>
 
-      <!-- Activity Field -->
-      <div class="form-group col-sm-6">
-        <label for="activity">Activity:</label>
-        <input class="form-control" name="activity" type="text" id="activity">
-      </div>
+      <div class="row">
+        <!-- First Name Field -->
+        <div class="form-group col-sm-6">
+          <label for="first_name">First Name:</label>
+          <input class="form-control" required="" name="first_name" type="text" [(ngModel)]="companyRepresentant.first_name">
+        </div>
 
-    </form>
+        <!-- Last Name Field -->
+        <div class="form-group col-sm-6">
+          <label for="last_name">Last Name:</label>
+          <input class="form-control" required="" name="last_name" type="text" [(ngModel)]="companyRepresentant.last_name">
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group col-sm-6">
+          <label for="email">Email:</label>
+          <input class="form-control" required="" name="email" type="email" [(ngModel)]="companyRepresentant.email">
+        </div>
+
+        <!-- Phone Field -->
+        <div class="form-group col-sm-6">
+          <label for="phone">Phone:</label>
+          <input class="form-control" required name="phone" type="text" [(ngModel)]="companyRepresentant.phone">
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="send()" style="margin-left: 5px; margin-bottom: 5px">Submit</button>
+    </div>
+    
   </div>
- 
-  <hr>
-
-  <div class="row">
-    <form method="POST" action="http://localhost:8000/representants" accept-charset="UTF-8">
-      <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
-
-      <!-- First Name Field -->
-      <div class="form-group col-sm-6">
-        <label for="first_name">First Name:</label>
-        <input class="form-control" required="" name="first_name" type="text" id="first_name">
-      </div>
-
-      <!-- Last Name Field -->
-      <div class="form-group col-sm-6">
-        <label for="last_name">Last Name:</label>
-        <input class="form-control" required="" name="last_name" type="text" id="last_name">
-      </div>
-
-      <!-- Email Field -->
-      <div class="form-group col-sm-6">
-        <label for="email">Email:</label>
-        <input class="form-control" required="" name="email" type="email" id="email">
-      </div>
-
-      <!-- Phone Field -->
-      <div class="form-group col-sm-6">
-        <label for="phone">Phone:</label>
-        <input class="form-control" name="phone" type="text" id="phone">
-      </div>
-    </form>
-  </div>
-  </div>  
 </div>
-

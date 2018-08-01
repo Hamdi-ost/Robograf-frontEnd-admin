@@ -16,6 +16,8 @@ export class TableComponent implements OnInit {
   @Output() deleteX = new EventEmitter();
   @Output() activate = new EventEmitter();
   @Output() desactivate = new EventEmitter();
+  @Output() open = new EventEmitter();
+  @Output() close = new EventEmitter();
 
   constructor() {}
 
@@ -35,8 +37,12 @@ export class TableComponent implements OnInit {
   }
 
 
-  open() {
-    console.log('ok');
+  openTemplate(row) {
+    this.open.emit(row.id);
+  }
+
+  closeTemplate(row) {
+    this.close.emit(row.id);
   }
 
 }

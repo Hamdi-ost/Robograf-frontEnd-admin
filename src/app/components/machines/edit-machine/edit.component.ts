@@ -25,7 +25,6 @@ export class EditMachineComponent implements OnInit {
           this.name = data.machines[0].name;
           this.type = data.machines[0].type;
           this.active = data.machines[0].active;
-         console.log(this.active);
         });
     });
   }

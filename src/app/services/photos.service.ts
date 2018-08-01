@@ -14,11 +14,18 @@ import { Session } from '../models/session';
 })
 export class PhotosService {
 
+  machines;
+  participants;
+  eventSession;
+
   constructor(private http: HttpClient,
     private machinesService: MachinesService,
     private sessionsService: SessionsService,
-    private eventsService: EventsService,
-    private participantsService: ParticipantsService) { }
+    private participantsService: ParticipantsService) {
+      this.machinesService.getMachines().subscribe(data => this.machines = data);
+      this.participantsService.getParticipant().subscribe(data => this.participants = data);
+      this.sessionsService.getSessions().subscribe(data => this.eventSession =  data.sessions);
+    }
 
   addPhoto(photo) {
     const header = new HttpHeaders ();
@@ -27,12 +34,8 @@ export class PhotosService {
   }
 
   getPhoto() {
-    let machines, participants, eventSession;
-    this.machinesService.getMachines().subscribe(data => machines = data);
-    this.participantsService.getParticipant().subscribe(data => participants = data);
-    this.sessionsService.getSessions().subscribe(data => eventSession =  data.sessions);
     return this.http.get<any[]>('http://localhost:8000/api/photos')
-    .pipe(map(res  => Photo.map(res, machines, eventSession, participants))
+    .pipe(map(res  => Photo.map(res, this.machines, this.eventSession, this.participants))
     );
   }
 

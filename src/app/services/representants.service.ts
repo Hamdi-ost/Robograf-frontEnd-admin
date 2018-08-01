@@ -9,8 +9,10 @@ import { CompaniesService } from './companies.service';
   providedIn: 'root'
 })
 export class RepresentantsService {
-
-  constructor(private companiesService: CompaniesService, private http: HttpClient, ) { }
+  companies;
+  constructor(private companiesService: CompaniesService, private http: HttpClient, ) {
+    this.companiesService.getCompany().subscribe(data => this.companies = data);
+  }
 
 
 
@@ -21,10 +23,8 @@ export class RepresentantsService {
   }
 
   getRepresentant() {
-    let companies;
-    this.companiesService.getCompany().subscribe(data => companies = data);
     return this.http.get<any[]>('http://localhost:8000/api/representants')
-    .pipe(map(res => Representant.map(res, companies)));
+    .pipe(map(res => Representant.map(res, this.companies)));
   }
 
   getRepresentantDetails(id): Observable<any> {

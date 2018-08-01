@@ -60,7 +60,9 @@ export class DetailsParticipantComponent implements OnInit {
             // tables
             // Photos
             this.dataPhoto = Photo.map(data.photos, machines, sessions.sessions, this.dataList);
+            if (this.dataPhoto.length > 0) {
             this.keysPhoto = Object.keys(this.dataPhoto[0]);
+            }
           });
         });
     });

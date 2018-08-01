@@ -10,7 +10,11 @@ import { Participant } from '../models/participant';
 })
 export class ParticipantsService {
 
-  constructor(private http: HttpClient, private eventsService: EventsService) { }
+  events;
+  constructor(private http: HttpClient, private eventsService: EventsService) {
+    this.events = this.eventsService.getEvent().toPromise().then(data => {
+      return data; });
+  }
 
 
   addParticipant(participants) {
@@ -20,11 +24,14 @@ export class ParticipantsService {
   }
 
   getParticipant() {
-    let events;
-    this.eventsService.getEvent().subscribe(data => events = data);
+    // this.events.then(data => console.log(data))
     return this.http.get<any[]>('http://localhost:8000/api/participants')
-    .pipe(map(res  => Participant.map(res, events))
+    .pipe(map(res  => Participant.map(res, this.events))
     );
+  }
+
+  getNumberParticipant () {
+    return this.http.get<any[]>('http://localhost:8000/api/participants');
   }
 
   getParticipantDetails(id): Observable<any> {

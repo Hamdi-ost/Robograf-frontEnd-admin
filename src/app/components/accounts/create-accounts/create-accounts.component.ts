@@ -14,7 +14,7 @@ export class CreateAccountsComponent implements OnInit {
 
   username;
   password;
-  account: Account = new Account();
+
 
   constructor(
     private flashMessages: FlashMessagesService,
@@ -28,17 +28,21 @@ export class CreateAccountsComponent implements OnInit {
   OnSubmit() {
 
     // Fill the object
-    this.account.username = this.username;
-    this.account.password = this.password;
+    const account = {
+      username: this.username,
+      password: this.password,
+      event_id: 8,
+      author_id: 1
+    };
 
     // Required  Fields
-    if (!this.validateService.validateAccountRegister(this.account)) {
+    if (!this.validateService.validateAccountRegister(account)) {
       this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
 
     // Add user
-    this.accountsServie.addAccount(this.account)
+    this.accountsServie.addAccount(account)
     .subscribe(data => {
       this.router.navigateByUrl('/accounts');
       this.flashMessages.show('Account Added', { cssClass: 'alert-success', timeout: 3000 });

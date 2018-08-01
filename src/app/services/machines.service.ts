@@ -38,11 +38,11 @@ export class MachinesService {
   }
 
   activateMachine(id) {
-    return this.http.get('http://localhost:8000/api/machines/' + id + 'activate');
+    return this.http.get('http://localhost:8000/api/machines/' + id + '/activate');
   }
 
   desactivateMachine(id) {
-    return this.http.get('http://localhost:8000/api/machines/' + id + 'desactivate');
+    return this.http.get('http://localhost:8000/api/machines/' + id + '/desactivate');
   }
 
 }

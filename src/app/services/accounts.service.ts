@@ -10,8 +10,16 @@ import { EventsService } from './events.service';
   providedIn: 'root'
 })
 export class AccountsService {
+  user;
+  events;
 
-  constructor(private http: HttpClient, private usersService: UsersService, private eventsService: EventsService) { }
+  constructor(private http: HttpClient, private usersService: UsersService, private eventsService: EventsService) {
+
+    this.eventsService.getEvent().subscribe(re => {
+      this.events = re;
+      re.map(el => this.user = el.author);
+    });
+   }
 
 
   addAccount(account) {
@@ -22,15 +30,8 @@ export class AccountsService {
 
 
   getAccount() {
-    let user;
-    let events;
-    this.eventsService.getEvent().subscribe(re => {
-      events = re;
-      re.map(el => user = el.author);
-    });
-
     return this.http.get<any[]>('http://localhost:8000/api/accounts')
-      .pipe(map(res => Account.map(res, events, user)));
+      .pipe(map(res => Account.map(res, this.events, this.user)));
   }
 
   getAccountDetails(id): Observable<any> {

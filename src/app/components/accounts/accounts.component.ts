@@ -17,7 +17,7 @@ export class AccountsComponent implements OnInit {
   constructor(private accountsService: AccountsService) {
     this.accountsService.getAccount()
     .subscribe(data => {
-      this.data = data;
+      this.data = data.reverse();
       this.keys = Object.keys(this.data[0]);
         }
       );
@@ -29,7 +29,7 @@ export class AccountsComponent implements OnInit {
   deleteAccount (id) {
     this.accountsService.deleteAccount(id)
     .subscribe(data => {
-        this.data.splice(this.data.indexOf(id), 1);
+      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
     });
   }
 

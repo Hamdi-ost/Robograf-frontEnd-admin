@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RepresentantsService } from '../../services/representants.service';
 import { CompaniesService } from '../../services/companies.service';
 import { Representant } from '../../models/representant';
+import { StaticService } from '../../services/static.service';
 
 @Component({
   selector: 'app-contacts',
@@ -20,10 +21,15 @@ export class ContactsComponent implements OnInit {
   title = 'representants';
   createLink = '/createRepresentant';
 
-  constructor(private representantsService: RepresentantsService, private companiesService: CompaniesService) {
+  constructor(private representantsService: RepresentantsService, private staticService: StaticService) {
+    // stat
+    this.staticService.getTotalCompany().then(total => this.valStat[0] = total);
+    this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
+    this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
+
     this.representantsService.getRepresentant()
     .subscribe(data => {
-       this.data = data;
+       this.data = data.reverse();
       this.keys = Object.keys(this.data[0]);
 
   });
@@ -35,7 +41,7 @@ export class ContactsComponent implements OnInit {
   deleteRepresentant(id) {
     this.representantsService.deleteRepresentant(id)
     .subscribe(data => {
-        this.data.splice(this.data.indexOf(id), 1);
+      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
     });
   }
 

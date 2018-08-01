@@ -2,20 +2,18 @@
 <div class="box box-primary">
   <div class="box-body">
     <div class="row">
-      <form method="POST" action="http://localhost:8000/accounts" accept-charset="UTF-8">
-        <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
 
         <div class="col-sm-6">
           <!-- Username Field -->
           <div class="form-group col-sm-12">
             <label for="username">Username:</label>
-            <input class="form-control" required="" name="username" type="text" value="8b9ad7d6f3" id="username">
+            <input class="form-control" required="" name="username" type="text" value="8b9ad7d6f3" [(ngModel)]="account.username">
           </div>
 
           <!-- Password Field -->
           <div class="form-group col-sm-12">
             <label for="password">Password:</label>
-            <input class="form-control" required="" name="password" type="text" value="d6c6cd716dc6a59f" id="password">
+            <input class="form-control" required="" name="password" type="text" value="d6c6cd716dc6a59f" [(ngModel)]="account.password">
           </div>
 
 
@@ -29,7 +27,7 @@
           </div>
         </div>
 
-      </form>
     </div>
+    <button class="btn btn-primary" (click)="send()" style="margin-left: 5px; margin-bottom: 5px">Submit</button>
   </div>
 </div>

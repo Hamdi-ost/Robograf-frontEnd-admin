@@ -1,3 +1,47 @@
-<p>
-  edit-contact works!
-</p>
+<h3>Edit:</h3>
+
+<div class="box box-primary">
+
+  <div class="box-body">
+    <div class="row">
+
+        <!-- First Name Field -->
+        <div class="form-group col-sm-6">
+          <label for="first_name">First Name:</label>
+          <input class="form-control" required="" name="first_name" type="text" [(ngModel)]="firstName">
+        </div>
+
+        <!-- Last Name Field -->
+        <div class="form-group col-sm-6">
+          <label for="last_name">Last Name:</label>
+          <input class="form-control" required="" name="last_name" type="text" id="last_name" [(ngModel)]="lastName">
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group col-sm-6">
+          <label for="email">Email:</label>
+          <input class="form-control" required="" name="email" type="email" id="email" [(ngModel)]="email">
+        </div>
+
+        <!-- Phone Field -->
+        <div class="form-group col-sm-6">
+          <label for="phone">Phone:</label>
+          <input class="form-control" name="phone" type="text" [(ngModel)]="phone">
+        </div>
+
+        <div  id="entreprise_id_field" class="form-group col-sm-6">
+          <label for="entreprise_id">Company:</label>
+          <select class="form-control" id="entreprise_id" [(ngModel)]="entreprise_id">
+            <option *ngFor="let company of companies" value={{company.id}}>{{company.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group col-sm-12">
+          <!-- Submit Field -->
+          <button (click)="Update()" class="btn btn-success" style="margin-left: 20px">Update</button>
+          <button (click)="back()" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+        </div>
+
+    </div>
+  </div>
+</div>

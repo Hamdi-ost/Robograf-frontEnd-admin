@@ -21,7 +21,7 @@ export class ParticipantsComponent implements OnInit {
   constructor(private participantsService: ParticipantsService) {
     this.participantsService.getParticipant()
     .subscribe(data => {
-      this.data = data;
+      this.data = data.reverse();
       this.keys = Object.keys(this.data[0]);
         }
       );
@@ -31,7 +31,7 @@ export class ParticipantsComponent implements OnInit {
   deleteParticipant (id) {
     this.participantsService.deleteParticipant(id)
     .subscribe(data => {
-        this.data.splice(this.data.indexOf(id), 1);
+      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
     });
   }
 

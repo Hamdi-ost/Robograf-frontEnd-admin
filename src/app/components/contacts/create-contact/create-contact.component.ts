@@ -4,6 +4,8 @@ import { ValidateService } from '../../../services/validate.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { RepresentantsService } from '../../../services/representants.service';
 import { Router } from '@angular/router';
+import { CompaniesComponent } from '../../companies/companies.component';
+import { CompaniesService } from '../../../services/companies.service';
 
 @Component({
   selector: 'app-create-contact',
@@ -16,42 +18,53 @@ export class CreateContactComponent implements OnInit {
   email;
   phone;
   entreprise_id;
-  representant: Representant = new Representant();
+  companies;
 
   constructor(
     private validateService: ValidateService,
     private flashMessages: FlashMessagesService,
     private representantService: RepresentantsService,
-    private router: Router) { }
+    private companiesService: CompaniesService,
+    private router: Router) {
+      this.companiesService.getCompany().subscribe(data => this.companies = data);
+
+     }
 
   ngOnInit() {
   }
 
+  back() {
+    window.history.back();
+  }
+
   OnSubmit() {
 
-    // Fill the object
-    this.representant.firstName = this.firstName;
-    this.representant.lastName = this.lastName;
-    this.representant.email = this.email;
-    this.representant.phone = this.phone;
-    this.representant.company = this.entreprise_id;
+    const contact = {
+      first_name : this.firstName,
+      last_name : this.lastName,
+      email : this.email,
+      phone: this.phone,
+      entreprise_id: this.entreprise_id
+    };
 
-    // Required  Fields
-    if (!this.validateService.validateRepresentant(this.representant)) {
-      this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });
-      return false;
-    }
+    console.log(contact);
+      // Required  Fields
+      if (!this.validateService.validateRepresentant(contact)) {
+        this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });
+        return false;
+      }
 
-     // email  Fields
-     if (!this.validateService.validateEmail(this.email)) {
-      this.flashMessages.show('Wrong Email', { cssClass: 'alert-danger', timeout: 3000 });
-      return false;
-    }
+       // email  Fields
+       if (!this.validateService.validateEmail(this.email)) {
+        this.flashMessages.show('Wrong Email', { cssClass: 'alert-danger', timeout: 3000 });
+        return false;
+      }
+
+
 
     // Add representant
-    this.representantService.addRepresentant(this.representant)
-    .subscribe(data => this.router.navigateByUrl('/representants'));
-
+    this.representantService.addRepresentant(contact)
+    .subscribe(res => this.back());
 
 
   }

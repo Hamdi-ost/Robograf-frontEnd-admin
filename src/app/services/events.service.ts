@@ -10,8 +10,10 @@ import { Observable } from 'rxjs';
 })
 export class EventsService {
 
-
-  constructor(private http: HttpClient, private usersService: UsersService) { }
+  users;
+  constructor(private http: HttpClient, private usersService: UsersService) {
+    this.usersService.getUsers().subscribe(data => this.users = data);
+   }
 
   addEvent(event) {
     const header = new HttpHeaders ();
@@ -20,11 +22,13 @@ export class EventsService {
   }
 
   getEvent() {
-    let users;
-    this.usersService.getUsers().subscribe(data => users = data);
     return this.http.get<any[]>('http://localhost:8000/api/events')
-    .pipe(map(res  => Event.map(res, users))
+     .pipe(map(res  => Event.map(res, this.users))
     );
+  }
+
+  getEventNumber() {
+    return this.http.get<any[]>('http://localhost:8000/api/events');
   }
 
   getEventDetails(id): Observable<any> {

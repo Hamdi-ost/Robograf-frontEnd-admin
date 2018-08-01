@@ -1,22 +1,33 @@
-import { Component, OnInit, OnChanges, Output , EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Output, EventEmitter, Input } from '@angular/core';
 import { Event } from '../../../../models/event';
+import { EventsService } from '../../../../services/events.service';
 
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
   styleUrls: ['./event-form.component.css']
 })
-export class EventFormComponent implements OnInit, OnChanges {
-  @Output() eventChanged: EventEmitter<any> = new EventEmitter<any>();
-  public event = new Event();
+export class EventFormComponent implements OnInit {
+  @Output() eventForm: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
+  event = {
+    name: null,
+    subject: null,
+    location: null,
+    author_id: null,
+    email_template_id: null,
+    description: null
+  };
+
+  constructor(private eventService: EventsService) {
+
+  }
 
   ngOnInit() {
   }
 
-  ngOnChanges() {
-    this.eventChanged.emit(this.event);
+  send() {
+    this.eventForm.emit(this.event);
   }
 
 }

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-3">
-    <a href="http://localhost:4200/{{titleStat[0]}}">
+    <a routerLink="/{{titleStat[0]}}">
       <div class="small-box bg-red" style="padding-bottom: 10px;">
         <div class="inner">
           <h3>{{valStat[0]}}</h3>
@@ -14,7 +14,7 @@
   </div>
 
   <div class="col-sm-3">
-    <a href="http://localhost:4200/{{titleStat[1]}}">
+    <a routerLink="/{{titleStat[1]}}">
       <div class="small-box bg-blue" style="padding-bottom: 10px;">
         <div class="inner">
           <h3>{{valStat[1]}}</h3>
@@ -28,7 +28,7 @@
   </div>
 
   <div *ngIf="valStat.length>2" class="col-sm-3">
-    <a href="http://localhost:4200/{{titleStat[2]}}">
+    <a routerLink="/{{titleStat[2]}}">
       <div class="small-box bg-green" style="padding-bottom: 10px;">
         <div class="inner">
           <h3>{{valStat[2]}}</h3>
@@ -41,7 +41,7 @@
     </a>
   </div>
   <div *ngIf="valStat.length>3" class="col-sm-3">
-    <a href="http://localhost:4200/{{titleStat[3]}}">
+    <a routerLink="/{{titleStat[3]}}">
       <div class="small-box bg-aqua" style="padding-bottom: 10px;">
         <div class="inner">
           <h3>{{valStat[3]}}</h3>

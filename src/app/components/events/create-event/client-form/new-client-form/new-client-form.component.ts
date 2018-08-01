@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-new-client-form',
@@ -7,9 +7,29 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NewClientFormComponent implements OnInit {
   @Input() hidden;
+  @Input() afterSend;
+  @Output() newRepresentantForm: EventEmitter<any> = new EventEmitter<any>();
+
+  companyRepresentant = {
+    matricule: null,
+    name: null,
+    activity: null,
+    first_name: null,
+    last_name: null,
+    email: null,
+    phone: null
+  };
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  send() {
+    this.afterSend = true;
+    this.newRepresentantForm.emit(this.companyRepresentant);
+  }
+
+
 
 }

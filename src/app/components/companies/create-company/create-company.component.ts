@@ -14,6 +14,7 @@ import { RepresentantsService } from '../../../services/representants.service';
 })
 export class CreateCompanyComponent implements OnInit {
 
+  newId;
   name;
   matricule;
   activity;
@@ -23,14 +24,19 @@ export class CreateCompanyComponent implements OnInit {
   email;
   phone;
 
-  company: Company = new Company();
-  representant: Representant = new Representant();
 
-  constructor( private flashMessages: FlashMessagesService,
+  constructor(private flashMessages: FlashMessagesService,
     private companiesService: CompaniesService,
     private representasService: RepresentantsService,
     private validateService: ValidateService,
-    private router: Router) { }
+    private router: Router) {
+       this.companiesService
+         .getCompany()
+         .toPromise()
+         .then(data => {
+           this.newId = data[data.length - 1].id + 1;
+         });
+     }
 
   ngOnInit() {
   }
@@ -38,37 +44,38 @@ export class CreateCompanyComponent implements OnInit {
   OnSubmit() {
 
     // Fill the object
-    this.company.name = this.name;
-    this.company.matricule = this.matricule;
-    this.company.activity = this.activity;
+    const company = {
+      name : this.name,
+      matricule: this.matricule,
+      activity: this.activity,
+    };
 
-    this.representant.firstName = this.firstName;
-    this.representant.lastName = this.lastName;
-    this.representant.email = this.email;
-    this.representant.phone = this.phone;
-    this.representant.company = this.company.name;
+    const contact = {
+      first_name: this.firstName,
+      last_name: this.lastName,
+      email: this.email,
+      phone: this.phone,
+      entreprise_id: this.newId
+    };
 
     // Required  Fields
-    if (!this.validateService.validateCompany(this.company) && !this.validateService.validateRepresentant(this.representant)) {
+    if (!this.validateService.validateCompany(company) && !this.validateService.validateRepresentant(contact)) {
       this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
 
-     // Validate email
-     if (!this.validateService.validateEmail(this.email)) {
+    // Validate email
+    if (!this.validateService.validateEmail(this.email)) {
       this.flashMessages.show('Wrong Email', { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
 
-    // Add representant
-    this.representasService.addRepresentant(this.representant)
-    .subscribe();
     // Add company
-    this.companiesService.addCompany(this.company)
-    .subscribe(data => {
-      this.router.navigateByUrl('/companies');
-      this.flashMessages.show('Company created', { cssClass: 'alert-success', timeout: 3000 });
-    });
+    this.companiesService.addCompany(company)
+      .subscribe(data => {
+        this.router.navigateByUrl('/companies');
+        this.flashMessages.show('Company created', { cssClass: 'alert-success', timeout: 3000 });
+      }, null, () => this.representasService.addRepresentant(contact).subscribe());
 
 
 

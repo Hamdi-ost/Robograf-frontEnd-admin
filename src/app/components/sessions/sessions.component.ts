@@ -26,7 +26,7 @@ export class SessionsComponent implements OnInit {
     .subscribe(data => {
       this.eventsService.getEvent().subscribe(event => {
       const events = event ;
-      this.data = Session.map(data.sessions, events) ;
+      this.data = Session.map(data.sessions, events).reverse();
       this.keys = Object.keys(this.data[0]);
         }
       );
@@ -39,7 +39,7 @@ export class SessionsComponent implements OnInit {
   deleteSession (id) {
     this.sessionsService.deleteSession(id)
     .subscribe(data => {
-        this.data.splice(this.data.indexOf(id), 1);
+      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
     });
   }
 

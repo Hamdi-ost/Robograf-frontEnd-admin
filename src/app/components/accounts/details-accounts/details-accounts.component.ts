@@ -33,16 +33,18 @@ export class DetailsAccountsComponent implements OnInit {
     let users;
     this.usersService.getUsers().subscribe(data => users = data);
     this.route.params.subscribe(params => {
-        this.accountsService.getAccountDetails(params['id'])
-          .subscribe(data => {
-            // list
-            this.dataList = Account.map(data.accounts, data.events, users);
-            this.dataListKeys = Object.keys(this.dataList[0]);
-            // tables
-            // event
-            this.dataEvent = Event.map(data.events, users);
+      this.accountsService.getAccountDetails(params['id'])
+        .subscribe(data => {
+          // list
+          this.dataList = Account.map(data.accounts, data.events, users);
+          this.dataListKeys = Object.keys(this.dataList[0]);
+          // tables
+          // event
+          this.dataEvent = Event.map(data.events, users);
+          if (this.dataEvent.length > 0) {
             this.keyEvent = Object.keys(this.dataEvent[0]);
-      });
+          }
+        });
     });
   }
 

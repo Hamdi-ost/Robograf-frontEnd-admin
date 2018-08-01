@@ -63,28 +63,31 @@ export class DetailsPhotoComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.photosService.getPhotoDetails(params['id'])
         .subscribe(data => {
-              // list
-                this.dataList = Photo.map(data.photos,  machines, data.sessions, data.participants);
-                this.dataList[0].event = this.dataList[0].event.name;
-                this.dataListKeys = Object.keys(this.dataList[0]);
-                console.log(data);
-                // cubes
-               // this.cubesData.push(data.remaining_sessions_count, data.nextSession, data.photos_count, data.participants_count);
-                // tables
-                  // Sessions
-                  this.dataSession = Session.map(data.sessions, data.events);
-                  this.keySession = Object.keys(this.dataSession[0]);
-                  // Event
-                  this.dataEvent = Event.map(data.events, users);
-                  this.keyEvent = Object.keys(this.dataEvent[0]);
-                  console.log(this.dataEvent);
-                  // Participant
-                  this.dataParticipant = Participant.map(data.participants, data.events);
-                  if ( this.dataParticipant.length > 0 ) {
-                    this.keyParticipant = Object.keys(this.dataParticipant[0]);
-                  }
+          // list
+          this.dataList = Photo.map(data.photos, machines, data.sessions, data.participants);
+          this.dataList[0].event = this.dataList[0].event.name;
+          this.dataListKeys = Object.keys(this.dataList[0]);
+          // cubes
+          // tables
+          // Sessions
+          this.dataSession = Session.map(data.sessions, data.events);
+          if (this.dataSession.length > 0) {
+            this.keySession = Object.keys(this.dataSession[0]);
+          }
+
+          // Event
+          this.dataEvent = Event.map(data.events, users);
+          if (this.dataEvent.length > 0) {
+            this.keyEvent = Object.keys(this.dataEvent[0]);
+          }
+
+          // Participant
+          this.dataParticipant = Participant.map(data.participants, data.events);
+          if (this.dataParticipant.length > 0) {
+            this.keyParticipant = Object.keys(this.dataParticipant[0]);
+          }
         });
-      });
+    });
   }
 
   ngOnInit() {

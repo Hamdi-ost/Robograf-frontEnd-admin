@@ -10,6 +10,9 @@ import { Session } from '../../../models/session';
 import { Account } from '../../../models/account';
 import { CompaniesService } from '../../../services/companies.service';
 import { Representant } from '../../../models/representant';
+import { ParticipantsService } from '../../../services/participants.service';
+import { PhotosService } from '../../../services/photos.service';
+import { StaticService } from '../../../services/static.service';
 
 
 @Component({
@@ -28,13 +31,12 @@ export class DetailsEventComponent implements OnInit {
   // stat variables
   stat = ['Total Event', 'Total Sessions', 'Total Participants', 'Total Photos'];
   titleStat = ['events', 'sessions', 'participants', 'photos'];
-  valStat = [1, 2, 3, 4];
+  valStat = [];
   icon = ['fa fa-list', 'fa fa-cubes', 'fa fa-users', 'fa fa-picture-o'];
   // table variables
   colTitlesS = ['Number', 'Start Data', 'Start Time', 'End Time', 'End Date', 'Description', 'Event'];
   colTitlesR = ['First Name', 'Last Name', 'Email', 'Phone', 'Company'];
   colTitlesA = ['Username', 'Link', 'Author', 'Event', 'Permissions'];
-  repLength;
   dataSessions = [];
   dataRepresentants = [];
   dataAccounts = [];
@@ -57,7 +59,15 @@ export class DetailsEventComponent implements OnInit {
     private companiesService: CompaniesService,
     private sessionService: SessionsService,
     private usersService: UsersService,
+    private staticService: StaticService,
     private route: ActivatedRoute) {
+
+    // stat
+    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+
     this.route.params.subscribe(params => {
       this.eventService.getEventDetails(params['id'])
         .subscribe(data => {
@@ -71,25 +81,26 @@ export class DetailsEventComponent implements OnInit {
               // cubes
               this.cubesData.push(data.remaining_sessions_count, data.nextSession, data.photos_count, data.participants_count);
               // tables
-                // Sessions
-                this.dataSessions = Session.map(data.sessions, data.events);
-                if (this.dataSessions.length > 0) {
-                  this.keySessions = Object.keys(this.dataSessions[0]);
-                }
-                // Representatnts
-                this.dataRepresentants = Representant.map(data.representants, companies);
-                if (this.dataRepresentants.length > 0) {
-                  this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
-                }
-                // Accounts
-                this.dataAccounts = Account.map(data.accounts, data.events, users);
-                if (this.dataAccounts.length > 0) {
-                  this.keyAccounts = Object.keys(this.dataAccounts[0]);
-                }
+              // Sessions
+              this.dataSessions = Session.map(data.sessions, data.events);
+              if (this.dataSessions.length > 0) {
+                this.keySessions = Object.keys(this.dataSessions[0]);
+              }
+              // Representatnts
+              this.dataRepresentants = Representant.map(data.representants, companies);
+              if (this.dataRepresentants.length > 0) {
+                this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
+              }
+              // Accounts
+              this.dataAccounts = Account.map(data.accounts, data.events, users);
+              if (this.dataAccounts.length > 0) {
+                this.keyAccounts = Object.keys(this.dataAccounts[0]);
+              }
             });
           });
         });
     });
+
   }
 
   ngOnInit() {

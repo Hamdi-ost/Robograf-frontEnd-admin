@@ -7,6 +7,7 @@ import { Representant } from '../../../models/representant';
 import { UsersService } from '../../../services/users.service';
 import { Event } from '../../../models/event';
 import { Company } from '../../../models/company';
+import { StaticService } from '../../../services/static.service';
 
 @Component({
   selector: 'app-details-contact',
@@ -42,7 +43,14 @@ export class DetailsContactComponent implements OnInit {
     private companiesService: CompaniesService,
     private representantsService: RepresentantsService,
     private usersService: UsersService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private staticService: StaticService) {
+
+      // stat
+    this.staticService.getTotalCompany().then(total => this.valStat[0] = total);
+    this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
+    this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
+
     this.route.params.subscribe(params => {
       this.representantsService.getRepresentantDetails(params['id'])
         .subscribe(data => {
@@ -59,15 +67,18 @@ export class DetailsContactComponent implements OnInit {
               // tables
               // event
               this.dataEvents = Event.map(data.events, users);
-              this.keysEvent = Object.keys(this.dataEvents[0]);
+              if (this.dataEvents.length > 0) {
+                this.keysEvent = Object.keys(this.dataEvents[0]);
+              }
               // comapies
-                  this.dataCompanies = Company.map(data.entreprises);
-                  this.keysCompany = Object.keys(this.dataCompanies[0]);
-
-                });
+              this.dataCompanies = Company.map(data.entreprises);
+              if (this.dataCompanies.length > 0) {
+                this.keysCompany = Object.keys(this.dataCompanies[0]);
+              }
             });
           });
         });
+    });
   }
 
   ngOnInit() {
