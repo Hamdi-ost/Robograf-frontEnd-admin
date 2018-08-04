@@ -1,7 +1,7 @@
 <div [ngSwitch]="index">
     <app-event-form  *ngSwitchCase="0" (eventForm)="eventSubmit($event)" ></app-event-form>
     <app-client-form *ngSwitchCase="1" (newRepresentantForm)="newRepresentantFormSubmit($event)"></app-client-form>
-    <app-session-form *ngSwitchCase="2"></app-session-form>
+    <app-session-form *ngSwitchCase="2"(sessionForm)="sessionSubmit($event)"></app-session-form>
     <app-account-form *ngSwitchCase="3" (accountForm)="accountSubmit($event)"></app-account-form>
 </div>
 

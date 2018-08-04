@@ -30,6 +30,16 @@ export class CreateEventComponent {
     author_id: 1
   };
 
+  session = {
+    number: null,
+    date: null,
+    start_time: null,
+    end_time: null,
+    description: null,
+    event_id: null,
+    end_date: null
+  };
+
   company = {
     name: null,
     matricule: null,
@@ -92,9 +102,18 @@ export class CreateEventComponent {
     console.log(this.account);
   }
 
+  sessionSubmit(session) {
+    this.session.date = session.date;
+    this.session.end_date = session.end_date;
+    this.session.start_time = session.start_time;
+    this.session.end_time = session.end_time;
+    this.session.description = session.description;
+    console.log(session);
+  }
+
   add() {
     // event
-    this.eventService.addEvent(this.event);
+    this.eventService.addEvent(this.event).subscribe();
     // representant + company (new)
     this.companiesService.addCompany(this.company)
       .subscribe(null, null, () => this.representantService

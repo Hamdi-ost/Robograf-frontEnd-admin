@@ -1,16 +1,14 @@
 <div class="content-header">
-  <h3>Accounts</h3>
+  <h3>Permissions</h3>
 </div>
 <div class="content">
   <app-table 
     [title]="title" 
-    [canBeDesactivated]="false" 
     [colTitles]="colTitles" 
     [keys]="keys" 
     [data]="data" 
-    [canAddNew]="true"
     [createLink]="createLink"
-    (deleteX)="deleteAccount($event)">
+    [canAddNew]="true"
+    (deleteX)="deletePermission($event)">
   </app-table>
 </div>
-

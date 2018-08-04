@@ -1,39 +1,166 @@
 <section class="content-header">
-    <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
-  </section>
-  
-  <section class="content">
-    <div class="row">
-      <div class="col-lg-6">
+  <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="box box-primary">
+        <div class="box-body">
+          <div class="contents">
+            <div class="box-header with-border">
+              <h3 class="box-title" style="width: 100%;">
+                <b>Events: </b>
+              </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="padding-bottom: 0px;">
+              <app-details-list (deleteX)="deleteEvent($event)" [title]="titleForListDetails" [dataListIcons]="dataListIcons" [dataListKeys]="dataListKeys"
+                [dataList]="dataList"></app-details-list>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <app-details-cubes [cubesTitle]="cubesTitle" [cubesData]="cubesData"></app-details-cubes>
+    </div>
+  </div>
+
+  <div class="details-contents">
+    <div>
+      <div class="row">
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Sessions: {{dataSessions.length}}</button>
+        <app-table [createLink]="createLink" [canBeDesactivated]="false" [title]="title" [colTitles]="colTitlesS" [keys]="keySessions"
+          [data]="dataSessions" (deleteX)="deleteSession($event)"></app-table>
+        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#sessionModal">Add New</button>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{dataRepresentants.length}}</button>
+        <app-table [createLink]="createLinkRepresentant" [title]="titleForRepresentant" [colTitles]="colTitlesR" [keys]="keyRepresentatnts"
+          [data]="dataRepresentants" (deleteX)="deleteRepresentant($event)"></app-table>
+        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#representantModal">Add New</button>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Accounts: {{dataAccounts.length}}</button>
+        <app-table [createLink]="createLinkAccount" [title]="titleForAccount" [colTitles]="colTitlesA" [keys]="keyAccounts" [data]="dataAccounts"
+          (deleteX)="deleteAccount($event)"></app-table>
+        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#accountModal">Add New</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal For representant-->
+<div class="modal fade" id="representantModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add New Representant:</h4>
+      </div>
+      <div class="modal-body">
         <div class="box box-primary">
           <div class="box-body">
-            <div class="contents">
-              <div class="box-header with-border">
-                <h3 class="box-title" style="width: 100%;">
-                  <b>Events: </b> </h3>
+            <div class="row">
+
+              <!-- First Name Field -->
+              <div class="form-group col-sm-6">
+                <label for="first_name">First Name:</label>
+                <input class="form-control" required="" name="first_name" type="text" [(ngModel)]="representant.firstName">
               </div>
-              <!-- /.box-header -->
-              <div class="box-body" style="padding-bottom: 0px;">
-                <app-details-list  (deleteX)="deleteEvent($event)" [title]="titleForListDetails" [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
+
+              <!-- Last Name Field -->
+              <div class="form-group col-sm-6">
+                <label for="last_name">Last Name:</label>
+                <input class="form-control" required="" name="last_name" type="text" id="last_name" [(ngModel)]="representant.lastName">
               </div>
-              <!-- /.box-body -->
+
+              <!-- Email Field -->
+              <div class="form-group col-sm-6">
+                <label for="email">Email:</label>
+                <input class="form-control" required="" name="email" type="email" id="email" [(ngModel)]="representant.email">
+              </div>
+
+              <!-- Phone Field -->
+              <div class="form-group col-sm-6">
+                <label for="phone">Phone:</label>
+                <input class="form-control" name="phone" type="text" [(ngModel)]="representant.phone">
+              </div>
+
+              <div id="entreprise_id_field" class="form-group col-sm-6">
+                <label for="entreprise_id">Company:</label>
+                <select class="form-control" id="entreprise_id" [(ngModel)]="representant.entreprise_id">
+                  <option *ngFor="let company of companies" value={{company.id}}>{{company.name}}</option>
+                </select>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-6">
-        <app-details-cubes [cubesTitle]="cubesTitle" [cubesData]="cubesData" ></app-details-cubes>
+      <div class="modal-footer">
+        <button data-dismiss="modal" [disabled]="representant.phone==null || representant.firstName==null || representant.lastName==null || representant.email==null"
+          (click)="addRepresentant()" type="submit" class="btn btn-success" style="margin-left: 20px">ADD</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
+
+  </div>
+</div>
+
+<!-- Modal For account-->
+<div class="modal fade" id="accountModal" role="dialog">
+    <div class="modal-dialog">
   
-    <div class="details-contents">
-      <div>
-        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Sessions: {{dataSessions.length}}</button>
-        <app-table [createLink]="createLink" [canBeDesactivated]="false" [title]="title" [canAddNew]="true" [colTitles]="colTitlesS" [keys]="keySessions" [data]="dataSessions" (deleteX)="deleteSession($event)"></app-table>
-        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{dataRepresentants.length}}</button>
-        <app-table [createLink]="createLinkRepresentant" [title]="titleForRepresentant" [canAddNew]="true" [colTitles]="colTitlesR" [keys]="keyRepresentatnts" [data]="dataRepresentants" (deleteX)="deleteRepresentant($event)"></app-table>
-        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Accounts: {{dataAccounts.length}}</button>
-        <app-table [createLink]="createLinkAccount" [title]="titleForAccount" [canAddNew]="true" [colTitles]="colTitlesA" [keys]="keyAccounts" [data]="dataAccounts" (deleteX)="deleteAccount($event)"></app-table>
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add New Account:</h4>
+        </div>
+        <div class="modal-body">
+            <div class="box box-primary">
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <!-- Username Field -->
+                    <div class="form-group col-sm-12">
+                      <label for="username">Username:</label>
+                      <input class="form-control" required="" name="username" type="text" value="8b9ad7d6f3" [(ngModel)]="account.username">
+                    </div>
+            
+                    <!-- Password Field -->
+                    <div class="form-group col-sm-12">
+                      <label for="password">Password:</label>
+                      <input class="form-control" required="" name="password" type="password" value="d6c6cd716dc6a59f" [(ngModel)]="account.password">
+                    </div>
+            
+            
+                  </div>
+                  <!-- SELECT Permisssions -->
+                  <div class="col-sm-6">
+                    <!-- Permissions Field -->
+                    <div class="form-group col-sm-12">
+                      <label for="permissions">permissions:</label>
+                    </div>
+                  </div>
+            
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" [disabled]="account.username==null || account.password==null"
+            (click)="addAccount()" type="submit" class="btn btn-success" style="margin-left: 20px">ADD</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
+  
     </div>
-  </section>
+  </div>
+

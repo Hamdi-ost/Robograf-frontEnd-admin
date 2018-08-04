@@ -10,7 +10,7 @@ import { CompaniesService } from './companies.service';
 })
 export class RepresentantsService {
   companies;
-  constructor(private companiesService: CompaniesService, private http: HttpClient, ) {
+  constructor(private companiesService: CompaniesService, private http: HttpClient ) {
     this.companiesService.getCompany().subscribe(data => this.companies = data);
   }
 

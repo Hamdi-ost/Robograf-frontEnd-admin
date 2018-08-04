@@ -69,6 +69,10 @@ import { TemplateDetailsComponent } from './components/templates/template-detail
 import { SignupComponent } from './components/signup/signup.component';
 import { BeforeLoginService } from './services/before-login.service';
 import { AfterLoginService } from './services/after-login.service';
+import { PermissionsComponent } from './components/permissions/permissions.component';
+import { CreatePermissionComponent } from './components/permissions/create-permission/create-permission.component';
+import { DetailsPermissionComponent } from './components/permissions/details-permission/details-permission.component';
+import { EditPermissionComponent } from './components/permissions/edit-permission/edit-permission.component';
 
 
 
@@ -88,6 +92,11 @@ const appRoutes: Routes = [
   { path: 'createPhoto', component: CreatePhotoComponent,  canActivate: [AfterLoginService] },
   { path: 'photos/:id', component: DetailsPhotoComponent,  canActivate: [AfterLoginService] },
   { path: 'photos/edit/:id', component: EditPhotoComponent,  canActivate: [AfterLoginService] },
+
+  { path: 'permissions', component: PermissionsComponent,  canActivate: [AfterLoginService] },
+  { path: 'createPermission', component: CreatePermissionComponent,  canActivate: [AfterLoginService] },
+  { path: 'permissions/:id', component: DetailsPermissionComponent,  canActivate: [AfterLoginService] },
+  { path: 'permissions/edit/:id', component: EditPermissionComponent,  canActivate: [AfterLoginService] },
 
   { path: 'participants', component: ParticipantsComponent,  canActivate: [AfterLoginService] },
   { path: 'createParticipant', component: CreateParticipantComponent,  canActivate: [AfterLoginService] },
@@ -189,7 +198,11 @@ const appRoutes: Routes = [
     DetailsPhotoComponent,
     EditPhotoComponent,
     TemplateDetailsComponent,
-    SignupComponent
+    SignupComponent,
+    PermissionsComponent,
+    CreatePermissionComponent,
+    DetailsPermissionComponent,
+    EditPermissionComponent
   ],
   imports: [
     BrowserModule,

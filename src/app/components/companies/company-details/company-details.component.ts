@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { EventsService } from '../../../services/events.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RepresentantsService } from '../../../services/representants.service';
@@ -10,19 +10,20 @@ import { Representant } from '../../../models/representant';
 import { UsersService } from '../../../services/users.service';
 import { Account } from '../../../models/account';
 import { StaticService } from '../../../services/static.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-company-details',
   templateUrl: './company-details.component.html',
   styleUrls: ['./company-details.component.css']
 })
-export class CompanyDetailsComponent implements OnInit {
+export class CompanyDetailsComponent  {
 
   title = 'companies';
   titleForEditRepresentant = 'representants';
   titleForEditEvent = 'events';
   titleForEditAccount = 'accounts';
-  createLink = 'createRepresentant';
+  createLink = '/createRepresentant';
   // stat variables
   stat = ['Total Companies', 'Total Contact', 'Total Account'];
   titleStat = ['companies', 'representants', 'accounts'];
@@ -46,8 +47,13 @@ export class CompanyDetailsComponent implements OnInit {
   dataList;
   dataListKeys;
   dataListIcons = ['fa fa-tag', 'fa fa-building', 'fa fa-flash'];
+
+  entreprise_id;
+  entreprise_name;
+
   constructor(
     private router: Router,
+    private flashMessages: FlashMessagesService,
     private eventService: EventsService,
     private representantService: RepresentantsService,
     private accountService: AccountsService,
@@ -89,11 +95,42 @@ export class CompanyDetailsComponent implements OnInit {
             }
           });
         });
+        this.companiesService.getCompanyDetails(params['id'])
+        .toPromise()
+        .then(data => {
+          this.entreprise_name = data.entreprises[0].name;
+          this.entreprise_id = params['id'];
+        });
+      });
+  }
+
+   representant = {
+    firstName: null,
+    lastName: null,
+    email: null,
+    phone: null,
+    company: null
+  };
+
+  OnSubmit() {
+    const contact = {
+      first_name : this.representant.firstName,
+      last_name : this.representant.lastName,
+      email : this.representant.email,
+      phone: this.representant.phone,
+      entreprise_id: this.entreprise_id
+    };
+
+    this.representant.company = this.entreprise_name;
+
+    // Add representant
+    this.representantService.addRepresentant(contact)
+    .subscribe(res => {
+      this.dataRepresentants.push(this.representant);
+      this.flashMessages.show('Representant added', { cssClass: 'alert-success', timeout: 3000 });
     });
   }
 
-  ngOnInit() {
-  }
 
   deleteEvent(id) {
     this.eventService.deleteEvent(id)

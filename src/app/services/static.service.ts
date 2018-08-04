@@ -8,6 +8,7 @@ import { CompaniesService } from './companies.service';
 import { SessionsService } from './sessions.service';
 import { UsersService } from './users.service';
 import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,12 @@ export class StaticService {
     private participantsService: ParticipantsService,
     private photosService: PhotosService,
     private companiesService: CompaniesService,
-    private sessionService: SessionsService) { }
+    private sessionService: SessionsService,
+    private http: HttpClient) { }
+
+  getmachineStatic() {
+    return this.http.get('http://localhost:8000/api/machineStatic/');
+  }
 
   getTotalRepresentant() {
     return this.representantsService.getRepresentant().toPromise().then(data => {

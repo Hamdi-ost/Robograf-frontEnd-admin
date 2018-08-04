@@ -10,7 +10,7 @@ import { UsersService } from '../../../services/users.service';
 export class DetailsUserComponent implements OnInit {
 
   title = 'users';
-  dataList;
+  dataList = [];
   dataListKeys;
   dataListIcons = ['', 'fa fa-address-book', 'fa fa-envelope', 'fa fa-calendar', 'fa fa-calendar'];
 
@@ -22,8 +22,8 @@ export class DetailsUserComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.usersService.getUserDetails(params['id'])
       .subscribe(data => {
-        this.dataList = data;
-        this.dataListKeys = Object.keys(this.dataList);
+        this.dataList.push(data);
+        this.dataListKeys = Object.keys(this.dataList[0]);
       });
    });
   }
@@ -31,9 +31,5 @@ export class DetailsUserComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteUser (id) {
-    this.usersService.deleteUser(id)
-    .subscribe(data => this.router.navigateByUrl('/users'));
-  }
 
 }

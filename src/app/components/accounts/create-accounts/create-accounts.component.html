@@ -15,15 +15,26 @@
           <input class="form-control" required="" name="password" type="password" value="d6c6cd716dc6a59f" [(ngModel)]="password">
         </div>
 
+        <div id="entreprise_id_field" class="form-group col-sm-12">
+          <label for="event_id">Event:</label>
+          <select class="form-control" id="event_id" [(ngModel)]="event_id">
+            <option *ngFor="let event of events" value={{event.id}}>{{event.name}}</option>
+          </select>
+        </div>
+
 
       </div>
-      <!-- SELECT Permisssions -->
       <div class="col-sm-6">
         <!-- Permissions Field -->
         <div class="form-group col-sm-12">
           <label for="permissions">permissions:</label>
+          <div *ngFor="let permission of permissions">
+            <input id ="permissions_permission.id" value="permission.id" [(ngModel)]="AccountPermissions"  type="checkbox" >
+            <label for="AccountPermissions" >{{permission.name}}</label>
+          </div>
         </div>
       </div>
+
 
     </div>
     <!-- Submit Field -->

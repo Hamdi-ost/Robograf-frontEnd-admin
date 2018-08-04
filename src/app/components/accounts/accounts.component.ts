@@ -9,7 +9,7 @@ import { AccountsService } from '../../services/accounts.service';
 export class AccountsComponent implements OnInit {
 
   title = 'accounts';
-  colTitles = ['Username', 'link', 'Author', 'event'];
+  colTitles = ['Username', 'link', 'event', 'Author', 'Permissions'];
   data: any[];
   keys: any[];
   createLink = '/createAccount';

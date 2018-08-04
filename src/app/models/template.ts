@@ -3,6 +3,7 @@ export class Template {
    id;
    state;
    event;
+   nbrValidated;
 
     static map(rep, events) {
         const resultats = new Array(new Template());
@@ -15,6 +16,7 @@ export class Template {
                     resultat.event = event.name;
                 }
             }
+            resultat.nbrValidated = obj.nbrValidated + '/' + obj.total;
             resultats.push(resultat);
         }
         resultats.splice(0, 1);

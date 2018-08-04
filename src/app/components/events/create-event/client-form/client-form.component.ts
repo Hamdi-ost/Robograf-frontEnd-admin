@@ -41,10 +41,9 @@ export class ClientFormComponent implements OnInit {
     this.newRepresentant = newRepresentant;
     this.newRepresentant.entreprise_id = this.newId;
     this.confirm = true;
-  }
-
-  newRepresentantFormSubmit() {
     this.newRepresentantForm.emit(this.newRepresentant);
   }
+
+
 
 }

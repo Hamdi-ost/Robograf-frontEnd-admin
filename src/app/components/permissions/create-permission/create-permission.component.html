@@ -1,0 +1,26 @@
+<h3>Add New Permission</h3>
+<div class="box box-primary">
+  <div class="box-body">
+    <div class="row">
+
+        <!-- Name Field -->
+        <div class="form-group col-sm-12">
+          <label for="name">Name:</label>
+          <input class="form-control" name="name" type="text" [(ngModel)]="name">
+        </div>
+
+        <!-- Description Field -->
+        <div class="form-group col-sm-12">
+          <label for="description">Description:</label>
+          <textarea class="form-control" name="description" cols="50" rows="10" [(ngModel)]="description"></textarea>
+        </div>
+
+        <!-- Submit Field -->
+        <div class="form-group col-sm-12">
+          <button (click)="OnSubmit()" type="submit" class="btn btn-success" style="margin-left: 20px">ADD</button>
+          <button routerLink="/permissions" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+        </div>
+
+    </div>
+  </div>
+</div>

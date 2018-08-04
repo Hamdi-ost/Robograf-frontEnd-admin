@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from '../../../services/events.service';
 import { RepresentantsService } from '../../../services/representants.service';
@@ -13,6 +13,7 @@ import { Representant } from '../../../models/representant';
 import { ParticipantsService } from '../../../services/participants.service';
 import { PhotosService } from '../../../services/photos.service';
 import { StaticService } from '../../../services/static.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 
 @Component({
@@ -20,7 +21,9 @@ import { StaticService } from '../../../services/static.service';
   templateUrl: './details-event.component.html',
   styleUrls: ['./details-event.component.css']
 })
-export class DetailsEventComponent implements OnInit {
+export class DetailsEventComponent {
+  @Output() sendEventId = new EventEmitter();
+
   title = 'sessions';
   titleForListDetails = 'events';
   titleForRepresentant = 'representants';
@@ -51,8 +54,14 @@ export class DetailsEventComponent implements OnInit {
   dataListKeys;
   dataListIcons = ['fa fa-tags', 'fa fa-map-marker', 'fa fa-building', 'fa fa-envelope', 'fa fa-pencil', 'fa fa-pencil'];
 
+  event_id;
+  event_name;
+  author;
+  companies;
+
   constructor(
     private router: Router,
+    private flashMessages: FlashMessagesService,
     private eventService: EventsService,
     private representantsService: RepresentantsService,
     private accountService: AccountsService,
@@ -61,7 +70,7 @@ export class DetailsEventComponent implements OnInit {
     private usersService: UsersService,
     private staticService: StaticService,
     private route: ActivatedRoute) {
-
+      this.companiesService.getCompany().subscribe(data => this.companies = data);
     // stat
     this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
     this.staticService.getTotalSession().then(total => this.valStat[1] = total);
@@ -71,12 +80,15 @@ export class DetailsEventComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.eventService.getEventDetails(params['id'])
         .subscribe(data => {
+          this.event_id = params['id'];
           this.usersService.getUsers().subscribe(user => {
             this.companiesService.getCompany().subscribe(company => {
               const companies = company;
               const users = user;
               // list
               this.dataList = Event.map(data.events, users);
+              this.author = this.dataList[0].author;
+              this.event_name = this.dataList[0].name;
               this.dataListKeys = Object.keys(this.dataList[0]);
               // cubes
               this.cubesData.push(data.remaining_sessions_count, data.nextSession, data.photos_count, data.participants_count);
@@ -103,8 +115,67 @@ export class DetailsEventComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  representant = {
+    firstName: null,
+    lastName: null,
+    email: null,
+    phone: null,
+    entreprise_id: null,
+    company: null
+  };
+
+  account = {
+    username: null,
+    password: null,
+    event: null,
+    author: null
+  };
+
+  addRepresentant() {
+    const contact = {
+      first_name : this.representant.firstName,
+      last_name : this.representant.lastName,
+      email : this.representant.email,
+      phone: this.representant.phone,
+      entreprise_id: this.representant.entreprise_id,
+      event_id: this.event_id
+    };
+    // get company name
+    this.companiesService.getCompanyDetails(this.representant.entreprise_id)
+    .toPromise()
+    .then(data => {
+      this.representant.company = data.entreprises[0].name;
+    });
+    // Add representant
+    this.representantsService.addRepresentant(contact)
+    .subscribe(res => {
+      this.dataRepresentants.push(this.representant);
+      this.flashMessages.show('Representant added', { cssClass: 'alert-success', timeout: 3000 });
+    });
   }
+
+
+
+  addAccount() {
+    // Fill the object
+    const account = {
+      username: this.account.username,
+      password: this.account.password,
+      event_id: this.event_id,
+      author_id: 1
+    };
+
+    this.account.event = this.event_name;
+    this.account.author = this.author;
+    // Add user
+    this.accountService.addAccount(account)
+    .subscribe(data => {
+      this.dataAccounts.push(this.account);
+      this.flashMessages.show('Account Added', { cssClass: 'alert-success', timeout: 3000 });
+      });
+
+  }
+
 
   deleteSession(id) {
     this.sessionService.deleteSession(id)

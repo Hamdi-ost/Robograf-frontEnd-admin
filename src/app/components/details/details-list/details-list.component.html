@@ -18,13 +18,14 @@
   </div>
 </ng-container>
 <div class="row" style="margin-top:15px;">
-  <div class="col-sm-6" style="padding:0px; padding-left:5px;">
+  <div *ngIf="editButton" class="col-sm-6" style="padding:0px; padding-left:5px;">
     <a class="btn btn-default btn-sm" style="width:100%;border-radius:0px;" routerLink="/{{title}}/edit/{{dataList && dataList[0]?.id}}">
       <i class="glyphicon glyphicon-edit"></i> Edit</a>
   </div>
-  <div class="col-sm-6" style="padding:0px; padding-right:5px;">
+  <div *ngIf="deleteButton" class="col-sm-6" style="padding:0px; padding-right:5px;">
     <button type="submit" (click)="delete(dataList[0]?.id)" class="btn btn-danger btn-sm" style="width:100%;border-radius:0px;">
       <i class="glyphicon glyphicon-trash"></i> Delete</button>
   </div>
+  <a (click)="back()" *ngIf="cancelButton" class="btn btn-default">Cancel</a>
 </div>
 

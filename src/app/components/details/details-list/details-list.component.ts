@@ -11,7 +11,9 @@ export class DetailsListMachineComponent implements OnInit {
   @Input() dataListKeys;
   @Input() title;
   @Output() deleteX = new EventEmitter();
-
+  @Input() deleteButton = true;
+  @Input() editButton = true;
+  @Input() cancelButton;
   constructor() { }
 
   ngOnInit() {
@@ -19,6 +21,10 @@ export class DetailsListMachineComponent implements OnInit {
 
   delete (id) {
     this.deleteX.emit(id);
+  }
+
+  back() {
+    window.history.back();
   }
 
 }

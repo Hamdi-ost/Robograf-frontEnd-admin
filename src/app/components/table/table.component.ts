@@ -6,6 +6,7 @@ import { Component, OnInit , Output, Input, EventEmitter} from '@angular/core';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
+  @Input() eventId;
   @Input() title;
   @Input() colTitles;
   @Input() data;

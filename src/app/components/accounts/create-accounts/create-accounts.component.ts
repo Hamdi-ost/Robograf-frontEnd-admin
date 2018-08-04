@@ -4,26 +4,42 @@ import { ValidateService } from '../../../services/validate.service';
 import { Router } from '@angular/router';
 import { AccountsService } from '../../../services/accounts.service';
 import { Account } from '../../../models/account';
+import { EventsService } from '../../../services/events.service';
+import { PermissionsService } from '../../../services/permissions.service';
 
 @Component({
   selector: 'app-create-accounts',
   templateUrl: './create-accounts.component.html',
   styleUrls: ['./create-accounts.component.css']
 })
-export class CreateAccountsComponent implements OnInit {
+export class CreateAccountsComponent {
 
   username;
   password;
-
+  AccountPermissions;
+  event_id;
+  events;
+  permissions;
 
   constructor(
     private flashMessages: FlashMessagesService,
     private validateService: ValidateService,
-    private router: Router,
-    private accountsServie: AccountsService) { }
-
-  ngOnInit() {
+    private eventService: EventsService,
+    private accountsServie: AccountsService,
+    private permissionService: PermissionsService) {
+    this.permissionService.getPermissions().subscribe(data => this.permissions = data);
+    this.eventService
+      .getEvent()
+      .toPromise()
+      .then(data => {
+        this.events = data;
+      });
   }
+
+  back() {
+    window.history.back();
+  }
+
 
   OnSubmit() {
 
@@ -31,7 +47,8 @@ export class CreateAccountsComponent implements OnInit {
     const account = {
       username: this.username,
       password: this.password,
-      event_id: 8,
+      permissions: 'view-basic-info',
+      event_id: this.event_id,
       author_id: 1
     };
 
@@ -41,11 +58,13 @@ export class CreateAccountsComponent implements OnInit {
       return false;
     }
 
+    console.log(account);
+
     // Add user
     this.accountsServie.addAccount(account)
-    .subscribe(data => {
-      this.router.navigateByUrl('/accounts');
-      this.flashMessages.show('Account Added', { cssClass: 'alert-success', timeout: 3000 });
+      .subscribe(data => {
+        this.back();
+        this.flashMessages.show('Account Added', { cssClass: 'alert-success', timeout: 3000 });
       });
 
   }

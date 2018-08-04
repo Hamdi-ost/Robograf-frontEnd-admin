@@ -2,14 +2,11 @@
 <div class="box box-primary">
   <div class="box-body">
     <div class="row">
-      <form method="POST" action="http://localhost:8000/sessions" accept-charset="UTF-8">
-        <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
-
         <div class="col-sm-6">
           <!-- Date Field -->
           <div class="form-group col-sm-12">
             <label for="date">Start Date:</label>
-            <input id="session_date" class="form-control" onblur="updateMachines()" onchange="valueUpdated = true" required="" name="date"
+            <input [(ngModel)]="session.session_date" class="form-control"  required="" name="date"
               type="date">
           </div>
 
@@ -17,28 +14,28 @@
           <!-- Start Time Field -->
           <div class="form-group col-sm-12">
             <label for="start_time">Start Time:</label>
-            <input id="session_start_time" class="form-control" onblur="updateMachines()" onchange="valueUpdated = true;" name="start_time"
+            <input [(ngModel)]="session.session_start_time" class="form-control"  name="start_time"
               type="time">
           </div>
 
           <!-- End Date Field -->
           <div class="form-group col-sm-12">
             <label for="end_date">End Date:</label>
-            <input id="session_end_date" class="form-control" onblur="updateMachines()" onchange="valueUpdated = true" required="" name="end_date"
+            <input [(ngModel)]="session.session_end_date" class="form-control"  required="" name="end_date"
               type="date">
           </div>
 
           <!-- End Time Field -->
           <div class="form-group col-sm-12">
             <label for="end_time">End Time:</label>
-            <input id="session_end_time" class="form-control" onblur="updateMachines()" onchange="valueUpdated = true;" name="end_time"
+            <input [(ngModel)]="session.session_end_time" class="form-control"  name="end_time"
               type="time">
           </div>
 
           <!-- Description Field -->
           <div class="form-group col-sm-12">
-            <label for="description">Description:</label>
-            <textarea class="form-control" rows="3" name="description" cols="50" id="description"></textarea>
+            <label for="session.description">Description:</label>
+            <textarea class="form-control" rows="3" name="description" cols="50" [(ngModel)]="description"></textarea>
           </div>
 
           <div class="col-sm-12">
@@ -55,31 +52,14 @@
         <div class="form-group col-sm-6">
           <!-- Machines Field -->
           <div class="form-group col-sm-12">
-            <div id="machines-available" hidden="">
-              <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
-
-              <input class="form-control" name="date" type="text" id="date">
-              <input class="form-control" name="end_date" type="text" id="end_date">
-              <input class="form-control" name="start_time" type="text" id="start_time">
-              <input class="form-control" name="end_time" type="text" id="end_time">
-
-
-            </div>
-
-            <div id="machines-assigned" hidden="">
-             
-                <input class="form-control" name="date" type="text">
-                <input class="form-control" name="end_date" type="text">
-                <input class="form-control" name="start_time" type="text">
-                <input class="form-control" name="end_time" type="text">
-
-            </div>
+  
             <label for="machines">Machines:</label>
-            <div id="machines-list" class="form-group col-sm-12">
+            <div [(ngModel)]="machines-list" class="form-group col-sm-12">
             </div>
           </div>
         </div>
-      </form>
+        
     </div>
+    <button class="btn btn-primary" (click)="send()" style="margin-left: 5px; margin-bottom: 5px">Submit</button>
   </div>
 </div>

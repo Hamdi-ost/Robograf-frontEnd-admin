@@ -17,5 +17,6 @@ export class DashboardComponent {
 
   constructor(private dashboardService: DashboardService) {
     dashboardService.getInfo().subscribe(data => console.log(data));
+
   }
 }

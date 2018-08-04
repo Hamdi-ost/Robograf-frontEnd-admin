@@ -11,6 +11,6 @@ export class DashboardService {
 
 
   getInfo() {
-    return this.http.get<any[]>('http://localhost:8000/dashboard');
+    return this.http.get<any[]>('http://localhost:8000/api/dashboard');
   }
 }
