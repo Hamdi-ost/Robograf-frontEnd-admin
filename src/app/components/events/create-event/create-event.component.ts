@@ -22,6 +22,7 @@ export class CreateEventComponent {
   icon = ['fa fa-list', 'fa fa-cubes', 'fa fa-users', 'fa fa-picture-o'];
 
   event;
+  eventId;
 
   account = {
     username: null,
@@ -31,7 +32,7 @@ export class CreateEventComponent {
   };
 
   session = {
-    number: null,
+    number: 2,
     date: null,
     start_time: null,
     end_time: null,
@@ -63,7 +64,9 @@ export class CreateEventComponent {
     private accountService: AccountsService,
     private flashMessages: FlashMessagesService,
     private router: Router
-  ) {}
+  ) {
+    this.eventService.getEvent().subscribe(data => this.eventId = data.length);
+  }
 
   increment() {
     this.index++;
@@ -71,6 +74,16 @@ export class CreateEventComponent {
 
   decrement() {
     this.index--;
+  }
+
+  ExistRepresentantFormSubmit(existRepresentant) {
+    this.representant.first_name = existRepresentant.first_name;
+    this.representant.last_name = existRepresentant.last_name;
+    this.representant.email = existRepresentant.email;
+    this.representant.phone = existRepresentant.phone;
+    this.representant.entreprise_id = Number(existRepresentant.entreprise_id);
+
+    console.log(this.representant);
   }
 
   newRepresentantFormSubmit(newRepresentant) {
@@ -108,20 +121,30 @@ export class CreateEventComponent {
     this.session.start_time = session.start_time;
     this.session.end_time = session.end_time;
     this.session.description = session.description;
-    console.log(session);
+    this.session.event_id = this.eventId;
+
+    console.log(this.session);
   }
 
   add() {
+    console.log(this.company.name);
+
     // event
     this.eventService.addEvent(this.event).subscribe();
     // representant + company (new)
+    if (this.company.name != null) {
     this.companiesService.addCompany(this.company)
       .subscribe(null, null, () => this.representantService
         .addRepresentant(this.representant)
         .subscribe());
+    } else {
+      // representant + company (exist)
+      this.representantService.addRepresentant(this.representant).subscribe();
+    }
     // session
+    this.sessionService.addSession(this.session).subscribe();
     // account
-    this.accountService.addAccount(this.account);
+    this.accountService.addAccount(this.account).subscribe();
     this.router.navigateByUrl('/events');
     this.flashMessages.show('Event Added', { cssClass: 'alert-success', timeout: 3000 });
   }

@@ -8,6 +8,7 @@ import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CommonModule } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 // components
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -214,7 +215,8 @@ const appRoutes: Routes = [
     FormsModule,
     CalendarModule.forRoot(),
     NgbModalModule.forRoot(),
-    FlatpickrModule.forRoot()
+    FlatpickrModule.forRoot(),
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

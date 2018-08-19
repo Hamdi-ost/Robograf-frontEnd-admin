@@ -30,6 +30,7 @@
     "flatpickr": "^4.5.1",
     "jquery": "^3.3.1",
     "ng-modal": "^1.0.2",
+    "ngx-pagination": "^3.2.0",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

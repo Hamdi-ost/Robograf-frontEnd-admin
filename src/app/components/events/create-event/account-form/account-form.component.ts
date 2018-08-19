@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { EventsService } from '../../../../services/events.service';
+import { PermissionsService } from '../../../../services/permissions.service';
 
 @Component({
   selector: 'app-account-form',
@@ -9,13 +10,18 @@ import { EventsService } from '../../../../services/events.service';
 export class AccountFormComponent implements OnInit {
   @Output() accountForm: EventEmitter<any> = new EventEmitter<any>();
 
+  permissions;
+
   account = {
     username: null,
     password: null,
-    event_id: null
+    permissions: null,
+    event_id: null,
+    author_id: 1
   };
 
-  constructor(private eventService: EventsService) {
+  constructor(private eventService: EventsService, private permissionService: PermissionsService) {
+    this.permissionService.getPermissions().subscribe(data => this.permissions = data);
     this.eventService
     .getEvent()
     .toPromise()

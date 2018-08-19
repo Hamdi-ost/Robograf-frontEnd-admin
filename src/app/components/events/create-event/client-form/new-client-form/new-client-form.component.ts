@@ -7,7 +7,6 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 })
 export class NewClientFormComponent implements OnInit {
   @Input() hidden;
-  @Input() afterSend;
   @Output() newRepresentantForm: EventEmitter<any> = new EventEmitter<any>();
 
   companyRepresentant = {
@@ -26,7 +25,6 @@ export class NewClientFormComponent implements OnInit {
   }
 
   send() {
-    this.afterSend = true;
     this.newRepresentantForm.emit(this.companyRepresentant);
   }
 

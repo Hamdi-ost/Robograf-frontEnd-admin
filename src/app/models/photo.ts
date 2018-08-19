@@ -9,6 +9,7 @@ export class Photo {
     participant;
 
     static map(rep, machines, eventSession, participants) {
+
         const resultats = new Array(new Photo());
         for (const obj of rep) {
             const resultat = new Photo();
@@ -23,6 +24,7 @@ export class Photo {
             for (const session of eventSession) {
                 if (obj.session_id === session.id) {
                     resultat.session = session.number;
+                   // resultat.event = session.event_id;
                 }
             }
             for (const participant of participants) {
@@ -32,6 +34,8 @@ export class Photo {
                 }
             }
             resultats.push(resultat);
+            console.log(resultat);
+
         }
         resultats.splice(0, 1);
         return resultats;

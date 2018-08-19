@@ -19,11 +19,14 @@
 
 
         </div>
-        <!-- SELECT Permisssions -->
         <div class="col-sm-6">
           <!-- Permissions Field -->
           <div class="form-group col-sm-12">
             <label for="permissions">permissions:</label>
+            <div *ngFor="let permission of permissions">
+              <input id ="permissions_permission.id" value="permission.id" [(ngModel)]="AccountPermissions"  type="checkbox" >
+              <label for="AccountPermissions" >{{permission.name}}</label>
+            </div>
           </div>
         </div>
 

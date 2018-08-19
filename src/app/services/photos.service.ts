@@ -17,14 +17,16 @@ export class PhotosService {
   machines;
   participants;
   eventSession;
+  event;
 
   constructor(private http: HttpClient,
     private machinesService: MachinesService,
     private sessionsService: SessionsService,
-    private participantsService: ParticipantsService) {
+    private participantsService: ParticipantsService,
+    private eventService: EventsService) {
       this.machinesService.getMachines().subscribe(data => this.machines = data);
       this.participantsService.getParticipant().subscribe(data => this.participants = data);
-      this.sessionsService.getSessions().subscribe(data => this.eventSession =  data.sessions);
+      this.sessionsService.getSessions().subscribe(data => this.eventSession =  data);
     }
 
   addPhoto(photo) {

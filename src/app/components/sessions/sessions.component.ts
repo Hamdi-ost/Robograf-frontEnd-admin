@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SessionsService } from '../../services/sessions.service';
 import { Session } from '../../models/session';
 import { EventsService } from '../../services/events.service';
+import { StaticService } from '../../services/static.service';
 
 @Component({
   selector: 'app-sessions',
@@ -20,13 +21,19 @@ export class SessionsComponent implements OnInit {
   keys: any[];
   createLink = '/createSession';
 
-  constructor(private sessionsService: SessionsService, private eventsService: EventsService) {
+  constructor(private sessionsService: SessionsService, private eventsService: EventsService,
+    private staticService: StaticService) {
+    // stat
+    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
 
     this.sessionsService.getSessions()
     .subscribe(data => {
       this.eventsService.getEvent().subscribe(event => {
       const events = event ;
-      this.data = Session.map(data.sessions, events).reverse();
+      this.data = Session.map(data, events).reverse();
       this.keys = Object.keys(this.data[0]);
         }
       );

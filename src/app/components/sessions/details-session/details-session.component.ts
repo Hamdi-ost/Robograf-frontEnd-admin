@@ -36,7 +36,7 @@ export class DetailsSessionComponent implements OnInit {
   dataParticipants: any[] = [];
   keysParticipants: any[];
   // Photos
-  colTitlesPhotos = ['Url', 'Photo Time', 'Event', 'Machine', 'Session', 'Participant'];
+  colTitlesPhotos = ['Url', 'Photo Time', 'Machine', 'Session', 'Participant', 'Event'];
   dataPhotos: any[] = [];
   keysPhotos: any[];
   // cubes variables

@@ -8,9 +8,11 @@ import { CompaniesService } from '../../../../services/companies.service';
 })
 export class ClientFormComponent implements OnInit {
   @Output() newRepresentantForm: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ExistRepresentantForm: EventEmitter<any> = new EventEmitter<any>();
 
   id: string;
   newRepresentant;
+  ExistRepresentant;
   confirm;
   newId;
 
@@ -42,6 +44,12 @@ export class ClientFormComponent implements OnInit {
     this.newRepresentant.entreprise_id = this.newId;
     this.confirm = true;
     this.newRepresentantForm.emit(this.newRepresentant);
+  }
+
+  ExistCompanyRepresentantSubmit(ExistRepresentant) {
+    this.ExistRepresentant = ExistRepresentant;
+    this.confirm = true;
+    this.ExistRepresentantForm.emit(this.ExistRepresentant);
   }
 
 

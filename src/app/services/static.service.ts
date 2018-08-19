@@ -55,7 +55,7 @@ export class StaticService {
 
   getTotalSession() {
     return this.sessionService.getSessions().toPromise().then(data => {
-      return data.sessions.length;
+      return data.length;
     });
   }
 

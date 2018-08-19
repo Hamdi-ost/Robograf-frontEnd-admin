@@ -1,11 +1,11 @@
-<div [ngSwitch]="index">
-    <app-event-form  *ngSwitchCase="0" (eventForm)="eventSubmit($event)" ></app-event-form>
-    <app-client-form *ngSwitchCase="1" (newRepresentantForm)="newRepresentantFormSubmit($event)"></app-client-form>
-    <app-session-form *ngSwitchCase="2"(sessionForm)="sessionSubmit($event)"></app-session-form>
-    <app-account-form *ngSwitchCase="3" (accountForm)="accountSubmit($event)"></app-account-form>
+<div>
+    <app-event-form   *ngIf="index==0" (eventForm)="eventSubmit($event)" ></app-event-form>
+    <app-client-form  *ngIf="index==1" (newRepresentantForm)="newRepresentantFormSubmit($event)" (ExistRepresentantForm)="ExistRepresentantFormSubmit($event)"></app-client-form>
+    <app-session-form *ngIf="index==2" (sessionForm)="sessionSubmit($event)"></app-session-form>
+    <app-account-form *ngIf="index==3" (accountForm)="accountSubmit($event)"></app-account-form>
 </div>
 
 <button  *ngIf="index==3"class="btn btn-success" (click)="add()">Save</button>
-<button class="btn btn-primary" (click)="increment()" *ngIf="index<3" style="margin-left: 5px" [disabled]="event===undefined && index===0">Next</button>
+<button class="btn btn-primary" (click)="increment()" *ngIf="index<3" style="margin-left: 5px" [disabled]="event===undefined && index===0 || company===undefined && representant===undefined && index===1 ">Next</button>
 <button class="btn btn-default" (click)="decrement()" *ngIf="index>0"style="margin-left: 5px">Previous</button>
 <button class="btn btn-default" routerLink="/events" style="margin-left: 5px">Cancel</button>

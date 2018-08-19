@@ -47,8 +47,8 @@ export class CreateAccountsComponent {
     const account = {
       username: this.username,
       password: this.password,
-      permissions: 'view-basic-info',
-      event_id: this.event_id,
+      permissions: null,
+      event_id: Number(this.event_id),
       author_id: 1
     };
 

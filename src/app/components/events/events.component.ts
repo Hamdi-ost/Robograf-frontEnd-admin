@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../../services/events.service';
-import { SessionsService } from '../../services/sessions.service';
-import { ParticipantsService } from '../../services/participants.service';
-import { PhotosService } from '../../services/photos.service';
 import { StaticService } from '../../services/static.service';
 
 @Component({
@@ -22,16 +19,12 @@ export class EventsComponent implements OnInit {
   createLink = '/createEvent';
 
   constructor(private eventService: EventsService,
-    private staticService: StaticService,
-  private participantsService: ParticipantsService) {
-
+    private staticService: StaticService) {
 
     // stat
-   // this.participantsService.getNumberParticipant().subscribe(data => console.log(data.length));
     this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
     this.staticService.getTotalSession().then(total => this.valStat[1] = total);
-     this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
-    // console.log(this.participantsService.getParticipant());
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
     this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
 
     this.eventService.getEvent()

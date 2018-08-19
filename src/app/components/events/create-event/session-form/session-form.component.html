@@ -6,7 +6,7 @@
           <!-- Date Field -->
           <div class="form-group col-sm-12">
             <label for="date">Start Date:</label>
-            <input [(ngModel)]="session.session_date" class="form-control"  required="" name="date"
+            <input [(ngModel)]="session.date" class="form-control"  required="" name="date"
               type="date">
           </div>
 
@@ -14,38 +14,29 @@
           <!-- Start Time Field -->
           <div class="form-group col-sm-12">
             <label for="start_time">Start Time:</label>
-            <input [(ngModel)]="session.session_start_time" class="form-control"  name="start_time"
+            <input [(ngModel)]="session.start_time" class="form-control"  name="start_time"
               type="time">
           </div>
 
           <!-- End Date Field -->
           <div class="form-group col-sm-12">
             <label for="end_date">End Date:</label>
-            <input [(ngModel)]="session.session_end_date" class="form-control"  required="" name="end_date"
+            <input [(ngModel)]="session.end_date" class="form-control"  required="" name="end_date"
               type="date">
           </div>
 
           <!-- End Time Field -->
           <div class="form-group col-sm-12">
             <label for="end_time">End Time:</label>
-            <input [(ngModel)]="session.session_end_time" class="form-control"  name="end_time"
+            <input [(ngModel)]="session.end_time" class="form-control"  name="end_time"
               type="time">
           </div>
 
           <!-- Description Field -->
           <div class="form-group col-sm-12">
-            <label for="session.description">Description:</label>
-            <textarea class="form-control" rows="3" name="description" cols="50" [(ngModel)]="description"></textarea>
+            <label for="description">Description:</label>
+            <textarea class="form-control" name="description"  rows="3" cols="50" [(ngModel)]="session.description"></textarea>
           </div>
-
-          <div class="col-sm-12">
-            <select hidden="" required="" name="event_id">
-              <optgroup label="">
-                <option value="selected">selected</option>
-              </optgroup>
-            </select>
-          </div>
-
 
         </div>
 

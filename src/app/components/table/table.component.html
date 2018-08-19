@@ -4,70 +4,74 @@
 
   <div class="box box-primary">
     <div class="box-body">
-        <div class="table-container">
-      <table class="table table-responsive" id="machines-table">
-        <thead>
-          <tr>
-            <th *ngFor="let colTitle of colTitles">{{colTitle}}</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of data">
-            <ng-container *ngFor="let key of keys">
-              <td *ngIf="key !== 'id'">
-                <a data-toggle="modal" data-target="#exampleModal" *ngIf="key==='url'" class="glyphicon glyphicon-eye-open"></a>
-                <i *ngIf="canBeDesactivated && row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-green" style="margin-right: 2px"></i>
-                <i *ngIf="canBeDesactivated && !row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-red" style="margin-right: 2px"></i>
-                <a routerLink="/users" *ngIf="key=='author'">{{row[key]}}</a>
-                <span *ngIf="key!=='active' && key!=='author' && key!=='url'">{{row[key]}}</span>
-                <span *ngIf="key=='active' && row.active" style="margin-left: 15px;">
-                  Active
-                </span>
-                <span *ngIf="key=='active' && !row.active" class="text-muted" style="margin-left: 15px;">
-                  Inactive
-                </span>
+      <div class="table-container">
+        <table class="table table-responsive" id="machines-table">
+          <thead>
+            <tr>
+              <th *ngFor="let colTitle of colTitles">{{colTitle}}</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of data | paginate: { itemsPerPage: 5, currentPage: p}">
+              <ng-container *ngFor="let key of keys">
+                <td *ngIf="key !== 'id'">
+                  <a data-toggle="modal" data-target="#exampleModal" *ngIf="key==='url'" class="glyphicon glyphicon-eye-open"></a>
+                  <i *ngIf="canBeDesactivated && row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-green" style="margin-right: 2px"></i>
+                  <i *ngIf="canBeDesactivated && !row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-red" style="margin-right: 2px"></i>
+                  <a routerLink="/users" *ngIf="key=='author'">{{row[key]}}</a>
+                  <span *ngIf="key!=='active' && key!=='author' && key!=='url'">{{row[key]}}</span>
+                  <span *ngIf="key=='active' && row.active" style="margin-left: 15px;">
+                    Active
+                  </span>
+                  <span *ngIf="key=='active' && !row.active" class="text-muted" style="margin-left: 15px;">
+                    Inactive
+                  </span>
+                </td>
+              </ng-container>
+              <td>
+                <div class="btn-group">
+                  <a routerLink="/{{title}}/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                    <i class="glyphicon glyphicon-info-sign"></i> Details</a>
+
+                  <a *ngIf="title!=='templates'" routerLink="/{{title}}/edit/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                    <i class="glyphicon glyphicon-edit"></i> Edit</a>
+
+                  <button *ngIf="title!=='templates'" (click)="delete(row)" type="submit" class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                    <i class="glyphicon glyphicon-trash"></i> Delete</button>
+
+                  <button *ngIf="title=='templates' && row.state=='Open'" (click)="closeTemplate(row)" type="submit" class="btn btn-danger btn-xs"
+                    style="margin-left: 5px;margin-right: 5px;">
+                    <i class="fa fa-times"></i>Close</button>
+
+                  <button *ngIf="title=='templates' && row.state=='Closed'" (click)="openTemplate(row)" type="submit" class="btn btn-success btn-xs"
+                    style="margin-left: 5px;margin-right: 5px;">
+                    <i class="fa fa-times"></i>Open</button>
+
+                  <button *ngIf="canBeDesactivated && row.active" type="submit" class="btn btn-danger btn-xs" (click)="desactivateMachine(row)">
+                    <i class="glyphicon glyphicon-off"></i> Deactivate</button>
+
+                  <button *ngIf="canBeDesactivated && !row.active" type="submit" class="btn btn-success btn-xs" (click)="activateMachine(row)">
+                    <i class="glyphicon glyphicon-on"></i> Activate</button>
+
+                </div>
               </td>
-            </ng-container>
-            <td>
-              <div class="btn-group">
-                <a routerLink="/{{title}}/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
-                  <i class="glyphicon glyphicon-info-sign"></i> Details</a>
 
-                <a *ngIf="title!=='templates'" routerLink="/{{title}}/edit/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
-                  <i class="glyphicon glyphicon-edit"></i> Edit</a>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
 
-                <button *ngIf="title!=='templates'" (click)="delete(row)" type="submit" class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
-                  <i class="glyphicon glyphicon-trash"></i> Delete</button>
-
-                <button *ngIf="title=='templates' && row.state=='Open'" (click)="closeTemplate(row)" type="submit" class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
-                  <i class="fa fa-times"></i>Close</button>
-
-                <button *ngIf="title=='templates' && row.state=='Closed'" (click)="openTemplate(row)" type="submit" class="btn btn-success btn-xs" style="margin-left: 5px;margin-right: 5px;">
-                  <i class="fa fa-times"></i>Open</button>
-
-                <button *ngIf="canBeDesactivated && row.active" type="submit" class="btn btn-danger btn-xs" (click)="desactivateMachine(row)">
-                  <i class="glyphicon glyphicon-off"></i> Deactivate</button>
-
-                <button *ngIf="canBeDesactivated && !row.active" type="submit" class="btn btn-success btn-xs" (click)="activateMachine(row)">
-                  <i class="glyphicon glyphicon-on"></i> Activate</button>
-
-              </div>
-            </td>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" role="dialog" aria-hidden="true">
-              <div class="modal-dialog">
-
-                <div class="modal-body">
-                  <img crossorigin="anonymous" src="{{row.url}}" alt="">
+                  <div class="modal-body">
+                    <img crossorigin="anonymous" src="{{row.url}}" alt="">
+                  </div>
                 </div>
               </div>
-            </div>
 
-          </tr>
-        </tbody>
-      </table>
+            </tr>
+          </tbody>
+
+        </table>
+        <pagination-controls  (pageChange)="p = $event"></pagination-controls>
       </div>
       <div>
         <hr>

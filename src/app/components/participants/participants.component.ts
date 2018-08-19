@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ParticipantsService } from '../../services/participants.service';
+import { StaticService } from '../../services/static.service';
 
 @Component({
   selector: 'app-participants',
@@ -18,7 +19,14 @@ export class ParticipantsComponent implements OnInit {
   keys: any[];
   createLink = '/createParticipant';
 
-  constructor(private participantsService: ParticipantsService) {
+  constructor(private participantsService: ParticipantsService, private staticService: StaticService) {
+
+    // stat
+    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+
     this.participantsService.getParticipant()
     .subscribe(data => {
       this.data = data.reverse();

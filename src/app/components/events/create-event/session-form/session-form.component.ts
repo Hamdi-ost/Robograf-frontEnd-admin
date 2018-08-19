@@ -9,12 +9,10 @@ export class SessionFormComponent implements OnInit {
   @Output() sessionForm: EventEmitter<any> = new EventEmitter<any>();
 
   session = {
-    // number: null,
     date: null,
     start_time: null,
     end_time: null,
     description: null,
-    // event_id: null,
     end_date: null
   };
 
