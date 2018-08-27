@@ -23,6 +23,12 @@ export class MachinesService {
     .pipe(map(res => Machine.map(res)));
   }
 
+  getAvailableAsync(details) {
+    const header = new HttpHeaders ();
+    header.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:8000/api/machines/getAvailableAsync', details, {headers: header});
+  }
+
   getMachineDetails(id): Observable<any> {
     return this.http.get('http://localhost:8000/api/machines/' + id);
   }

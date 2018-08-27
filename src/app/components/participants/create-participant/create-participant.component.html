@@ -46,13 +46,14 @@
             <label for="phone">Phone:</label>
             <input class="form-control" name="phone" type="text" [(ngModel)]="phone">
           </div>
+
           <div id="event_id_field" class="form-group col-sm-12">
             <label for="event_id">Event:</label>
-            <select class="form-control" id="event_id" [(ngModel)]="eventId">
-              <option value="8">event123</option>
-              <option value="9">event44</option>
+            <select class="form-control" id="event_id" [(ngModel)]="event_id">
+              <option *ngFor="let event of events" value={{event.id}}>{{event.name}}</option>
             </select>
           </div>
+
 
         </div>
         <!-- Submit Field -->

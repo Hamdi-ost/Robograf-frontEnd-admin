@@ -42,6 +42,12 @@ export class EventsComponent implements OnInit {
     this.eventService.deleteEvent(id)
       .subscribe(data => {
         this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+
+        // stat
+        this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+        this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+        this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+        this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
       });
   }
 

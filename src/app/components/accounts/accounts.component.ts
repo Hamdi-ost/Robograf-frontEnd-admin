@@ -17,6 +17,7 @@ export class AccountsComponent implements OnInit {
   constructor(private accountsService: AccountsService) {
     this.accountsService.getAccount()
     .subscribe(data => {
+      console.log(data);
       this.data = data.reverse();
       this.keys = Object.keys(this.data[0]);
         }

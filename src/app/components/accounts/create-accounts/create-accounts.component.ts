@@ -16,10 +16,14 @@ export class CreateAccountsComponent {
 
   username;
   password;
-  AccountPermissions;
+  AccountPermissions = [
+    {id: 1, value: 'view-basic-info', selected: false},
+    {id: 2, value: 'view-database', selected: false},
+    {id: 3, value: 'download-database', selected: false},
+    {id: 4, value: 'validate-template', selected: false}
+  ];
   event_id;
   events;
-  permissions;
 
   constructor(
     private flashMessages: FlashMessagesService,
@@ -27,7 +31,6 @@ export class CreateAccountsComponent {
     private eventService: EventsService,
     private accountsServie: AccountsService,
     private permissionService: PermissionsService) {
-    this.permissionService.getPermissions().subscribe(data => this.permissions = data);
     this.eventService
       .getEvent()
       .toPromise()
@@ -43,14 +46,22 @@ export class CreateAccountsComponent {
 
   OnSubmit() {
 
+    const permissionId = [];
+
+    for (let i = 0 ; i < this.AccountPermissions.length ; i++) {
+        if (this.AccountPermissions[i].selected) {
+          permissionId.push(this.AccountPermissions[i].id);
+        }
+    }
     // Fill the object
     const account = {
       username: this.username,
       password: this.password,
-      permissions: null,
+      permissions: permissionId,
       event_id: Number(this.event_id),
       author_id: 1
     };
+console.log(account);
 
     // Required  Fields
     if (!this.validateService.validateAccountRegister(account)) {
@@ -58,7 +69,6 @@ export class CreateAccountsComponent {
       return false;
     }
 
-    console.log(account);
 
     // Add user
     this.accountsServie.addAccount(account)

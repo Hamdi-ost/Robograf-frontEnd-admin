@@ -22,8 +22,7 @@ export class PhotosService {
   constructor(private http: HttpClient,
     private machinesService: MachinesService,
     private sessionsService: SessionsService,
-    private participantsService: ParticipantsService,
-    private eventService: EventsService) {
+    private participantsService: ParticipantsService) {
       this.machinesService.getMachines().subscribe(data => this.machines = data);
       this.participantsService.getParticipant().subscribe(data => this.participants = data);
       this.sessionsService.getSessions().subscribe(data => this.eventSession =  data);

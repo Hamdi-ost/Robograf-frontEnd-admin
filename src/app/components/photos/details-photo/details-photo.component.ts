@@ -10,6 +10,7 @@ import { PhotosService } from '../../../services/photos.service';
 import { Session } from '../../../models/session';
 import { Event } from '../../../models/event';
 import { UsersService } from '../../../services/users.service';
+import { StaticService } from '../../../services/static.service';
 
 @Component({
   selector: 'app-details-photo',
@@ -55,7 +56,15 @@ export class DetailsPhotoComponent implements OnInit {
     private sessionService: SessionsService,
     private machineService: MachinesService,
     private photosService: PhotosService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private staticService: StaticService ) {
+
+          // stat
+    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+
     let machines;
     let users;
     this.usersService.getUsers().subscribe(data => users = data);

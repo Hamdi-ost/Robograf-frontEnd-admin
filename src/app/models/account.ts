@@ -5,6 +5,7 @@ export class Account {
     password;
     link;
     event;
+    permission;
     author;
 
 

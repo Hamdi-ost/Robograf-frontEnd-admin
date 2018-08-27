@@ -10,7 +10,12 @@ import { PermissionsService } from '../../../../services/permissions.service';
 export class AccountFormComponent implements OnInit {
   @Output() accountForm: EventEmitter<any> = new EventEmitter<any>();
 
-  permissions;
+  AccountPermissions = [
+    {id: 1, value: 'view-basic-info', selected: false},
+    {id: 2, value: 'view-database', selected: false},
+    {id: 3, value: 'download-database', selected: false},
+    {id: 4, value: 'validate-template', selected: false}
+  ];
 
   account = {
     username: null,
@@ -21,7 +26,6 @@ export class AccountFormComponent implements OnInit {
   };
 
   constructor(private eventService: EventsService, private permissionService: PermissionsService) {
-    this.permissionService.getPermissions().subscribe(data => this.permissions = data);
     this.eventService
     .getEvent()
     .toPromise()
@@ -34,6 +38,14 @@ export class AccountFormComponent implements OnInit {
   }
 
   send() {
+
+    const permissionId = [];
+    for (let i = 0 ; i < this.AccountPermissions.length ; i++) {
+      if (this.AccountPermissions[i].selected) {
+        permissionId.push(this.AccountPermissions[i].id);
+      }
+      this.account.permissions = permissionId;
+  }
     this.accountForm.emit(this.account);
   }
 

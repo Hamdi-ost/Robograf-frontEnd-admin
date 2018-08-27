@@ -67,7 +67,7 @@ export class ValidateService {
 
   validateParticipant(participant) {
     // tslint:disable-next-line:max-line-length
-    if (participant.name === undefined || participant.email === undefined || participant.lastName === undefined || participant.phone === undefined ) {
+    if (participant.name === undefined || participant.email === undefined || participant.last_name === undefined || participant.phone === undefined ) {
       return false;
     } else {
       return true;

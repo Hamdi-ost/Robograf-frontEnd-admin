@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MachinesService } from '../../../../services/machines.service';
 
 @Component({
   selector: 'app-session-form',
@@ -16,11 +17,22 @@ export class SessionFormComponent implements OnInit {
     end_date: null
   };
 
-  constructor() { }
+  machinesDispo = [];
+
+  constructor(private machineService: MachinesService) {
+   }
 
   ngOnInit() {
   }
-  // getAvailableAsync
+
+  onChange(newValue) {
+    this.machineService.getAvailableAsync(this.session).subscribe(data => {
+      for (let i = 0; i < Object.keys(data).length ; i++ ) {
+          this.machinesDispo.push({value: data[i], selected: false}) ;
+        }
+    console.log(this.machinesDispo);
+    });
+  }
 
   send() {
     this.sessionForm.emit(this.session);

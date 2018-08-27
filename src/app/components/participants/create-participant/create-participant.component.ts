@@ -5,6 +5,7 @@ import { ValidateService } from '../../../services/validate.service';
 import { Router } from '@angular/router';
 import { Participant } from '../../../models/participant';
 import { ParticipantsService } from '../../../services/participants.service';
+import { EventsService } from '../../../services/events.service';
 
 @Component({
   selector: 'app-create-participant',
@@ -18,36 +19,43 @@ export class CreateParticipantComponent implements OnInit {
   lastName;
   gender;
   age;
-  event;
+  event_id;
+  events;
   phone;
-  participant: Participant = new Participant();
 
   constructor(private flashMessages: FlashMessagesService,
     private participantsService: ParticipantsService,
     private validateService: ValidateService,
-    private router: Router) { }
+    private router: Router,
+    private eventService: EventsService) {
+    this.eventService.getEvent().subscribe(data => this.events = data);
+  }
 
   ngOnInit() {
   }
 
   OnSubmit() {
 
-    // Fill the object
-    this.participant.name = this.name;
-    this.participant.lastName = this.lastName;
-    this.participant.email = this.email;
-    this.participant.age = this.age;
-    this.participant.event = this.event;
-    this.participant.phone = this.phone;
     if (this.gender === 0) {
-      this.participant.gender = false;
+      this.gender = false;
     } else {
-      this.participant.gender = true;
+      this.gender = true;
     }
-    console.log(this.participant);
+
+    const participant = {
+      email: this.email,
+      name: this.name,
+      last_name: this.lastName,
+      gender: this.gender,
+      age: this.age,
+      phone: this.phone,
+      event_id: Number(this.event_id)
+    };
+
+    console.log(participant);
 
     // Required  Fields
-    if (!this.validateService.validateParticipant(this.participant)) {
+    if (!this.validateService.validateParticipant(participant)) {
       this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
@@ -58,11 +66,11 @@ export class CreateParticipantComponent implements OnInit {
       return false;
     }
     // Add Participant
-    this.participantsService.addParticipant(this.participant)
-    .subscribe(data => {
-      this.router.navigateByUrl('/participants');
-      this.flashMessages.show('Participant created !!', { cssClass: 'alert-success', timeout: 3000 });
-    });
+    this.participantsService.addParticipant(participant)
+      .subscribe(data => {
+        this.router.navigateByUrl('/participants');
+        this.flashMessages.show('Participant created !!', { cssClass: 'alert-success', timeout: 3000 });
+      });
   }
 
 }

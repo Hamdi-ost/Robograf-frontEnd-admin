@@ -27,6 +27,7 @@ export class CreateEventComponent {
   account = {
     username: null,
     password: null,
+    permissions: null,
     event_id: null,
     author_id: 1
   };
@@ -112,6 +113,7 @@ export class CreateEventComponent {
     this.account.username = account.username;
     this.account.password = account.password;
     this.account.event_id = account.event_id;
+    this.account.permissions = account.permissions;
     console.log(this.account);
   }
 
