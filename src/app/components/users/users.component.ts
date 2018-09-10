@@ -10,26 +10,30 @@ import { ActivatedRoute } from '@angular/router';
 export class UsersComponent implements OnInit {
 
   title = 'users';
-  colTitles = ['Name', 'Email', 'Role'];
+  colTitles = ['Roles', 'Email', 'Name'];
   data: any[];
   keys: any[];
   createLink = '/createUser';
 
   constructor(private usersService: UsersService , private route: ActivatedRoute) {
+    this.fetchData();
+  }
+
+  fetchData() {
     this.usersService.getUsers()
     .subscribe(data => {
+      console.log(data);
       this.data = data.reverse();
       this.keys = Object.keys(this.data[0]);
     });
   }
-
   ngOnInit() {
   }
 
   deleteuser (id) {
     this.usersService.deleteUser(id)
     .subscribe(data => {
-        this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+      this.fetchData();
     });
   }
 

@@ -42,4 +42,20 @@ export class SessionsService {
     return this.http.patch('http://localhost:8000/api/sessions/' + id, modifiedSession, {headers: header});
   }
 
+  detachMachineAsync(sessionId, machineId) {
+    return this.http.get('http://localhost:8000/api/sessions/' + sessionId + '/detachMachineAsync/' + machineId);
+  }
+
+  assignMachineAsync(id, req) {
+    const header = new HttpHeaders ();
+    header.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:8000/api/sessions/' + id + '/assignMachineAsync', req, {headers: header} );
+  }
+
+  assignMachine(id, req) {
+    const header = new HttpHeaders ();
+    header.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:8000/api/sessions/' + id + '/assignMachine', req, {headers: header} );
+  }
+
 }

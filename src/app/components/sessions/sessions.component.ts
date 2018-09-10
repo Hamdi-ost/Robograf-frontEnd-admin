@@ -20,6 +20,7 @@ export class SessionsComponent implements OnInit {
   data: any[];
   keys: any[];
   createLink = '/createSession';
+  events;
 
   constructor(private sessionsService: SessionsService, private eventsService: EventsService,
     private staticService: StaticService) {
@@ -29,25 +30,43 @@ export class SessionsComponent implements OnInit {
     this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
     this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
 
-    this.sessionsService.getSessions()
-    .subscribe(data => {
-      this.eventsService.getEvent().subscribe(event => {
-      const events = event ;
-      this.data = Session.map(data, events).reverse();
-      this.keys = Object.keys(this.data[0]);
-        }
-      );
-    });
+
+
+    this.fetchData();
+
   }
 
   ngOnInit() {
   }
 
-  deleteSession (id) {
-    this.sessionsService.deleteSession(id)
-    .subscribe(data => {
-      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+  fetchData() {
+    let eventt;
+    this.eventsService.getEvent().subscribe(event => {
+      eventt = event;
+    }, null, () => {
+      this.sessionsService.getSessions()
+        .subscribe(data => {
+          this.data = Session.map(data, eventt).reverse();
+          console.log(this.data);
+          this.keys = Object.keys(this.data[0]);
+          // console.log(this.data.find(res => res.id === 16));
+        }, null, () => {
+
+          for (const session of this.data) {
+            console.log(this.data.find(res => res.id === 16));
+          }
+        });
     });
+
+
+
+  }
+
+  deleteSession(id) {
+    this.sessionsService.deleteSession(id)
+      .subscribe(data => {
+        this.fetchData();
+      });
   }
 
 }

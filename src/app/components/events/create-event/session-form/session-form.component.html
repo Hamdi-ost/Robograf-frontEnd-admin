@@ -42,7 +42,7 @@
           <label for="machines">Machines:</label>
           <div *ngFor="let machine of machinesDispo">
             <input type="checkbox" value="machine.value.id" [(ngModel)]="machine.selected" />
-            <label>{{machine.value.name}}</label>
+            <label>{{machine.value}}</label>
           </div>
         </div>
       </div>

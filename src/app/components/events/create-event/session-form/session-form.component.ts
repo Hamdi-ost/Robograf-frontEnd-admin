@@ -14,11 +14,12 @@ export class SessionFormComponent implements OnInit {
     start_time: null,
     end_time: null,
     description: null,
-    end_date: null
+    end_date: null,
+    machines: null
   };
 
   machinesDispo = [];
-
+  machines = [];
   constructor(private machineService: MachinesService) {
    }
 
@@ -26,15 +27,26 @@ export class SessionFormComponent implements OnInit {
   }
 
   onChange(newValue) {
+    this.machinesDispo = [];
+    this.machines = [];
     this.machineService.getAvailableAsync(this.session).subscribe(data => {
       for (let i = 0; i < Object.keys(data).length ; i++ ) {
-          this.machinesDispo.push({value: data[i], selected: false}) ;
+          this.machines.push(data[i]);
+          this.machinesDispo.push({id: data[i].id , value: data[i].name, selected: false}) ;
         }
-    console.log(this.machinesDispo);
     });
   }
 
   send() {
+    const machineId = [];
+
+    for (let i = 0 ; i < this.machinesDispo.length ; i++) {
+        if (this.machinesDispo[i].selected) {
+          console.log(this.machines);
+          machineId.push(this.machines[i]);
+        }
+    }
+    this.session.machines = this.machines;
     this.sessionForm.emit(this.session);
   }
 }

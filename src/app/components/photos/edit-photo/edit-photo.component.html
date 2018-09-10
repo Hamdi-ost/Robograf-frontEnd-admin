@@ -1,3 +1,31 @@
-<p>
-  edit-photo works!
-</p>
+<h3>Edit</h3>
+<div class="box box-primary">
+  <div class="box-body">
+    <div class="row">
+      <!-- Url Field -->
+      <div class="form-group col-sm-6">
+        <label for="url">Url:</label>
+        <input class="form-control" name="url" type="text"  [(ngModel)]="photo.url">
+      </div>
+
+      <!-- Photo Time Field -->
+      <div class="form-group col-sm-6">
+        <label for="photo_time">Photo Time:</label>
+        <input class="form-control" name="photo_time" type="text"  [(ngModel)]="photo.photo_time">
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group col-sm-12 col-lg-12">
+        <label for="description">Description:</label>
+        <textarea class="form-control" name="description" cols="50" rows="10" [(ngModel)]="photo.description"></textarea>
+      </div>
+
+      <!-- Submit Field -->
+      <div class="form-group col-sm-12">
+        <input class="btn btn-primary" type="submit" (click)="update()" value="Save">
+        <a (click)="back()" class="btn btn-default">Cancel</a></div>
+
+
+    </div>
+  </div>
+</div>

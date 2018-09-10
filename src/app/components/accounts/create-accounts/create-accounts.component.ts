@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { ValidateService } from '../../../services/validate.service';
-import { Router } from '@angular/router';
 import { AccountsService } from '../../../services/accounts.service';
-import { Account } from '../../../models/account';
 import { EventsService } from '../../../services/events.service';
-import { PermissionsService } from '../../../services/permissions.service';
+
 
 @Component({
   selector: 'app-create-accounts',
@@ -29,8 +27,7 @@ export class CreateAccountsComponent {
     private flashMessages: FlashMessagesService,
     private validateService: ValidateService,
     private eventService: EventsService,
-    private accountsServie: AccountsService,
-    private permissionService: PermissionsService) {
+    private accountsServie: AccountsService) {
     this.eventService
       .getEvent()
       .toPromise()
@@ -61,7 +58,6 @@ export class CreateAccountsComponent {
       event_id: Number(this.event_id),
       author_id: 1
     };
-console.log(account);
 
     // Required  Fields
     if (!this.validateService.validateAccountRegister(account)) {

@@ -59,6 +59,29 @@ export class DetailsEventComponent {
   author;
   companies;
 
+  AccountPermissions = [
+    {id: 1, value: 'view-basic-info', selected: false},
+    {id: 2, value: 'view-database', selected: false},
+    {id: 3, value: 'download-database', selected: false},
+    {id: 4, value: 'validate-template', selected: false}
+  ];
+
+  representant = {
+    firstName: null,
+    lastName: null,
+    email: null,
+    phone: null,
+    entreprise_id: null,
+    company: null
+  };
+
+  account = {
+    username: null,
+    password: null,
+    event: null,
+    author: null
+  };
+
   constructor(
     private router: Router,
     private flashMessages: FlashMessagesService,
@@ -71,6 +94,11 @@ export class DetailsEventComponent {
     private staticService: StaticService,
     private route: ActivatedRoute) {
       this.companiesService.getCompany().subscribe(data => this.companies = data);
+    this.fetchData();
+
+  }
+
+  fetchData() {
     // stat
     this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
     this.staticService.getTotalSession().then(total => this.valStat[1] = total);
@@ -99,6 +127,7 @@ export class DetailsEventComponent {
                 this.keySessions = Object.keys(this.dataSessions[0]);
               }
               // Representatnts
+              console.log(data.representants);
               this.dataRepresentants = Representant.map(data.representants, companies);
               if (this.dataRepresentants.length > 0) {
                 this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
@@ -112,26 +141,11 @@ export class DetailsEventComponent {
           });
         });
     });
-
   }
 
-  representant = {
-    firstName: null,
-    lastName: null,
-    email: null,
-    phone: null,
-    entreprise_id: null,
-    company: null
-  };
-
-  account = {
-    username: null,
-    password: null,
-    event: null,
-    author: null
-  };
 
   addRepresentant() {
+
     const contact = {
       first_name : this.representant.firstName,
       last_name : this.representant.lastName,
@@ -140,6 +154,7 @@ export class DetailsEventComponent {
       entreprise_id: this.representant.entreprise_id,
       event_id: this.event_id
     };
+
     // get company name
     this.companiesService.getCompanyDetails(this.representant.entreprise_id)
     .toPromise()
@@ -149,30 +164,47 @@ export class DetailsEventComponent {
     // Add representant
     this.representantsService.addRepresentant(contact)
     .subscribe(res => {
+      this.fetchData();
       this.dataRepresentants.push(this.representant);
       this.flashMessages.show('Representant added', { cssClass: 'alert-success', timeout: 3000 });
     });
   }
 
-
+  detachRepresentant (RepresentantId) {
+    this.eventService.detachRepresentant(this.event_id, RepresentantId).subscribe(res  => this.fetchData());
+  }
 
   addAccount() {
+
+    const permissionId = [];
+
+    for (let i = 0 ; i < this.AccountPermissions.length ; i++) {
+        if (this.AccountPermissions[i].selected) {
+          permissionId.push(this.AccountPermissions[i].id);
+        }
+    }
+
+
     // Fill the object
     const account = {
       username: this.account.username,
       password: this.account.password,
       event_id: this.event_id,
+      permissions: permissionId,
       author_id: 1
     };
 
-    this.account.event = this.event_name;
+   this.account.event = this.event_name;
     this.account.author = this.author;
     // Add user
     this.accountService.addAccount(account)
     .subscribe(data => {
+      this.fetchData();
       this.dataAccounts.push(this.account);
       this.flashMessages.show('Account Added', { cssClass: 'alert-success', timeout: 3000 });
       });
+
+
 
   }
 

@@ -1,3 +1,72 @@
-<p>
-  template-details works!
-</p>
+<section class="content">
+
+  <section class="content-header">
+    <h1 class="pull-left">Rejected Models</h1>
+
+  </section>
+  <div class="content">
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <div class="box box-primary">
+      <div class="box-body">
+        <h2 style="color: silver; text-align: center;">
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i> No Models Available <br>
+        </h2>
+      </div>
+    </div>
+  </div>
+
+
+
+  <section class="content-header">
+    <h1 class="pull-left">Templates</h1>
+
+  </section>
+  <div class="content" *ngIf="!templates">
+    <div class="clearfix"></div>
+    <div class="clearfix"></div>
+    <div class="box box-primary">
+      <div class="box-body">
+        <h2 style="color: silver; text-align: center;">
+          <i class="fa fa-exclamation-circle" aria-hidden="true"></i> No Templates Available <br>
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="content" *ngIf="templates">
+    <app-table 
+      [title]="title" 
+      [colTitles]="colTitles" 
+      [keys]="keys" 
+      [data]="templates" 
+    >
+    </app-table>
+  </div>
+
+
+  <div id="full_size_img" class="modal fade" role="dialog">
+    <div class="modal-dialog " style="width: 100%;">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="background-color:rgba(100,100,100,0.9);min-height: 95vh;display:flex;justify-content:center;align-items:center;">
+        <div class="modal-body">
+   
+            <div style="position: relative">
+              <div style="position: relative;display: inline-block;">
+                <span style="position: relative;display: inline-block;">
+                  <button id="modal_close_btn" type="button" class="close" data-dismiss="modal" style="font-size:250%;position:absolute;right: 10px;color: white;opacity:1;"><span
+                      style="text-shadow: 1px 0px 1px black;">×</span></button>
+                  <img id="modal_photo" src="" style="border-radius: 3px;max-width: 100%; max-height: 90vh;">
+                </span>
+
+              </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</section>

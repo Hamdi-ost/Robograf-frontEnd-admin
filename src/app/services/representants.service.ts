@@ -11,10 +11,13 @@ import { CompaniesService } from './companies.service';
 export class RepresentantsService {
   companies;
   constructor(private companiesService: CompaniesService, private http: HttpClient ) {
-    this.companiesService.getCompany().subscribe(data => this.companies = data);
+
   }
 
 
+  getCompanies() {
+    this.companiesService.getCompany().subscribe(data => this.companies = data);
+  }
 
   addRepresentant(representant) {
     const header = new HttpHeaders ();
@@ -23,6 +26,7 @@ export class RepresentantsService {
   }
 
   getRepresentant() {
+    this.getCompanies();
     return this.http.get<any[]>('http://localhost:8000/api/representants')
     .pipe(map(res => Representant.map(res, this.companies)));
   }

@@ -23,6 +23,10 @@ export class PhotosService {
     private machinesService: MachinesService,
     private sessionsService: SessionsService,
     private participantsService: ParticipantsService) {
+      this.getData();
+    }
+
+    getData() {
       this.machinesService.getMachines().subscribe(data => this.machines = data);
       this.participantsService.getParticipant().subscribe(data => this.participants = data);
       this.sessionsService.getSessions().subscribe(data => this.eventSession =  data);
@@ -35,6 +39,7 @@ export class PhotosService {
   }
 
   getPhoto() {
+    this.getData();
     return this.http.get<any[]>('http://localhost:8000/api/photos')
     .pipe(map(res  => Photo.map(res, this.machines, this.eventSession, this.participants))
     );

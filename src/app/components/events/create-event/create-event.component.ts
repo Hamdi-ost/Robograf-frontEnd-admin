@@ -39,7 +39,9 @@ export class CreateEventComponent {
     end_time: null,
     description: null,
     event_id: null,
-    end_date: null
+    end_date: null,
+    name : 'ok',
+    type : 'fd'
   };
 
   company = {
@@ -53,9 +55,11 @@ export class CreateEventComponent {
     last_name: null,
     email: null,
     phone: null,
-    entreprise_id: null
+    entreprise_id: null,
+    event_id: null
   };
 
+  machines = [];
 
   constructor(
     private eventService: EventsService,
@@ -66,7 +70,11 @@ export class CreateEventComponent {
     private flashMessages: FlashMessagesService,
     private router: Router
   ) {
-    this.eventService.getEvent().subscribe(data => this.eventId = data.length);
+    this.fetchData();
+  }
+
+  fetchData() {
+    this.eventService.getEvent().subscribe(data => this.eventId = data[data.length - 1].id + 1);
   }
 
   increment() {
@@ -84,7 +92,6 @@ export class CreateEventComponent {
     this.representant.phone = existRepresentant.phone;
     this.representant.entreprise_id = Number(existRepresentant.entreprise_id);
 
-    console.log(this.representant);
   }
 
   newRepresentantFormSubmit(newRepresentant) {
@@ -98,15 +105,14 @@ export class CreateEventComponent {
     this.representant.email = newRepresentant.email;
     this.representant.phone = newRepresentant.phone;
     this.representant.entreprise_id = newRepresentant.entreprise_id;
+    console.log(this.eventId);
+    this.representant.event_id = this.eventId;
 
-    console.log(this.company);
-    console.log(this.representant);
   }
 
   eventSubmit(event) {
     this.event = event;
     this.event.author_id = 1;
-    console.log(this.event);
   }
 
   accountSubmit(account) {
@@ -114,7 +120,6 @@ export class CreateEventComponent {
     this.account.password = account.password;
     this.account.event_id = account.event_id;
     this.account.permissions = account.permissions;
-    console.log(this.account);
   }
 
   sessionSubmit(session) {
@@ -125,29 +130,33 @@ export class CreateEventComponent {
     this.session.description = session.description;
     this.session.event_id = this.eventId;
 
+    this.machines = session.machines;
     console.log(this.session);
+    console.log(this.machines);
   }
 
   add() {
-    console.log(this.company.name);
+
 
     // event
-    this.eventService.addEvent(this.event).subscribe();
-    // representant + company (new)
-    if (this.company.name != null) {
-    this.companiesService.addCompany(this.company)
-      .subscribe(null, null, () => this.representantService
-        .addRepresentant(this.representant)
-        .subscribe());
-    } else {
-      // representant + company (exist)
-      this.representantService.addRepresentant(this.representant).subscribe();
-    }
-    // session
-    this.sessionService.addSession(this.session).subscribe();
-    // account
-    this.accountService.addAccount(this.account).subscribe();
+    this.eventService.addEvent(this.event).subscribe(null , null, () => {
+      this.sessionService.addSession(this.session).subscribe(null, null, () => {
+        this.sessionService.assignMachine(21, this.machines).subscribe();
+      });
+      if (this.company.name != null) {
+        this.companiesService.addCompany(this.company)
+          .subscribe(null, null, () => this.representantService
+            .addRepresentant(this.representant)
+            .subscribe());
+      } else {
+        // representant + company (exist)
+        this.representantService.addRepresentant(this.representant).subscribe();
+      }
+      this.accountService.addAccount(this.account).subscribe();
+    });
+
     this.router.navigateByUrl('/events');
+    this.fetchData();
     this.flashMessages.show('Event Added', { cssClass: 'alert-success', timeout: 3000 });
   }
 

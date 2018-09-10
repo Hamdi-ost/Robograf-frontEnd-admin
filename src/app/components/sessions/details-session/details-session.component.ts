@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SessionsService } from '../../../services/sessions.service';
 import { Machine } from '../../../models/machine';
 import { MachinesService } from '../../../services/machines.service';
@@ -7,6 +7,9 @@ import { Session } from '../../../models/session';
 import { EventsService } from '../../../services/events.service';
 import { Participant } from '../../../models/participant';
 import { Photo } from '../../../models/photo';
+import { PhotosService } from '../../../services/photos.service';
+import { ParticipantsService } from '../../../services/participants.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-details-session',
@@ -20,7 +23,7 @@ export class DetailsSessionComponent implements OnInit {
   title3 = 'photos';
   createMachine = '/createMachine';
   createParticipant = '/createParticipant';
-
+  sessionId;
   // stat variables
   stat = ['Total Event', 'Total Sessions', 'Total Participants', 'Total Photos'];
   titleStat = ['events', 'sessions', 'participants', 'photos'];
@@ -46,16 +49,35 @@ export class DetailsSessionComponent implements OnInit {
   dataList;
   dataListKeys;
   dataListIcons = ['fa fa-circle-o', 'fa fa-calendar', 'fa fa-clock-o', 'fa fa-calendar', 'fa fa-clock-o', 'fa fa-tag'];
-
+  machineId;
+  machines = [];
   constructor(
     private sessionService: SessionsService,
     private route: ActivatedRoute,
-    private machinesService: MachinesService,
-    private eventsService: EventsService) {
+    private router: Router,
+    private eventsService: EventsService,
+    private photosService: PhotosService,
+    private participantsService: ParticipantsService,
+    private machineService: MachinesService) {
+
+    this.machineService.getMachines()
+    .subscribe(data => {
+      for (let i = 0 ; i < data.length; i++) {
+        const obj = {id: data[i].id, value: data[i].name, selected: false};
+        this.machines.push(obj);
+    }
+    });
+    this.fetchData();
+  }
+
+  ngOnInit() {
+  }
+
+  fetchData() {
     this.route.params.subscribe(params => {
-        this.sessionService.getSessionDetails(params['id'])
-          .subscribe(data => {
-            this.eventsService.getEvent().subscribe(event => {
+      this.sessionService.getSessionDetails(params['id'])
+        .subscribe(data => {
+          this.eventsService.getEvent().subscribe(event => {
             const events = event;
             // list
             this.dataList = Session.map(data.sessions, events);
@@ -67,24 +89,65 @@ export class DetailsSessionComponent implements OnInit {
             // machines
             this.dataMachines = Machine.map(data.machines);
             if (this.dataMachines.length > 0) {
-            this.keysMachines = Object.keys(this.dataMachines[0]);
+              this.keysMachines = Object.keys(this.dataMachines[0]);
             }
             // Participants
             this.dataParticipants = Participant.map(data.participants, events);
             if (this.dataParticipants.length > 0) {
-            this.keysParticipants = Object.keys(this.dataParticipants[0]);
+              this.keysParticipants = Object.keys(this.dataParticipants[0]);
             }
             // Photos
             this.dataPhotos = Photo.map(data.photos, data.machines, data.sessions, this.dataParticipants);
             if (this.dataPhotos.length > 0) {
-            this.keysPhotos = Object.keys(this.dataPhotos[0]);
+              this.keysPhotos = Object.keys(this.dataPhotos[0]);
             }
-      });
-    });
+          });
+        }, null, () =>  {
+          this.sessionId = params['id'];
+        });
   });
+}
+
+  save() {
+    const machineId = [];
+
+    for (let i = 0 ; i < this.machines.length ; i++) {
+        if (this.machines[i].selected) {
+          machineId.push(this.machines[i].id);
+        }
+    }
+
+    const req = {
+      machines : machineId
+    };
+
+   this.sessionService.assignMachineAsync(this.sessionId, req).subscribe(data => {
+   }, null, () => this.fetchData());
   }
 
-  ngOnInit() {
+  detachMachine(id) {
+    this.sessionService.detachMachineAsync(this.sessionId, id).subscribe(data => {
+      this.fetchData();
+    });
+  }
+
+  deletePhoto(id) {
+    this.photosService.deletePhoto(id)
+      .subscribe(data => {
+        this.fetchData();
+      });
+  }
+
+  deleteSession(id) {
+    this.sessionService.deleteSession(id)
+      .subscribe(data => this.router.navigateByUrl('/sessions'));
+  }
+
+  deleteParticipant(id) {
+    this.participantsService.deleteParticipant(id)
+      .subscribe(data => {
+        this.fetchData();
+      });
   }
 
 }

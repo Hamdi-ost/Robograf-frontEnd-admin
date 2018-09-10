@@ -16,6 +16,10 @@ export class PermissionsComponent implements OnInit {
   createLink = '/createPermission';
 
   constructor(private permissionService: PermissionsService , private route: ActivatedRoute) {
+    this.fetchData();
+  }
+
+  fetchData() {
     this.permissionService.getPermissions()
     .subscribe(data => {
       this.data = data.reverse();
@@ -29,7 +33,7 @@ export class PermissionsComponent implements OnInit {
   deletePermission (id) {
     this.permissionService.deletePermission(id)
     .subscribe(data => {
-        this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+        this.fetchData();
     });
   }
 

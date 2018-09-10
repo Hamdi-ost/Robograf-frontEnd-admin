@@ -52,8 +52,6 @@ export class CreateParticipantComponent implements OnInit {
       event_id: Number(this.event_id)
     };
 
-    console.log(participant);
-
     // Required  Fields
     if (!this.validateService.validateParticipant(participant)) {
       this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });

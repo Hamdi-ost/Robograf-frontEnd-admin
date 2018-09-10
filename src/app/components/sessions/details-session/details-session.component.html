@@ -14,7 +14,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="padding-bottom: 0px;">
-              <app-details-list [title]="titleForListDetails" [dataListIcons] ="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
+              <app-details-list  [title]="titleForListDetails" [dataListIcons]="dataListIcons" [dataListKeys]="dataListKeys" [dataList]="dataList"></app-details-list>
             </div>
             <!-- /.box-body -->
           </div>
@@ -22,19 +22,57 @@
       </div>
     </div>
     <div class="col-lg-6">
-      <app-details-cubes [cubesTitle]="cubesTitle" [cubesData]="cubesData" ></app-details-cubes>
+      <app-details-cubes [cubesTitle]="cubesTitle" [cubesData]="cubesData"></app-details-cubes>
     </div>
   </div>
 
   <div class="details-contents">
     <div>
       <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Machines: {{dataMachines.length}}</button>
-      <app-table [createLink]="createMachine" [title]="title1" [colTitles]="colTitlesMachines" [keys]="keysMachines" [data]="dataMachines" [canBeDesactivated]="true" [canAddNew]="true" createLink="/createMachine"></app-table>
+      <app-table (detachMachine)="detachMachine($event)" [detach]="true" [createLink]="createMachine" [title]="title1" [colTitles]="colTitlesMachines" [keys]="keysMachines" [data]="dataMachines"
+        [canBeDesactivated]="true" createLink="/createMachine"></app-table>
+      <button type="button"  style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#myModal">Add
+        New
+      </button>
       <br><br>
       <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Participants: {{dataParticipants.length}}</button>
-      <app-table [createLink]="createParticipant" [title]="title2" [colTitles]="colTitlesParticipants" [keys]="keysParticipants" [data]="dataParticipants" [canAddNew]="true"></app-table>
+      <app-table [createLink]="createParticipant" [title]="title2" [colTitles]="colTitlesParticipants" [keys]="keysParticipants" (deleteX)="deleteParticipant($event)"
+        [data]="dataParticipants"></app-table>
       <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Photos: {{dataPhotos.length}}</button>
-      <app-table [title]="title3" [colTitles]="colTitlesPhotos" [keys]="keysPhotos" [data]="dataPhotos" ></app-table>
+      <app-table [title]="title3" [colTitles]="colTitlesPhotos" [keys]="keysPhotos" [data]="dataPhotos" (deleteX)="deletePhoto($event)"></app-table>
     </div>
   </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Machines:</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box box-primary">
+          <div class="box-body">
+            <div class="modal-body row">
+              <div class="form-group col-sm-12">
+
+                  <div *ngFor="let machine of machines" id="div-Mech2">
+                    <input type="checkbox" [(ngModel)]="machine.selected" name="machines[]" class="form-checkbox" value="machine.id">{{machine.value}}</div>
+                
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" (click)="save()" data-dismiss="modal">Save changes</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+          </div>
+          </div>
+        </div>
+    
+      </div>
+
+    </div>
+  </div>

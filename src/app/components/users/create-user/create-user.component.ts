@@ -14,7 +14,10 @@ export class CreateUserComponent implements OnInit {
   name;
   email;
   password;
-  user: User = new User();
+  userRoles = [
+    {id: 1, value: 'super-admin', selected: false},
+    {id: 2, value: 'admin', selected: false}
+  ];
 
   constructor(
     private flashMessages: FlashMessagesService,
@@ -26,26 +29,35 @@ export class CreateUserComponent implements OnInit {
   }
 
   OnSubmit() {
+    const rolesId = [];
 
+    for (let i = 0 ; i < this.userRoles.length ; i++) {
+        if (this.userRoles[i].selected) {
+          rolesId.push(this.userRoles[i].id);
+        }
+    }
     // Fill the object
-    this.user.name = this.name;
-    this.user.email = this.email;
-    this.user.password = this.password;
+    const user = {
+      name: this.name,
+      email: this.email,
+      password: this.password,
+      roles: rolesId
+    };
 
     // Required  Fields
-    if (!this.validateService.validateUserRegister(this.user)) {
+    if (!this.validateService.validateUserRegister(user)) {
       this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
 
     // Validate email
-    if (!this.validateService.validateEmail(this.email)) {
+    if (!this.validateService.validateEmail(user.email)) {
       this.flashMessages.show('Wrong Email', { cssClass: 'alert-danger', timeout: 3000 });
       return false;
     }
 
     // Add user
-    this.usersService.addUser(this.user)
+    this.usersService.addUser(user)
     .subscribe(data => this.router.navigateByUrl('/users'));
 
   }

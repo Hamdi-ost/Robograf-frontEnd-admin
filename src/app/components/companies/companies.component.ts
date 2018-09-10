@@ -28,22 +28,24 @@ export class CompaniesComponent implements OnInit {
   this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
   this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
 
-    this.companiesService.getCompany()
+    this.fetchData();
+  }
+
+fetchData() {
+  this.companiesService.getCompany()
     .subscribe(data => {
       this.data = data.reverse();
       this.keys = Object.keys(this.data[0]);
         }
       );
-  }
-
-
+}
 
   ngOnInit() {}
 
   deleteCompany (id) {
     this.companiesService.deleteCompany(id)
     .subscribe(data => {
-      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+     this.fetchData();
     });
   }
 

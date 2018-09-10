@@ -34,19 +34,23 @@
         <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Sessions: {{dataSessions.length}}</button>
         <app-table [createLink]="createLink" [canBeDesactivated]="false" [title]="title" [colTitles]="colTitlesS" [keys]="keySessions"
           [data]="dataSessions" (deleteX)="deleteSession($event)"></app-table>
-        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#sessionModal">Add New</button>
+        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#sessionModal">Add
+          New</button>
       </div>
       <div class="row">
-        <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{dataRepresentants.length}}</button>
-        <app-table [createLink]="createLinkRepresentant" [title]="titleForRepresentant" [colTitles]="colTitlesR" [keys]="keyRepresentatnts"
+        <button   class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{dataRepresentants.length}}</button>
+        <app-table (detachMachine)="detachRepresentant($event)" [detach]="true" [createLink]="createLinkRepresentant" [title]="titleForRepresentant" [colTitles]="colTitlesR" [keys]="keyRepresentatnts"
           [data]="dataRepresentants" (deleteX)="deleteRepresentant($event)"></app-table>
-        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#representantModal">Add New</button>
+        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info">Add
+          New</button>
+          <button routerLink={{createLink}} class="btn btn-success"  style="float: right; margin:-29px 5px 0 0" data-toggle="modal" data-target="#representantModal">Create NEW</button>
       </div>
       <div class="row">
         <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Accounts: {{dataAccounts.length}}</button>
         <app-table [createLink]="createLinkAccount" [title]="titleForAccount" [colTitles]="colTitlesA" [keys]="keyAccounts" [data]="dataAccounts"
           (deleteX)="deleteAccount($event)"></app-table>
-        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#accountModal">Add New</button>
+        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#accountModal">Add
+          New</button>
       </div>
     </div>
   </div>
@@ -114,53 +118,57 @@
 
 <!-- Modal For account-->
 <div class="modal fade" id="accountModal" role="dialog">
-    <div class="modal-dialog">
-  
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add New Account:</h4>
-        </div>
-        <div class="modal-body">
-            <div class="box box-primary">
-              <div class="box-body">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <!-- Username Field -->
-                    <div class="form-group col-sm-12">
-                      <label for="username">Username:</label>
-                      <input class="form-control" required="" name="username" type="text" value="8b9ad7d6f3" [(ngModel)]="account.username">
-                    </div>
-            
-                    <!-- Password Field -->
-                    <div class="form-group col-sm-12">
-                      <label for="password">Password:</label>
-                      <input class="form-control" required="" name="password" type="password" value="d6c6cd716dc6a59f" [(ngModel)]="account.password">
-                    </div>
-            
-            
-                  </div>
-                  <!-- SELECT Permisssions -->
-                  <div class="col-sm-6">
-                    <!-- Permissions Field -->
-                    <div class="form-group col-sm-12">
-                      <label for="permissions">permissions:</label>
-                    </div>
-                  </div>
-            
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add New Account:</h4>
+      </div>
+      <div class="modal-body">
+        <div class="box box-primary">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <!-- Username Field -->
+                <div class="form-group col-sm-12">
+                  <label for="username">Username:</label>
+                  <input class="form-control" required="" name="username" type="text" value="8b9ad7d6f3" [(ngModel)]="account.username">
                 </div>
 
+                <!-- Password Field -->
+                <div class="form-group col-sm-12">
+                  <label for="password">Password:</label>
+                  <input class="form-control" required="" name="password" type="password" value="d6c6cd716dc6a59f" [(ngModel)]="account.password">
+                </div>
+
+
               </div>
+              <!-- SELECT Permisssions -->
+
+              <!-- Permissions Field -->
+              <div class="col-sm-6">
+                <div class="form-group col-sm-12">
+                  <label for="permissions">permissions:</label>
+                  <div *ngFor="let permission of AccountPermissions">
+                    <input type="checkbox" value="permission.id" [(ngModel)]="permission.selected" />
+                    <label>{{permission.value}}</label>
+                  </div>
+                </div>
+              </div>
+
             </div>
-        </div>
-        <div class="modal-footer">
-          <button data-dismiss="modal" [disabled]="account.username==null || account.password==null"
-            (click)="addAccount()" type="submit" class="btn btn-success" style="margin-left: 20px">ADD</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+          </div>
         </div>
       </div>
-  
+      <div class="modal-footer">
+        <button data-dismiss="modal" [disabled]="account.username==null || account.password==null" (click)="addAccount()" type="submit"
+          class="btn btn-success" style="margin-left: 20px">ADD</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
-  </div>
 
+  </div>
+</div>

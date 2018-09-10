@@ -5,11 +5,12 @@ export class Account {
     password;
     link;
     event;
-    permission;
+    permissions = [];
     author;
 
 
     static map(rep, events, users) {
+
         const resultats = new Array(new Account());
         for (const obj of rep) {
             const resultat = new Account();
@@ -28,6 +29,9 @@ export class Account {
                 if (event.author === users) {
                     resultat.author = event.author;
                 }
+            }
+           for (const permission of obj.permissions) {
+                    resultat.permissions.push (permission.name);
             }
             resultats.push(resultat);
         }

@@ -21,16 +21,15 @@
             <option *ngFor="let event of events" value={{event.id}}>{{event.name}}</option>
           </select>
         </div>
-
-
+        
       </div>
+
+      <!-- Permissions Field -->
       <div class="col-sm-6">
-        <!-- Permissions Field -->
-        <!-- Permissions Field -->
         <div class="form-group col-sm-12">
           <label for="permissions">permissions:</label>
           <div *ngFor="let permission of AccountPermissions">
-            <input type="checkbox" value="permission.id" [(ngModel)]="permission.selected"/>
+            <input type="checkbox" value="permission.id" [(ngModel)]="permission.selected" />
             <label>{{permission.value}}</label>
           </div>
         </div>

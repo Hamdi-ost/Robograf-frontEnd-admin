@@ -20,6 +20,10 @@ export class ParticipantsComponent implements OnInit {
   createLink = '/createParticipant';
 
   constructor(private participantsService: ParticipantsService, private staticService: StaticService) {
+    this.fetchData();
+  }
+
+  fetchData() {
 
     // stat
     this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
@@ -35,11 +39,10 @@ export class ParticipantsComponent implements OnInit {
       );
   }
 
-
   deleteParticipant (id) {
     this.participantsService.deleteParticipant(id)
     .subscribe(data => {
-      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+      this.fetchData();
     });
   }
 

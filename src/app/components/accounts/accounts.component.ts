@@ -9,15 +9,18 @@ import { AccountsService } from '../../services/accounts.service';
 export class AccountsComponent implements OnInit {
 
   title = 'accounts';
-  colTitles = ['Username', 'link', 'Author', 'Event', 'Permissions'];
+  colTitles = ['Permissions', 'Username', 'link', 'Event', 'Author'];
   data: any[];
   keys: any[];
   createLink = '/createAccount';
 
   constructor(private accountsService: AccountsService) {
+      this.fetchData();
+  }
+
+  fetchData() {
     this.accountsService.getAccount()
     .subscribe(data => {
-      console.log(data);
       this.data = data.reverse();
       this.keys = Object.keys(this.data[0]);
         }
@@ -30,7 +33,7 @@ export class AccountsComponent implements OnInit {
   deleteAccount (id) {
     this.accountsService.deleteAccount(id)
     .subscribe(data => {
-      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+      this.fetchData();
     });
   }
 

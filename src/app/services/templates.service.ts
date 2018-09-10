@@ -15,12 +15,12 @@ export class TemplatesService {
     this.eventsService.getEvent().subscribe(data => this.events = data);
   }
 
-  getTemplates(): Observable<any> {
+  getTemplateNegotiations(): Observable<any> {
     return this.http.get('http://localhost:8000/api/templateNegotiations/')
       .pipe(map(res => Template.map(res, this.events)));
   }
 
-  getTemplateDetails(id): Observable<any> {
+  getTemplateNegotiationsDetails(id): Observable<any> {
     return this.http.get('http://localhost:8000/api/templateNegotiations/' + id);
   }
 
@@ -28,11 +28,18 @@ export class TemplatesService {
     return this.http.delete('http://localhost:8000/api/templateNegotiations/' + id);
   }
 
+  // ------------------------------------
+
+  getTemplate(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/templates/')
+    .pipe(map(res => Template.map2(res)));
+  }
+
   close(id) {
     const header = new HttpHeaders();
     header.append('Content-Type', 'application/json');
     let template;
-    this.getTemplateDetails(id).subscribe(data => template = data.template_negotiation);
+    this.getTemplateNegotiationsDetails(id).subscribe(data => template = data.template_negotiation);
     return this.http.post('http://localhost:8000/api/templateNegotiations/' + id + '/close', template, { headers: header });
   }
 
@@ -40,7 +47,7 @@ export class TemplatesService {
     const header = new HttpHeaders();
     header.append('Content-Type', 'application/json');
     let template;
-    this.getTemplateDetails(id).subscribe(data => template = data.template_negotiation);
+    this.getTemplateNegotiationsDetails(id).subscribe(data => template = data.template_negotiation);
     return this.http.post('http://localhost:8000/api/templateNegotiations/' + id + '/open', template, { headers: header });
   }
 

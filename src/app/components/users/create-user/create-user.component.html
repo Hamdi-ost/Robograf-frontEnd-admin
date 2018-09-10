@@ -23,8 +23,14 @@
       <!-- SELECT ROLES -->
       <div class="col-sm-6">
         <!-- Roles Field -->
-        <div class="form-group col-sm-12">
-          <label for="roles">Roles:</label>
+        <div class="col-sm-6">
+          <div class="form-group col-sm-12">
+            <label for="roles">Roles:</label>
+            <div *ngFor="let role of userRoles">
+              <input type="checkbox" value="role.id" [(ngModel)]="role.selected" />
+              <label>{{role.value}}</label>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -51,6 +51,14 @@ export class CompanyDetailsComponent  {
   entreprise_id;
   entreprise_name;
 
+  representant = {
+    firstName: null,
+    lastName: null,
+    email: null,
+    phone: null,
+    company: null
+  };
+
   constructor(
     private router: Router,
     private flashMessages: FlashMessagesService,
@@ -61,58 +69,52 @@ export class CompanyDetailsComponent  {
     private usersService: UsersService,
     private route: ActivatedRoute,
     private staticService: StaticService) {
+      this.fetchData();
+    }
+
+    fetchData() {
 
         // stat
-    this.staticService.getTotalCompany().then(total => this.valStat[0] = total);
-    this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
-    this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
+        this.staticService.getTotalCompany().then(total => this.valStat[0] = total);
+        this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
+        this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
 
-    this.route.params.subscribe(params => {
-      this.companiesService.getCompanyDetails(params['id'])
-        .subscribe(data => {
-          this.usersService.getUsers().subscribe(user => {
-            const users = user;
-            // list
-            this.dataList = Company.map(data.entreprises);
-            this.dataListKeys = Object.keys(this.dataList[0]);
-            // cubes
-            this.cubesData.push(data.representants.length, data.next_session, data.future_sessions_count, data.past_sessions_count);
-            // tables
-            // Events
-            this.dataEvents = Event.map(data.events, users);
-            if (this.dataEvents.length > 0) {
-            this.keyEvents = Object.keys(this.dataEvents[0]);
-            }
-            // Representatnts
-            this.dataRepresentants = Representant.map(data.representants, data.entreprises);
-            if (this.dataRepresentants.length > 0) {
-            this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
-            }
-            // Accounts
-            this.dataAccounts = Account.map(data.accounts, data.events, users);
-            if (this.dataAccounts.length > 0) {
-            this.keyAccounts = Object.keys(this.dataAccounts[0]);
-            }
+        this.route.params.subscribe(params => {
+          this.companiesService.getCompanyDetails(params['id'])
+            .toPromise()
+            .then(data => {
+              this.usersService.getUsers().subscribe(user => {
+                const users = user;
+                // list
+                this.dataList = Company.map(data.entreprises);
+                this.dataListKeys = Object.keys(this.dataList[0]);
+                // cubes
+                this.cubesData.push(data.representants.length, data.next_session, data.future_sessions_count, data.past_sessions_count);
+                // tables
+                // Events
+                this.dataEvents = Event.map(data.events, users);
+                if (this.dataEvents.length > 0) {
+                this.keyEvents = Object.keys(this.dataEvents[0]);
+                }
+                // Representatnts
+                this.dataRepresentants = Representant.map(data.representants, data.entreprises);
+                if (this.dataRepresentants.length > 0) {
+                this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
+                }
+                // Accounts
+                this.dataAccounts = Account.map(data.accounts, data.events, users);
+                if (this.dataAccounts.length > 0) {
+                this.keyAccounts = Object.keys(this.dataAccounts[0]);
+                }
+              });
+              this.entreprise_id = params['id'];
+              this.entreprise_name = data.entreprises[0].name;
+            });
           });
-        });
-        this.companiesService.getCompanyDetails(params['id'])
-        .toPromise()
-        .then(data => {
-          this.entreprise_name = data.entreprises[0].name;
-          this.entreprise_id = params['id'];
-        });
-      });
   }
 
-   representant = {
-    firstName: null,
-    lastName: null,
-    email: null,
-    phone: null,
-    company: null
-  };
-
   OnSubmit() {
+
     const contact = {
       first_name : this.representant.firstName,
       last_name : this.representant.lastName,
@@ -126,8 +128,8 @@ export class CompanyDetailsComponent  {
     // Add representant
     this.representantService.addRepresentant(contact)
     .subscribe(res => {
-      this.dataRepresentants.push(this.representant);
       this.flashMessages.show('Representant added', { cssClass: 'alert-success', timeout: 3000 });
+      this.fetchData();
     });
   }
 
@@ -135,21 +137,22 @@ export class CompanyDetailsComponent  {
   deleteEvent(id) {
     this.eventService.deleteEvent(id)
       .subscribe(data => {
-        this.dataEvents.splice(this.dataEvents.indexOf(id), 1);
+       this.fetchData();
       });
   }
 
   deleteRepresentant(id) {
     this.representantService.deleteRepresentant(id)
-      .subscribe(data => {
-        this.dataRepresentants.splice(this.dataRepresentants.indexOf(id), 1);
+      .toPromise()
+      .then(data => {
+        this.fetchData();
       });
   }
 
   deleteAccount(id) {
     this.accountService.deleteAccount(id)
       .subscribe(data => {
-        this.dataAccounts.splice(this.dataAccounts.indexOf(id), 1);
+        this.fetchData();
       });
   }
 

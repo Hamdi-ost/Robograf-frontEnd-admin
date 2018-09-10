@@ -20,6 +20,7 @@ export class EditParticipantComponent implements OnInit {
   phone;
   gender;
   event;
+  events;
   modifiedParticipant: Participant = new Participant();
 
   constructor(
@@ -28,6 +29,9 @@ export class EditParticipantComponent implements OnInit {
     private eventsService: EventsService,
     private participantsService: ParticipantsService,
     private route: ActivatedRoute) {
+
+      this.eventsService.getEvent().subscribe(data => this.events = data);
+
     this.route.params.subscribe(params => {
       this.participantsService.getParticipantDetails(params['id'])
         .subscribe(data => {

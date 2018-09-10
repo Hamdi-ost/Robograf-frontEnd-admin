@@ -58,68 +58,74 @@ export class DetailsPhotoComponent implements OnInit {
     private photosService: PhotosService,
     private route: ActivatedRoute,
     private staticService: StaticService ) {
-
-          // stat
-    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
-    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
-    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
-    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
-
-    let machines;
-    let users;
-    this.usersService.getUsers().subscribe(data => users = data);
-    this.machineService.getMachines().subscribe(data => machines = data);
-    this.route.params.subscribe(params => {
-      this.photosService.getPhotoDetails(params['id'])
-        .subscribe(data => {
-          // list
-          this.dataList = Photo.map(data.photos, machines, data.sessions, data.participants);
-          this.dataList[0].event = this.dataList[0].event.name;
-          this.dataListKeys = Object.keys(this.dataList[0]);
-          // cubes
-          // tables
-          // Sessions
-          this.dataSession = Session.map(data.sessions, data.events);
-          if (this.dataSession.length > 0) {
-            this.keySession = Object.keys(this.dataSession[0]);
-          }
-
-          // Event
-          this.dataEvent = Event.map(data.events, users);
-          if (this.dataEvent.length > 0) {
-            this.keyEvent = Object.keys(this.dataEvent[0]);
-          }
-
-          // Participant
-          this.dataParticipant = Participant.map(data.participants, data.events);
-          if (this.dataParticipant.length > 0) {
-            this.keyParticipant = Object.keys(this.dataParticipant[0]);
-          }
-        });
-    });
+      this.fetchData();
   }
 
   ngOnInit() {
   }
 
+  fetchData() {
+
+          // stat
+          this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+          this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+          this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+          this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+
+          let machines;
+          let users;
+          this.usersService.getUsers().subscribe(data => users = data);
+          this.route.params.subscribe(params => {
+            this.photosService.getPhotoDetails(params['id'])
+              .subscribe(data => {
+                this.machineService.getMachines().subscribe(res => {
+                  machines = res;
+                // list
+                this.dataList = Photo.map(data.photos, machines, data.sessions, data.participants);
+                this.dataList[0].event = this.dataList[0].event.name;
+                this.dataListKeys = Object.keys(this.dataList[0]);
+                // cubes
+                // tables
+                // Sessions
+                this.dataSession = Session.map(data.sessions, data.events);
+                if (this.dataSession.length > 0) {
+                  this.keySession = Object.keys(this.dataSession[0]);
+                }
+
+                // Event
+                this.dataEvent = Event.map(data.events, users);
+                if (this.dataEvent.length > 0) {
+                  this.keyEvent = Object.keys(this.dataEvent[0]);
+                }
+
+                // Participant
+                this.dataParticipant = Participant.map(data.participants, data.events);
+                if (this.dataParticipant.length > 0) {
+                  this.keyParticipant = Object.keys(this.dataParticipant[0]);
+                }
+              });
+            });
+          });
+  }
+
   deleteSession(id) {
     this.sessionService.deleteSession(id)
       .subscribe(data => {
-        this.dataSession.splice(this.dataSession.indexOf(id), 1);
+        this.fetchData();
       });
   }
 
   deleteParticipant(id) {
     this.participantService.deleteParticipant(id)
       .subscribe(data => {
-        this.dataParticipant.splice(this.dataParticipant.indexOf(id), 1);
+        this.fetchData();
       });
   }
 
   deleteEvent(id) {
     this.eventService.deleteEvent(id)
       .subscribe(data => {
-        this.dataEvent.splice(this.dataEvent.indexOf(id), 1);
+        this.fetchData();
       });
   }
 

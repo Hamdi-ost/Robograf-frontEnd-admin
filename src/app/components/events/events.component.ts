@@ -21,33 +21,31 @@ export class EventsComponent implements OnInit {
   constructor(private eventService: EventsService,
     private staticService: StaticService) {
 
-    // stat
-    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
-    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
-    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
-    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
-
-    this.eventService.getEvent()
-      .subscribe(data => {
-        this.data = data.reverse();
-        this.keys = Object.keys(this.data[0]);
-      }
-      );
+    this.fetchData();
   }
 
   ngOnInit() {
   }
 
-  deleteEvent(id) {
-    this.eventService.deleteEvent(id)
-      .subscribe(data => {
-        this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
-
+  fetchData() {
         // stat
         this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
         this.staticService.getTotalSession().then(total => this.valStat[1] = total);
         this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
         this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+
+        this.eventService.getEvent()
+          .subscribe(data => {
+            this.data = data.reverse();
+            this.keys = Object.keys(this.data[0]);
+          }
+          );
+  }
+
+  deleteEvent(id) {
+    this.eventService.deleteEvent(id)
+      .subscribe(data => {
+       this.fetchData();
       });
   }
 

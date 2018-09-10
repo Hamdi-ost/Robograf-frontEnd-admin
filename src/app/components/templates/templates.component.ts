@@ -14,7 +14,7 @@ export class TemplatesComponent implements OnInit {
   keys: any[] = [];
 
   constructor(private templatesService: TemplatesService, private flashMessageService: FlashMessagesService) {
-    this.templatesService.getTemplates()
+    this.templatesService.getTemplateNegotiations()
       .subscribe(data => {
         this.data = data.reverse();
         this.keys = Object.keys(this.data[0]);

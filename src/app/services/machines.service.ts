@@ -51,4 +51,5 @@ export class MachinesService {
     return this.http.get('http://localhost:8000/api/machines/' + id + '/desactivate');
   }
 
+
 }

@@ -1,7 +1,51 @@
 <div class="content-header">
-    <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
-    <h3>Errors</h3>
+  <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
+  <h3>Errors</h3>
+</div>
+<div class="content">
+  <div class="row">
+    <div class="col-sm-4" style="height:100%;" *ngFor="let exception of data">
+      <div class="box box-danger">
+        <div class="box-body">
+          <div class="box-header with-border">
+            <h3 class="box-title" style="width: 100%;"><b>Exception:</b> {{exception.type}}</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body" style="padding-bottom: 0px;">
+            <strong><i class="fa fa-exclamation margin-r-5"></i> Message: </strong>
+            <span class="text-muted" style="margin-left: 15px;">
+              {{exception.message}}
+            </span>
+            <hr>
+            <strong><i class="fa fa-clock-o margin-r-5"></i> lastest_occurrence: </strong>
+            <span class="text-muted" style="margin-left: 15px;">
+             {{exception.lastest_occurrence}}
+            </span>
+            <hr>
+            <strong><i class="fa fa-gears margin-r-5"></i> Machine: </strong>
+            <span class="text-muted" style="margin-left: 15px;">
+              {{exception.machine}}
+            </span>
+            <hr>
+            <strong><i class="fa fa-tags margin-r-5"></i> Total Occurrences: </strong>
+            <span class="text-muted" style="margin-left: 15px;">
+              {{nbr_occ}}
+            </span>
+            <hr>
+            <div class="row" style="margin-top:15px;">
+              <div class="col-sm-6" style="padding:0px;padding-right: 1px;"><button class="btn btn-default" style="width: 100%;border-radius: 1px;border: 0px;"
+                  (click)="moreBtn()">
+                  More
+                </button></div>
+
+              <div class="col-sm-6" style="padding:0px; padding-left: 1px;"><button class="btn btn-default" style="width: 100%;border-radius: 1px;border: 0px;"
+                  (click)="dismiss()">
+                  Dismiss
+                </button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="content">
-    Filters
-  </div>
+</div>

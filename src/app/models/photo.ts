@@ -34,8 +34,6 @@ export class Photo {
                 }
             }
             resultats.push(resultat);
-            console.log(resultat);
-
         }
         resultats.splice(0, 1);
         return resultats;

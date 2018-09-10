@@ -1,3 +1,53 @@
-<p>
-  create-photo works!
-</p>
+<div class="box box-primary">
+
+  <div class="box-body">
+    <div class="row">
+
+      <!-- Url Field -->
+      <div class="form-group col-sm-6">
+        <label for="url">Url:</label>
+        <input class="form-control" name="url" type="text" [(ngModel)]="photo.url">
+      </div>
+
+
+      <!-- Photo Time Field -->
+      <div class="form-group col-sm-6">
+        <label for="start_time">Photo Time:</label>
+        <input [(ngModel)]="photo.photo_time" class="form-control" name="start_time" type="time">
+      </div>
+
+
+      <div id="machine_id_field" class="form-group col-sm-4">
+        <label>Machine:</label>
+        <select class="form-control"  [(ngModel)]="photo.machine_id">
+          <option *ngFor="let machine of machines" value={{machine.id}}>{{machine.name}}</option>
+        </select>
+      </div>
+
+      <div id="session_id_field" class="form-group col-sm-4">
+        <label for="session_id">Session:</label>
+        <select class="form-control" id="session_id" [(ngModel)]="photo.session_id">
+          <option *ngFor="let session of sessions" value={{session.id}}>{{session.description}}</option>
+        </select>
+      </div>
+
+      <div id="participant_id_field" class="form-group col-sm-4">
+        <label for="participant_id">Participant:</label>
+        <select class="form-control" id="participant_id" [(ngModel)]="photo.participant_id">
+          <option *ngFor="let participant of participants" value={{participant.id}}>{{participant.name}}</option>
+        </select>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group col-sm-12 col-lg-12">
+        <label for="description">Description:</label>
+        <textarea class="form-control" name="description" cols="50" rows="10" id="description"></textarea>
+      </div>
+
+      <!-- Submit Field -->
+      <div class="form-group col-sm-12">
+        <input class="btn btn-primary" type="submit" (click)="addPhoto()" value="Save">
+        <a (click)="back()" class="btn btn-default">Cancel</a></div>
+    </div>
+  </div>
+</div>

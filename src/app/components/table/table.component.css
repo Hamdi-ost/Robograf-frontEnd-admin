@@ -5,3 +5,8 @@
 	_overflow: auto;
 	margin: 0 0 1em;
 }
+
+#img {
+	width: 700px;
+	height: 500px;
+  }

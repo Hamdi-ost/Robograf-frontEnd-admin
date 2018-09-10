@@ -15,19 +15,44 @@
           <input class="form-control" required="" name="password" type="password" value="d6c6cd716dc6a59f" [(ngModel)]="password">
         </div>
 
+        <div class="form-group col-sm-12">
+          <label for="link">Link:</label>
+          <div class="row">
+            <div class="col-sm-12">
+              <input class="form-control account_link" id="account_link" readonly="true" name="link" type="text" [(ngModel)]='name'>
+            </div>
+            <div class="col-sm-12" style="margin-top: 10px;">
+              <a class="btn btn-primary" (click)="refreshLink()"><i class="fa fa-refresh"></i> Refresh</a>
+              <a class="btn btn-default" onclick="
+              document.getElementById('account_link').select();
+              document.execCommand('copy');"><i class="fa fa-copy"></i> Copy</a>
+            </div>
+          </div>
+        </div>
 
+        <div id="entreprise_id_field" class="form-group col-sm-12">
+          <label for="event_id">Event:</label>
+          <select class="form-control" id="event_id" [(ngModel)]="event_id">
+            <option *ngFor="let event of events" value={{event.id}}>{{event.name}}</option>
+          </select>
+        </div>
       </div>
+      
       <!-- SELECT Permisssions -->
       <div class="col-sm-6">
-        <!-- Permissions Field -->
         <div class="form-group col-sm-12">
           <label for="permissions">permissions:</label>
+          <div *ngFor="let permission of AccountPermissions">
+            <input type="checkbox" value="permission.id" [(ngModel)]="permission.selected" />
+            <label>{{permission.value}}</label>
+          </div>
         </div>
       </div>
 
     </div>
     <!-- Submit Field -->
-    <div class="form-group col-sm-12">
+    <hr>
+    <div class="form-group col-sm-12" style="margin-left: -22px">
       <button (click)="Update()" type="submit" class="btn btn-success" style="margin-left: 20px">Update</button>
       <button (click)="back()" class="btn btn-default" style="margin-left: 5px">Cancel</button>
     </div>

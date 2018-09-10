@@ -15,6 +15,11 @@ export class EditUserComponent implements OnInit {
   email;
   password;
   modifiedUser: User = new User();
+  userRoles = [
+    {id: 1, value: 'super-admin', selected: false},
+    {id: 2, value: 'admin', selected: false}
+  ];
+
 
   constructor(private usersService: UsersService,
     private route: ActivatedRoute,
@@ -35,9 +40,18 @@ export class EditUserComponent implements OnInit {
   }
 
   Update() {
+    const rolesId = [];
+
+    for (let i = 0 ; i < this.userRoles.length ; i++) {
+        if (this.userRoles[i].selected) {
+          rolesId.push(this.userRoles[i].id);
+        }
+    }
+
     this.modifiedUser.name = this.name;
     this.modifiedUser.email = this.email;
     this.modifiedUser.password = this.password;
+    this.modifiedUser.roles = rolesId;
 
     // Required  Fields
     if (!this.validateService.validateUserRegister(this.modifiedUser)) {

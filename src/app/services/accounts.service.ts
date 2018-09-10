@@ -48,4 +48,8 @@ export class AccountsService {
   deleteAccount(id) {
     return this.http.delete('http://localhost:8000/api/accounts/' + id);
   }
+
+  getLinkToRefresh(id) {
+    return this.http.get('http://localhost:8000/api/accounts/' + id + '/refreshLink');
+  }
 }

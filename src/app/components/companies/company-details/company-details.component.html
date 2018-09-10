@@ -34,7 +34,7 @@
         <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Representants: {{dataRepresentants.length}}</button>
         <app-table [createLink]="createLink" [title]="titleForEditRepresentant" [colTitles]="colTitlesR" [keys]="keyRepresentatnts"
           [data]="dataRepresentants" (deleteX)="deleteRepresentant($event)"></app-table>
-        <button type="button" style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#myModal">Add New</button>
+        <button type="button"  style="float: right; margin: -30px 15px 15px 0px" class="btn btn-info" data-toggle="modal" data-target="#myModal">Add New</button>
       </div>
       <div class="row">
         <button class="btn btn-primary" style="margin-left: 14px; margin-bottom: -19px">Events: {{dataEvents.length}}</button>

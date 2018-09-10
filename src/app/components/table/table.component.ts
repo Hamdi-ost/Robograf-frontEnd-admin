@@ -10,15 +10,18 @@ export class TableComponent implements OnInit {
   @Input() title;
   @Input() colTitles;
   @Input() data;
+  @Input() state;
   @Input() keys;
   @Input() createLink;
   @Input() canBeDesactivated;
   @Input() canAddNew;
+  @Input() detach;
   @Output() deleteX = new EventEmitter();
   @Output() activate = new EventEmitter();
   @Output() desactivate = new EventEmitter();
   @Output() open = new EventEmitter();
   @Output() close = new EventEmitter();
+  @Output() detachMachine = new EventEmitter();
 
   constructor() {}
 
@@ -44,6 +47,10 @@ export class TableComponent implements OnInit {
 
   closeTemplate(row) {
     this.close.emit(row.id);
+  }
+
+  detachX (row) {
+    this.detachMachine.emit(row.id);
   }
 
 }

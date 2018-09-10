@@ -7,6 +7,7 @@ import { Photo } from '../../../models/photo';
 import { MachinesService } from '../../../services/machines.service';
 import { SessionsService } from '../../../services/sessions.service';
 import { PhotosService } from '../../../services/photos.service';
+import { StaticService } from '../../../services/static.service';
 
 @Component({
   selector: 'app-details-participant',
@@ -43,7 +44,17 @@ export class DetailsParticipantComponent implements OnInit {
     private participantsService: ParticipantsService,
     private machinesService: MachinesService,
     private sessionsService: SessionsService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private staticService: StaticService) {
+
+
+    // stat
+    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+
+
     let machines, sessions;
     this.sessionsService.getSessions().subscribe(data => sessions = data);
     this.machinesService.getMachines().subscribe(data => machines = data);

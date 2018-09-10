@@ -32,6 +32,9 @@ export class EditCompanyComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.companiesService.getCompanyDetails(params['id'])
         .subscribe(data => {
+
+          console.log(data);
+          
           this.matricule = data.entreprises[0].matricule;
           this.name = data.entreprises[0].name;
           this.activity = data.entreprises[0].activity;

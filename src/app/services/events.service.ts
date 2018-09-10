@@ -44,4 +44,16 @@ export class EventsService {
     header.append('Content-Type', 'application/json');
     return this.http.patch('http://localhost:8000/api/events/' + id, modifiedEvent, {headers: header});
   }
+
+  detachRepresentant(id, representantId) {
+    return this.http.get('http://localhost:8000/api/sessions/' + id + '/detachRepresentant/' + representantId);
+  }
+
+  addRepresentant (id, representant) {
+    const header = new HttpHeaders ();
+    header.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:8000/api/sessions/' + id + '/assignRepresentants', representant, {headers: header});
+
+  }
+
 }

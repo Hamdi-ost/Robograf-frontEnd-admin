@@ -21,6 +21,8 @@ export class ExistingClientFormComponent implements OnInit {
     entreprise_id: null
   };
 
+  ExistCompanyEntreprise;
+
   ExistRepresentants;
   entreprises;
   repId;
@@ -47,7 +49,12 @@ export class ExistingClientFormComponent implements OnInit {
 
 
   send() {
-    console.log(this.repId);
+   /* const machineId = [];
+    for (let i = 0 ; i < this.machinesDispo.length ; i++) {
+        if (this.machinesDispo[i].selected) {
+          machineId.push(this.machinesDispo[i].id);
+        }
+    }*/
     this.ExistRepresentantForm.emit(this.companyRepresentant);
   }
 
