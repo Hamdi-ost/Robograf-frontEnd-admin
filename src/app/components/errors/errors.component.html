@@ -3,7 +3,46 @@
   <h3>Errors</h3>
 </div>
 <div class="content">
+  <div class="box box-default">
+    <div class="box-body">
+      <h3>Filters:</h3>
+      <div class="row">
+        <div class="col-sm-4">
+          <h4>Seen/Unseen</h4>
+          <select id="seen_unseen_filter" class="form-control">
+            <option selected="selected">All</option>
+            <option>Seen</option>
+            <option>Unseen</option>
+          </select>
+        </div>
+
+        <div class="col-sm-4">
+          <h4>Type</h4>
+          <select id="type_filter" class="form-control inline">
+            <option selected="selected">All</option>
+            <option>Invalid data</option>
+            <option>Camera Disconnected</option>
+          </select>
+        </div>
+
+        <div class="col-sm-4">
+          <h4>Date Range</h4>
+          <select id="date_filter" class="form-control">
+            <option selected="selected">All</option>
+            <option>Today</option>
+            <option>This Week</option>
+            <option>This Month</option>
+            <option>This Year</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
+  <div class="pull-right" style="margin-bottom: 10px;">
+    <a (click)="dismisAll()" class="btn btn-primary">Dismiss all</a></div>
+    </div>
+      <div class="row">
     <div class="col-sm-4" style="height:100%;" *ngFor="let exception of data">
       <div class="box box-danger">
         <div class="box-body">
@@ -19,7 +58,7 @@
             <hr>
             <strong><i class="fa fa-clock-o margin-r-5"></i> lastest_occurrence: </strong>
             <span class="text-muted" style="margin-left: 15px;">
-             {{exception.lastest_occurrence}}
+              {{exception.lastest_occurrence}}
             </span>
             <hr>
             <strong><i class="fa fa-gears margin-r-5"></i> Machine: </strong>
@@ -38,10 +77,11 @@
                   More
                 </button></div>
 
-              <div class="col-sm-6" style="padding:0px; padding-left: 1px;"><button class="btn btn-default" style="width: 100%;border-radius: 1px;border: 0px;"
-                  (click)="dismiss()">
-                  Dismiss
-                </button></div>
+              <div class="col-sm-6" style="padding:0px; padding-left: 1px;">
+                  <button class="btn btn-default" style="width: 100%;border-radius: 1px;border: 0px;" (click)="dismiss()">
+                    Dismiss
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -13,21 +13,46 @@ export class ErrorsComponent implements OnInit {
   icon = ['fa fa-file', 'fa fa-camera'];
 
   data;
-
+  nbErreurInvalideData = 0;
+  nbErreurCamera = 0;
 
   constructor(private errorService: ErrorsService) {
-    this.errorService.getPersistentExceptions().subscribe(data => {
-          this.data = data;
-          console.log(data);
-    });
-   }
+    this.fetchData();
+  }
 
-   moreBtn() {
+  fetchData() {
+    this.errorService.getPersistentExceptions().subscribe(data => {
+      this.data = data;
+      this.nbDerreur();
+      this.valStat[0] = this.nbErreurInvalideData;
+      this.valStat[1] = this.nbErreurCamera;
+    });
+  }
+
+  nbDerreur() {
+    for (const erreur of this.data) {
+      if (erreur.type === 'Invalid Data Exception') {
+        this.nbErreurInvalideData++;
+      } else {
+        this.nbErreurCamera++;
+      }
+    }
+  }
+
+  moreBtn() {
     // this.errorService.getPersistentExceptionsDetails()
   }
 
-  dismiss() {
+  dismisAll() {
+    this.errorService.dismissAll().subscribe(null, null, () => {
+      this.fetchData();
+    });
+  }
 
+  dismiss (id) {
+    this.errorService.dismiss(id).subscribe(null, null, () => {
+      this.fetchData();
+    });
   }
 
   ngOnInit() {

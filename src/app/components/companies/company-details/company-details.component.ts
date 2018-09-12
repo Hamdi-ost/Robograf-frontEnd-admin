@@ -32,7 +32,7 @@ export class CompanyDetailsComponent  {
   // table variables
   colTitlesR = ['First Name', 'Last Name', 'Email', 'Phone', 'Company'];
   colTitlesE = ['Name', 'Subject', 'Location', 'Contact', 'Author'];
-  colTitlesA = ['Username', 'Link', 'Event', 'Author', 'Permissions'];
+  colTitlesA = ['', 'Username', 'Link', 'Author', 'Event'];
   repLength;
   dataEvents = [];
   dataRepresentants = [];

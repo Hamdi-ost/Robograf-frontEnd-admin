@@ -1,6 +1,6 @@
 export class Representant {
     id;
-    firstName;
+    name;
     lastName;
     email;
     phone;
@@ -12,7 +12,7 @@ export class Representant {
         for (const obj of rep) {
             const resultat = new Representant();
             resultat.id = obj.id;
-            resultat.firstName = obj.first_name;
+            resultat.name = obj.first_name;
             resultat.lastName = obj.last_name;
             resultat.email = obj.email;
             resultat.phone = obj.phone;

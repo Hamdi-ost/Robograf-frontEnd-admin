@@ -56,7 +56,7 @@ export class EditParticipantComponent implements OnInit {
   Update() {
     this.modifiedParticipant.name =     this.name;
     this.modifiedParticipant.email =    this.email;
-    this.modifiedParticipant.lastName = this.lastName;
+    this.modifiedParticipant.last_name = this.lastName;
     this.modifiedParticipant.age =      this.age;
     this.modifiedParticipant.phone =    this.phone;
     this.modifiedParticipant.gender = this.gender ?  true : false;

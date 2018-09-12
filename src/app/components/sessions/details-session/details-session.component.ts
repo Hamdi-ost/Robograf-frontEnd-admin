@@ -10,6 +10,7 @@ import { Photo } from '../../../models/photo';
 import { PhotosService } from '../../../services/photos.service';
 import { ParticipantsService } from '../../../services/participants.service';
 import { map } from 'rxjs/operators';
+import { StaticService } from '../../../services/static.service';
 
 @Component({
   selector: 'app-details-session',
@@ -58,15 +59,16 @@ export class DetailsSessionComponent implements OnInit {
     private eventsService: EventsService,
     private photosService: PhotosService,
     private participantsService: ParticipantsService,
-    private machineService: MachinesService) {
+    private machineService: MachinesService,
+    private staticService: StaticService) {
 
     this.machineService.getMachines()
-    .subscribe(data => {
-      for (let i = 0 ; i < data.length; i++) {
-        const obj = {id: data[i].id, value: data[i].name, selected: false};
-        this.machines.push(obj);
-    }
-    });
+      .subscribe(data => {
+        for (let i = 0; i < data.length; i++) {
+          const obj = { id: data[i].id, value: data[i].name, selected: false };
+          this.machines.push(obj);
+        }
+      });
     this.fetchData();
   }
 
@@ -74,14 +76,27 @@ export class DetailsSessionComponent implements OnInit {
   }
 
   fetchData() {
+
+    // stat
+    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+
     this.route.params.subscribe(params => {
       this.sessionService.getSessionDetails(params['id'])
         .subscribe(data => {
+          console.log(data);
           this.eventsService.getEvent().subscribe(event => {
             const events = event;
             // list
             this.dataList = Session.map(data.sessions, events);
             this.dataList.splice(0, 1);
+            this.dataList = this.dataList.filter((thing, index, self) =>
+              index === self.findIndex((t) => (
+                t.id === this.dataList[index].id
+              ))
+            );
             this.dataListKeys = Object.keys(this.dataList[0]);
             // cubes
             this.cubesData.push(data.remaining_sessions_count, data.nextSession, data.photos_count, data.participants_count);
@@ -102,27 +117,27 @@ export class DetailsSessionComponent implements OnInit {
               this.keysPhotos = Object.keys(this.dataPhotos[0]);
             }
           });
-        }, null, () =>  {
+        }, null, () => {
           this.sessionId = params['id'];
         });
-  });
-}
+    });
+  }
 
   save() {
     const machineId = [];
 
-    for (let i = 0 ; i < this.machines.length ; i++) {
-        if (this.machines[i].selected) {
-          machineId.push(this.machines[i].id);
-        }
+    for (let i = 0; i < this.machines.length; i++) {
+      if (this.machines[i].selected) {
+        machineId.push(this.machines[i].id);
+      }
     }
 
     const req = {
-      machines : machineId
+      machines: machineId
     };
 
-   this.sessionService.assignMachineAsync(this.sessionId, req).subscribe(data => {
-   }, null, () => this.fetchData());
+    this.sessionService.assignMachineAsync(this.sessionId, req).subscribe(data => {
+    }, null, () => this.fetchData());
   }
 
   detachMachine(id) {

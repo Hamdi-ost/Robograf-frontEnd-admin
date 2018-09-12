@@ -2,88 +2,54 @@
 <div class="box box-primary">
   <div class="box-body">
     <div class="row">
-      <form method="POST" action="http://localhost:8000/sessions" accept-charset="UTF-8">
-        <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
-
-        <div class="col-sm-6">
-          <!-- Date Field -->
-          <div class="form-group col-sm-12">
-            <label for="date">Start Date:</label>
-            <input id="session_date" class="form-control" onblur="updateMachines()" onchange="valueUpdated = true" required="" name="date"
-              type="date" [(ngModel)]="startDate">
-          </div>
-
-
-          <!-- Start Time Field -->
-          <div class="form-group col-sm-12">
-            <label for="start_time">Start Time:</label>
-            <input id="session_start_time" class="form-control" onblur="updateMachines()" onchange="valueUpdated = true;" name="start_time"
-              type="time" [(ngModel)]="startTime">
-          </div>
-
-          <!-- End Date Field -->
-          <div class="form-group col-sm-12">
-            <label for="end_date">End Date:</label>
-            <input id="session_end_date" class="form-control" onblur="updateMachines()" onchange="valueUpdated = true" required="" name="end_date"
-              type="date" [(ngModel)]="endDate">
-          </div>
-
-          <!-- End Time Field -->
-          <div class="form-group col-sm-12">
-            <label for="end_time">End Time:</label>
-            <input id="session_end_time" class="form-control" onblur="updateMachines()" onchange="valueUpdated = true;" name="end_time"
-              type="time" [(ngModel)]="endTime">
-          </div>
-
-          <!-- Description Field -->
-          <div class="form-group col-sm-12">
-            <label for="description">Description:</label>
-            <textarea class="form-control" rows="3" name="description" cols="50" id="description" [(ngModel)]="description"></textarea>
-          </div>
-
-          <div class="col-sm-12">
-            <select hidden="" required="" name="event_id">
-              <optgroup label="">
-                <option value="selected" >selected</option>
-              </optgroup>
-            </select>
-          </div>
-
-
+      <div class="col-sm-6">
+        <!-- Date Field -->
+        <div class="form-group col-sm-12">
+          <label for="date">Start Date:</label>
+          <input [(ngModel)]="session.date" class="form-control" required="" name="date" type="date" (ngModelChange)="onChange($event)">
         </div>
 
-        <div class="form-group col-sm-6">
-          <!-- Machines Field -->
-          <div class="form-group col-sm-12">
-            <div id="machines-available" hidden="">
-              <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
 
-              <input class="form-control" name="date" type="text" id="date">
-              <input class="form-control" name="end_date" type="text" id="end_date">
-              <input class="form-control" name="start_time" type="text" id="start_time">
-              <input class="form-control" name="end_time" type="text" id="end_time">
+        <!-- Start Time Field -->
+        <div class="form-group col-sm-12">
+          <label for="start_time">Start Time:</label>
+          <input [(ngModel)]="session.start_time" class="form-control" name="start_time" type="time" (ngModelChange)="onChange($event)">
+        </div>
 
+        <!-- End Date Field -->
+        <div class="form-group col-sm-12">
+          <label for="end_date">End Date:</label>
+          <input [(ngModel)]="session.end_date" class="form-control" required="" name="end_date" type="date" (ngModelChange)="onChange($event)">
+        </div>
 
-            </div>
+        <!-- End Time Field -->
+        <div class="form-group col-sm-12">
+          <label for="end_time">End Time:</label>
+          <input [(ngModel)]="session.end_time" class="form-control" name="end_time" type="time" (ngModelChange)="onChange($event)">
+        </div>
 
-            <div id="machines-assigned" hidden="">
-              <form method="POST" action="http://localhost:8000/events/create" accept-charset="UTF-8">
-                <input name="_token" type="hidden" value="f6AnL61DchpCs2oiwXXPJQgMD53VLzgifPAWgbqn">
-                <input class="form-control" name="date" type="text">
-                <input class="form-control" name="end_date" type="text">
-                <input class="form-control" name="start_time" type="text">
-                <input class="form-control" name="end_time" type="text">
-              </form>
-            </div>
-            <label for="machines">Machines:</label>
-            <div id="machines-list" class="form-group col-sm-12">
-            </div>
+        <!-- Description Field -->
+        <div class="form-group col-sm-12">
+          <label for="description">Description:</label>
+          <textarea class="form-control" name="description" rows="3" cols="50" [(ngModel)]="session.description"></textarea>
+        </div>
+
+      </div>
+
+      <div class="form-group col-sm-6">
+        <!-- Machines Field -->
+        <div class="form-group col-sm-12">
+          <label for="machines">Machines:</label>
+          <div *ngFor="let machine of machinesDispo">
+            <input type="checkbox" value="machine.value.id" [(ngModel)]="machine.selected" />
+            <label>{{machine.value}}</label>
           </div>
         </div>
-      </form>
+      </div>
+
     </div>
-  </div>
+    <button (click)="update()" type="submit" class="btn btn-success" style="margin-left: 20px">Save</button>
+    <button (click)="back()" class="btn btn-default" style="margin-left: 5px">Cancel</button>  </div>
 </div>
 
-        <button (click)="OnSubmit()" type="submit" class="btn btn-success" style="margin-left: 20px">Save</button>
-        <button (click)="back()" class="btn btn-default" style="margin-left: 5px">Cancel</button>
+        

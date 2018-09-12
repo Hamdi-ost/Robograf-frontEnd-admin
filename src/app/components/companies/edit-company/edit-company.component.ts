@@ -32,9 +32,6 @@ export class EditCompanyComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.companiesService.getCompanyDetails(params['id'])
         .subscribe(data => {
-
-          console.log(data);
-          
           this.matricule = data.entreprises[0].matricule;
           this.name = data.entreprises[0].name;
           this.activity = data.entreprises[0].activity;
@@ -65,7 +62,7 @@ export class EditCompanyComponent implements OnInit {
       .subscribe(rep => {
         this.modifiedRepresentant = rep.find(repp => repp.company === this.name);
         this.modifiedRepresentant.lastName = this.lastName;
-        this.modifiedRepresentant.firstName = this.firstName;
+        this.modifiedRepresentant.name = this.firstName;
         this.modifiedRepresentant.email = this.email;
         this.modifiedRepresentant.phone = this.phone;
         this.modifiedRepresentant.company = this.name;
@@ -78,13 +75,6 @@ export class EditCompanyComponent implements OnInit {
             this.flashMessages.show('Please fill in all the fields', { cssClass: 'alert-danger', timeout: 3000 });
             return false;
           }
-
-          // Validate email
-          if (!this.validateService.validateEmail(this.email)) {
-            this.flashMessages.show('Wrong Email', { cssClass: 'alert-danger', timeout: 3000 });
-            return false;
-          }
-
           // tslint:disable-next-line:no-shadowed-variable
           this.route.params.subscribe(params => {
             this.companiesService.editCompany(params['id'], this.modifiedCompany)
@@ -94,7 +84,7 @@ export class EditCompanyComponent implements OnInit {
               });
           });
         });
+
       });
   }
-
 }

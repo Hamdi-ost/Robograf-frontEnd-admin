@@ -33,15 +33,13 @@ export class CreateEventComponent {
   };
 
   session = {
-    number: 2,
+    number: null,
     date: null,
     start_time: null,
     end_time: null,
     description: null,
-    event_id: null,
     end_date: null,
-    name : 'ok',
-    type : 'fd'
+    event_id: null
   };
 
   company = {
@@ -59,7 +57,8 @@ export class CreateEventComponent {
     event_id: null
   };
 
-  machines = [];
+  req;
+  sessionId;
 
   constructor(
     private eventService: EventsService,
@@ -68,12 +67,13 @@ export class CreateEventComponent {
     private sessionService: SessionsService,
     private accountService: AccountsService,
     private flashMessages: FlashMessagesService,
-    private router: Router
-  ) {
+    private router: Router,
+    private sessionSerive: SessionsService) {
     this.fetchData();
   }
 
   fetchData() {
+    this.sessionSerive.getSessions().subscribe(data => this.sessionId = data[data.length - 1].id + 1);
     this.eventService.getEvent().subscribe(data => this.eventId = data[data.length - 1].id + 1);
   }
 
@@ -105,7 +105,6 @@ export class CreateEventComponent {
     this.representant.email = newRepresentant.email;
     this.representant.phone = newRepresentant.phone;
     this.representant.entreprise_id = newRepresentant.entreprise_id;
-    console.log(this.eventId);
     this.representant.event_id = this.eventId;
 
   }
@@ -123,6 +122,7 @@ export class CreateEventComponent {
   }
 
   sessionSubmit(session) {
+    this.session.number = 1;
     this.session.date = session.date;
     this.session.end_date = session.end_date;
     this.session.start_time = session.start_time;
@@ -130,20 +130,22 @@ export class CreateEventComponent {
     this.session.description = session.description;
     this.session.event_id = this.eventId;
 
-    this.machines = session.machines;
-    console.log(this.session);
-    console.log(this.machines);
+
+    for (let i = 0; i < session.req.machines.length; i++) {
+      session.req.machines[i].session_id = this.sessionId;
+    }
+    this.req = session.req;
   }
 
   add() {
 
 
     // event
-    this.eventService.addEvent(this.event).subscribe(null , null, () => {
+    this.eventService.addEvent(this.event).subscribe(null, null, () => {
       this.sessionService.addSession(this.session).subscribe(null, null, () => {
-        this.sessionService.assignMachine(21, this.machines).subscribe();
+        this.sessionService.assignMachineAsync(this.sessionId, this.req).subscribe();
       });
-      if (this.company.name != null) {
+           if (this.company.name != null) {
         this.companiesService.addCompany(this.company)
           .subscribe(null, null, () => this.representantService
             .addRepresentant(this.representant)

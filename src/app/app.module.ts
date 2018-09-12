@@ -59,7 +59,6 @@ import { EditParticipantComponent } from './components/participants/edit-partici
 import { CreateSessionComponent } from './components/sessions/create-session/create-session.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { CreateAccountsComponent } from './components/accounts/create-accounts/create-accounts.component';
-import { DetailsAccountsComponent } from './components/accounts/details-accounts/details-accounts.component';
 import { EditAccountsComponent } from './components/accounts/edit-accounts/edit-accounts.component';
 import { SessionsComponent } from './components/sessions/sessions.component';
 import { PhotosComponent } from './components/photos/photos.component';
@@ -74,6 +73,7 @@ import { PermissionsComponent } from './components/permissions/permissions.compo
 import { CreatePermissionComponent } from './components/permissions/create-permission/create-permission.component';
 import { DetailsPermissionComponent } from './components/permissions/details-permission/details-permission.component';
 import { EditPermissionComponent } from './components/permissions/edit-permission/edit-permission.component';
+import { SearchPipe } from './search.pipe';
 
 
 
@@ -106,7 +106,6 @@ const appRoutes: Routes = [
 
   { path: 'accounts', component: AccountsComponent,  canActivate: [AfterLoginService] },
   { path: 'createAccount', component: CreateAccountsComponent,  canActivate: [AfterLoginService] },
-  { path: 'accounts/:id', component: DetailsAccountsComponent,  canActivate: [AfterLoginService] },
   { path: 'accounts/edit/:id', component: EditAccountsComponent,  canActivate: [AfterLoginService] },
 
   { path: 'machines', component: MachinesComponent,  canActivate: [AfterLoginService] },
@@ -191,7 +190,6 @@ const appRoutes: Routes = [
     CreateSessionComponent,
     AccountsComponent,
     CreateAccountsComponent,
-    DetailsAccountsComponent,
     EditAccountsComponent,
     SessionsComponent,
     PhotosComponent,
@@ -203,7 +201,8 @@ const appRoutes: Routes = [
     PermissionsComponent,
     CreatePermissionComponent,
     DetailsPermissionComponent,
-    EditPermissionComponent
+    EditPermissionComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

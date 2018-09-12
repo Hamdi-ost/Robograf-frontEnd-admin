@@ -39,7 +39,7 @@ export class DetailsEventComponent {
   // table variables
   colTitlesS = ['Number', 'Start Data', 'Start Time', 'End Time', 'End Date', 'Description', 'Event'];
   colTitlesR = ['First Name', 'Last Name', 'Email', 'Phone', 'Company'];
-  colTitlesA = ['Username', 'Link', 'Author', 'Event', 'Permissions'];
+  colTitlesA = ['', 'Username', 'Link', 'Author', 'Event'];
   dataSessions = [];
   dataRepresentants = [];
   dataAccounts = [];
@@ -133,6 +133,7 @@ export class DetailsEventComponent {
                 this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
               }
               // Accounts
+              console.log(data.accounts);
               this.dataAccounts = Account.map(data.accounts, data.events, users);
               if (this.dataAccounts.length > 0) {
                 this.keyAccounts = Object.keys(this.dataAccounts[0]);

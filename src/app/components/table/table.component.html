@@ -1,6 +1,19 @@
 <div class="content">
   <div class="clearfix"></div>
   <div class="clearfix"></div>
+  <!-- Search Field -->
+  <div *ngIf="title != 'templates'" class="pull-right search-box-container col-sm-6" style="margin: -40px -13px 0 0">
+      <div class="form-group pull-right">
+        <div class="input-group">
+          <input class="search-box form-control pull-right" type="text" name="value" placeholder="Search.." value="" [(ngModel)]="searchText">
+          <span class="input-group-btn">
+            <button type="submit" name="submit" class="btn btn-default search-btn">
+              <i class="ion-ios-search-strong"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+  </div>
 
   <div class="box box-primary">
     <div class="box-body">
@@ -13,17 +26,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let row of data | paginate: { itemsPerPage: 5, currentPage: p}">
+            <tr *ngFor="let row of (data | filter: searchText) | paginate: { itemsPerPage: 5, currentPage: p}">
               <ng-container *ngFor="let key of keys">
                 <td *ngIf="key !== 'id'">
                   <a data-toggle="modal" data-target="#exampleModal" *ngIf="key==='url'" class="glyphicon glyphicon-eye-open"></a>
-                  <i *ngIf="canBeDesactivated && row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-green" style="margin-right: 2px"></i>
-                  <i *ngIf="canBeDesactivated && !row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-red" style="margin-right: 2px"></i>
+                  <i *ngIf="canBeDesactivated && row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-green"
+                    style="margin-right: 2px"></i>
+                  <i *ngIf="canBeDesactivated && !row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-red"
+                    style="margin-right: 2px"></i>
                   <h4 *ngIf="title === 'templatesDetails' && key=='state' && row['state'] === 2" style="color: gray;"><i
                       class="fa fa-info-circle"></i>Undisclosed</h4>
                   <h4 *ngIf="title === 'templatesDetails' && key=='state' && row['state'] === 1" style="color: green;"><i
                       class="fa fa-check-circle"></i>Activated</h4>
-                  <h4 *ngIf="title === 'templatesDetails' && key=='state' && row['state'] === 0" style="color: red;"><i class="fa fa-info-circle"></i>Rejected</h4>
+                  <h4 *ngIf="title === 'templatesDetails' && key=='state' && row['state'] === 0" style="color: red;"><i
+                      class="fa fa-info-circle"></i>Rejected</h4>
                   <a routerLink="/users" *ngIf="key=='author'">{{row[key]}}</a>
                   <span *ngIf="key!=='active' && key!=='author' && key!=='url' && key!=='state'">{{row[key]}}</span>
                   <span *ngIf="key=='active' && row.active" style="margin-left: 15px;">
@@ -39,7 +55,8 @@
                   <a *ngIf="title !='accounts'" routerLink="/{{title}}/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
                     <i class="glyphicon glyphicon-info-sign"></i> Details</a>
 
-                  <a *ngIf="title!=='templates'" routerLink="/{{title}}/edit/{{row.id}}" class="btn btn-default btn-xs" style="margin-left: 5px;margin-right: 5px;">
+                  <a *ngIf="title!=='templates'" routerLink="/{{title}}/edit/{{row.id}}" class="btn btn-default btn-xs"
+                    style="margin-left: 5px;margin-right: 5px;">
                     <i class="glyphicon glyphicon-edit"></i> Edit</a>
 
                   <a *ngIf="detach" class="btn btn-warning btn-xs" (click)="detachX(row)"><i class="glyphicon glyphicon-remove"></i>
@@ -48,18 +65,20 @@
                   <button *ngIf="!detach" (click)="delete(row)" type="submit" class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
                     <i class="glyphicon glyphicon-trash"></i> Delete</button>
 
-                  <button *ngIf="title=='templates' && row.state=='Open'" (click)="closeTemplate(row)" type="submit" class="btn btn-danger btn-xs"
-                    style="margin-left: 5px;margin-right: 5px;">
+                  <button *ngIf="title=='templates' && row.state=='Open'" (click)="closeTemplate(row)" type="submit"
+                    class="btn btn-danger btn-xs" style="margin-left: 5px;margin-right: 5px;">
                     <i class="fa fa-times"></i>Close</button>
 
-                  <button *ngIf="title=='templates' && row.state=='Closed'" (click)="openTemplate(row)" type="submit" class="btn btn-success btn-xs"
-                    style="margin-left: 5px;margin-right: 5px;">
+                  <button *ngIf="title=='templates' && row.state=='Closed'" (click)="openTemplate(row)" type="submit"
+                    class="btn btn-success btn-xs" style="margin-left: 5px;margin-right: 5px;">
                     <i class="fa fa-times"></i>Open</button>
 
-                  <button *ngIf="!detach && canBeDesactivated && row.active" type="submit" class="btn btn-danger btn-xs" (click)="desactivateMachine(row)">
+                  <button *ngIf="!detach && canBeDesactivated && row.active" type="submit" class="btn btn-danger btn-xs"
+                    (click)="desactivateMachine(row)">
                     <i class="glyphicon glyphicon-off"></i> Deactivate</button>
 
-                  <button *ngIf="!detach && canBeDesactivated && !row.active" type="submit" class="btn btn-success btn-xs" (click)="activateMachine(row)">
+                  <button *ngIf="!detach && canBeDesactivated && !row.active" type="submit" class="btn btn-success btn-xs"
+                    (click)="activateMachine(row)">
                     <i class="glyphicon glyphicon-on"></i> Activate</button>
 
                 </div>

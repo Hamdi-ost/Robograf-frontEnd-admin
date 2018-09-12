@@ -55,6 +55,11 @@ export class DetailsMachineComponent implements OnInit {
             this.dataListKeys.splice(3, 3, 'status');
             // table
             this.data = Session.map(data.sessions, events);
+            this.data = this.data.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+              t.id === this.data[index].id
+            ))
+          );
             if (this.data.length > 0) {
             this.keys = Object.keys(this.data[0]);
             }

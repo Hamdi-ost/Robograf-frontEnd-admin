@@ -1,7 +1,7 @@
 export class Account {
 
     id;
-    username;
+    name;
     password;
     link;
     event;
@@ -15,7 +15,7 @@ export class Account {
         for (const obj of rep) {
             const resultat = new Account();
             resultat.id = obj.id;
-            resultat.username = obj.username;
+            resultat.name = obj.username;
             resultat.link = obj.link;
             for (const user of users) {
                 if (obj.author_id === user.id) {
@@ -30,8 +30,10 @@ export class Account {
                     resultat.author = event.author;
                 }
             }
-           for (const permission of obj.permissions) {
-                    resultat.permissions.push (permission.name);
+            if (obj.permissions) {
+                for (const permission of obj.permissions) {
+                    resultat.permissions.push(permission.name);
+                }
             }
             resultats.push(resultat);
         }

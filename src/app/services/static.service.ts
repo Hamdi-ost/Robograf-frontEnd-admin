@@ -9,6 +9,7 @@ import { SessionsService } from './sessions.service';
 import { UsersService } from './users.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { MachinesService } from './machines.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class StaticService {
     private photosService: PhotosService,
     private companiesService: CompaniesService,
     private sessionService: SessionsService,
+    private machineService: MachinesService,
     private http: HttpClient) { }
 
   getmachineStatic() {
@@ -55,6 +57,12 @@ export class StaticService {
 
   getTotalSession() {
     return this.sessionService.getSessions().toPromise().then(data => {
+      return data.length;
+    });
+  }
+
+  getTotalMachine() {
+    return this.machineService.getMachines().toPromise().then(data => {
       return data.length;
     });
   }

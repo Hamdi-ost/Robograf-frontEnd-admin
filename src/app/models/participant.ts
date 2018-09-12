@@ -2,7 +2,7 @@ export class Participant {
    id;
    email;
    name;
-   lastName;
+   last_name;
    gender;
    age;
    phone;
@@ -14,7 +14,7 @@ export class Participant {
             const resultat = new Participant();
             resultat.id = obj.id;
             resultat.name = obj.name;
-            resultat.lastName = obj.last_name;
+            resultat.last_name = obj.last_name;
             resultat.gender = obj.gender ?  'Female' : 'Male';
             resultat.email = obj.email;
             resultat.age = obj.age;

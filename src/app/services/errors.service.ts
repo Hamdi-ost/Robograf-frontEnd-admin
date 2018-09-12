@@ -23,12 +23,12 @@ export class ErrorsService {
     return this.http.get('http://localhost:8000/api/persistentExceptions/detailsAsync/' + id);
   }
 
-  dismissAll(id): Observable<any> {
-    return this.http.get('http://localhost:8000/api/persistentExceptions/dismiss');
+  dismissAll(): Observable<any> {
+    return this.http.get('http://localhost:8000/persistentExceptions/dismiss');
   }
 
   dismiss(id): Observable<any> {
-    return this.http.get('http://localhost:8000/api/persistentExceptions/dismiss' + id);
+    return this.http.get('http://localhost:8000/persistentExceptions/dismiss/' + id);
   }
 
 }

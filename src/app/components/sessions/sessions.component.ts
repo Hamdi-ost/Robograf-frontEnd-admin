@@ -47,14 +47,13 @@ export class SessionsComponent implements OnInit {
       this.sessionsService.getSessions()
         .subscribe(data => {
           this.data = Session.map(data, eventt).reverse();
-          console.log(this.data);
           this.keys = Object.keys(this.data[0]);
-          // console.log(this.data.find(res => res.id === 16));
         }, null, () => {
-
-          for (const session of this.data) {
-            console.log(this.data.find(res => res.id === 16));
-          }
+          this.data = this.data.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+              t.id === this.data[index].id
+            ))
+          );
         });
     });
 

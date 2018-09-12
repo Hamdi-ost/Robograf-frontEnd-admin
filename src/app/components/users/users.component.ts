@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class UsersComponent implements OnInit {
 
   title = 'users';
-  colTitles = ['Roles', 'Email', 'Name'];
+  colTitles = ['Roles', 'Name', 'Email'];
   data: any[];
   keys: any[];
   createLink = '/createUser';
@@ -22,7 +22,6 @@ export class UsersComponent implements OnInit {
   fetchData() {
     this.usersService.getUsers()
     .subscribe(data => {
-      console.log(data);
       this.data = data.reverse();
       this.keys = Object.keys(this.data[0]);
     });
