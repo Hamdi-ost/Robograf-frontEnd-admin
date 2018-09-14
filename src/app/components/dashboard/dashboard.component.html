@@ -1,147 +1,106 @@
 <app-statics [titleStat]="titleStat" [stat]="stat" [valStat]="valStat" [icon]="icon"></app-statics>
-<section class="content">
-
-  <div class="box box-primary">
-    <div class="row" style="padding:10px">
-      <div class="col-sm-8">
-        <div style="border: 1px solid #f0f0f0; border-radius: 3px;">
-          <div style="border: 1px solid #f0f0f0">
-
-            <div style="position:absolute;margin-top:1px;margin-left:10px;">
-              <button class="btn btn-default inline" >
-                <i class="fa fa-angle-left" (click)="prev()"></i>
-              </button>
-
-
-              <button class="btn btn-default  inline" >
-                <i class="fa fa-angle-right" (click) = "next()" ></i>
-              </button>
-
-              <button class="btn btn-default  inline" onclick="window.location='http://localhost:4200/dashboard'">
-                TODAY
-              </button>
-            </div>
-            <h3 style="text-align: center;">November 2018</h3>
-          </div>
-
-          <table class="table table-bordered table-responsive" style="margin: 0px;">
-            <thead>
-              <tr>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="col-hover " style="width:100px; height:100px; padding:0px;cursor:pointer;" onclick="loadModal(1)">
-                  <div style="float:right;margin-right:5px;font-size: 150%;">
-                    <div style="color:grey;">29</div>
-                  </div>
-                  <div> </div>
-
-
-                  <div style="margin-top: 20px;">
-                  </div>
-                </td>
-                
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="col-sm-4">
-
-        <h3>THIS WEEK</h3>
-        <div>
-          <div onclick="thisWeekEvents()" style="cursor: pointer;">
-            <div class="info-box bg-red">
-              <span class="info-box-icon"><i class="ion ion-ios-list"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Events</span>
-                <span class="info-box-number">0/0</span>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 0%"></div>
-                </div>
-                <span class="progress-description">
-                  0% Done
-                </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-          </div>
-
-          <div onclick="thisWeekSessions()" style="cursor: pointer;">
-            <div class="info-box bg-blue">
-              <span class="info-box-icon"><i class="ion ion-cube"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Sessions</span>
-                <span class="info-box-number">0/0</span>
-
-                <div class="progress">
-                  <div class="progress-bar" style="width: 0%"></div>
-                </div>
-                <span class="progress-description">
-                  0% Done
-                </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-          </div>
-
-          <div>
-            <div class="info-box bg-green" onclick="thisWeekMachines();" style="cursor: pointer;">
-              <span class="info-box-icon"><i class="ion ion-ios-gear"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Scheduled Machines</span>
-                <span class="info-box-number">0/2</span>
-                <div class="progress">
-                  <div class="progress-bar" style="width: 0%"></div>
-                </div>
-                <span class="progress-description">
-                  0%
-                </span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-
-
-
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-
-  <div id="event_modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-
-      <div class="modal-content">
-        <div class="modal-header" style="    background-color: #3c8dbc;
-color: white;">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title" id="event_modal_header"> </h4>
-        </div>
-        <div class="modal-body" id="event_modal_contents" style="background-color: #ecf0f5;overflow: auto; height: 70vh;">
-
-        </div>
-        <div class="modal-footer">
-          <button id="modal_close_btn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
+    </div>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
     </div>
   </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+  </div>
+</ng-template>
 
-</section>
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="activeDayIsOpen = false">
+        Previous
+      </div>
+      <div
+        class="btn btn-outline-secondary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate">
+        Today
+      </div>
+      <div
+        class="btn btn-primary"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="activeDayIsOpen = false">
+        Next
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        (click)="view = 'month'"
+        [class.active]="view === 'month'">
+        Month
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="view = 'week'"
+        [class.active]="view === 'week'">
+        Week
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="view = 'day'"
+        [class.active]="view === 'day'">
+        Day
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view
+    *ngSwitchCase="'month'"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    [activeDayIsOpen]="activeDayIsOpen"
+    (dayClicked)="dayClicked($event.day)"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view
+    *ngSwitchCase="'week'"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view
+    *ngSwitchCase="'day'"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-day-view>
+</div>
+

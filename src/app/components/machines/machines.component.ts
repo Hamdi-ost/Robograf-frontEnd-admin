@@ -33,8 +33,12 @@ export class MachinesComponent {
   fetchData() {
     this.machineService.getMachines()
       .subscribe(data => {
-        this.data = data.reverse();
-        this.keys = Object.keys(this.data[0]);
+        if (data) {
+          this.data = data.reverse();
+          if (this.data.length !== 0) {
+            this.keys = Object.keys(this.data[0]);
+          }
+        }
       });
 
     this.staticService.getmachineStatic().subscribe(data => {

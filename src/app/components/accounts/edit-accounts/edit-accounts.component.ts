@@ -72,7 +72,7 @@ export class EditAccountsComponent implements OnInit {
 
     // Set the new account
     this.modifiedAccount.password = this.password;
-    this.modifiedAccount.username = this.username;
+    this.modifiedAccount.name = this.username;
     this.modifiedAccount.link = this.link;
     this.modifiedAccount.permissions = permissionId;
     this.modifiedAccount.event = this.event_id;

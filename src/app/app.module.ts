@@ -4,11 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
-import { CalendarModule } from 'angular-calendar';
+// import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule } from 'angular-calendar';
+// import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 // components
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -205,6 +208,8 @@ const appRoutes: Routes = [
     SearchPipe
   ],
   imports: [
+    BrowserAnimationsModule,
+    CalendarModule.forRoot(),
     BrowserModule,
     CommonModule,
     RouterModule.forRoot(appRoutes),
@@ -212,7 +217,7 @@ const appRoutes: Routes = [
     NgbModalModule.forRoot(),
     FlashMessagesModule.forRoot(),
     FormsModule,
-    CalendarModule.forRoot(),
+    // CalendarModule.forRoot(),
     NgbModalModule.forRoot(),
     FlatpickrModule.forRoot(),
     NgxPaginationModule

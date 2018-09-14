@@ -23,30 +23,32 @@ export class CompaniesComponent implements OnInit {
 
 
   constructor(private companiesService: CompaniesService, private staticService: StaticService) {
-  // stat
-  this.staticService.getTotalCompany().then(total => this.valStat[0] = total);
-  this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
-  this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
+    // stat
+    this.staticService.getTotalCompany().then(total => this.valStat[0] = total);
+    this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
+    this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
 
     this.fetchData();
   }
 
-fetchData() {
-  this.companiesService.getCompany()
-    .subscribe(data => {
-      this.data = data.reverse();
-      this.keys = Object.keys(this.data[0]);
+  fetchData() {
+    this.companiesService.getCompany()
+      .subscribe(data => {
+        this.data = data.reverse();
+        if (this.data.length !== 0) {
+          this.keys = Object.keys(this.data[0]);
         }
+      }
       );
-}
+  }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  deleteCompany (id) {
+  deleteCompany(id) {
     this.companiesService.deleteCompany(id)
-    .subscribe(data => {
-     this.fetchData();
-    });
+      .subscribe(data => {
+        this.fetchData();
+      });
   }
 
 }

@@ -29,7 +29,7 @@
             <tr *ngFor="let row of (data | filter: searchText) | paginate: { itemsPerPage: 5, currentPage: p}">
               <ng-container *ngFor="let key of keys">
                 <td *ngIf="key !== 'id'">
-                  <a data-toggle="modal" data-target="#exampleModal" *ngIf="key==='url'" class="glyphicon glyphicon-eye-open"></a>
+                  <a data-toggle="modal" data-target="#exampleModal" (click)="click(row.url)" *ngIf="key==='url'" class="glyphicon glyphicon-eye-open"></a>
                   <i *ngIf="canBeDesactivated && row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-green"
                     style="margin-right: 2px"></i>
                   <i *ngIf="canBeDesactivated && !row['active'] && key==='name' && title==='machines'" class="fa fa-circle text-red"
@@ -104,14 +104,7 @@
 
               </td>
 
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-body">
-                    <img crossorigin="anonymous" id="img" [src]="row.url" alt="">
-                  </div>
-                </div>
-              </div>
+             
 
 
             </tr>
@@ -126,4 +119,15 @@
     </div>
   </div>
   <a routerLink={{createLink}} class="btn btn-primary" *ngIf="canAddNew" style="float: right;">ADD NEW</a>
+</div>
+
+
+ <!-- Modal -->
+ <div  class="modal fade" id="exampleModal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-body">
+      <img crossorigin="anonymous" *ngIf='url' id="img" [src]="url" alt="">
+      <p>{{i}}</p>
+    </div>
+  </div>
 </div>

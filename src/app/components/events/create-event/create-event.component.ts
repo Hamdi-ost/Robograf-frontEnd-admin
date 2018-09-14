@@ -73,8 +73,16 @@ export class CreateEventComponent {
   }
 
   fetchData() {
-    this.sessionSerive.getSessions().subscribe(data => this.sessionId = data[data.length - 1].id + 1);
-    this.eventService.getEvent().subscribe(data => this.eventId = data[data.length - 1].id + 1);
+    this.sessionSerive.getSessions().subscribe(data => {
+      if (data.length) {
+        this.sessionId = data[data.length - 1].id + 1;
+      }
+    });
+    this.eventService.getEvent().subscribe(data => {
+      if (data.length) {
+        this.eventId = data[data.length - 1].id + 1;
+      }
+    });
   }
 
   increment() {
@@ -145,7 +153,7 @@ export class CreateEventComponent {
       this.sessionService.addSession(this.session).subscribe(null, null, () => {
         this.sessionService.assignMachineAsync(this.sessionId, this.req).subscribe();
       });
-           if (this.company.name != null) {
+      if (this.company.name != null) {
         this.companiesService.addCompany(this.company)
           .subscribe(null, null, () => this.representantService
             .addRepresentant(this.representant)

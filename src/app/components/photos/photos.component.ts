@@ -20,32 +20,34 @@ export class PhotosComponent implements OnInit {
   createLink = '/createPhoto';
 
   constructor(private photosService: PhotosService, private staticService: StaticService) {
-        this.fetchData();
-    }
+    this.fetchData();
+  }
 
   ngOnInit() {
   }
 
   fetchData() {
-     // stat
-     this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
-     this.staticService.getTotalSession().then(total => this.valStat[1] = total);
-     this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
-     this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
+    // stat
+    this.staticService.getTotalEvent().then(total => this.valStat[0] = total);
+    this.staticService.getTotalSession().then(total => this.valStat[1] = total);
+    this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
+    this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
 
-     this.photosService.getPhoto()
-     .subscribe(data => {
-       this.data = data.reverse();
-       this.keys = Object.keys(this.data[0]);
-         }
-       );
+    this.photosService.getPhoto()
+      .subscribe(data => {
+        this.data = data.reverse();
+        if (this.data.length !== 0) {
+          this.keys = Object.keys(this.data[0]);
+        }
+      }
+      );
   }
 
-  deletePhoto (id) {
+  deletePhoto(id) {
     this.photosService.deletePhoto(id)
-    .subscribe(data => {
-      this.fetchData();
-    });
+      .subscribe(data => {
+        this.fetchData();
+      });
   }
 
 }

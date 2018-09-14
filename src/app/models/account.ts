@@ -17,9 +17,11 @@ export class Account {
             resultat.id = obj.id;
             resultat.name = obj.username;
             resultat.link = obj.link;
-            for (const user of users) {
-                if (obj.author_id === user.id) {
-                    resultat.author = user.name;
+            if (users) {
+                for (const user of users) {
+                    if (obj.author_id === user.id) {
+                        resultat.author = user.name;
+                    }
                 }
             }
             for (const event of events) {

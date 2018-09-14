@@ -86,7 +86,6 @@ export class DetailsSessionComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.sessionService.getSessionDetails(params['id'])
         .subscribe(data => {
-          console.log(data);
           this.eventsService.getEvent().subscribe(event => {
             const events = event;
             // list
@@ -97,7 +96,9 @@ export class DetailsSessionComponent implements OnInit {
                 t.id === this.dataList[index].id
               ))
             );
-            this.dataListKeys = Object.keys(this.dataList[0]);
+            if (this.dataList.length !== 0) {
+              this.dataListKeys = Object.keys(this.dataList[0]);
+            }
             // cubes
             this.cubesData.push(data.remaining_sessions_count, data.nextSession, data.photos_count, data.participants_count);
             // tables

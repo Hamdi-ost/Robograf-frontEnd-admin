@@ -27,6 +27,7 @@
     "angularx-flatpickr": "^6.0.0",
     "bootstrap": "^4.1.2",
     "core-js": "^2.5.4",
+    "date-fns": "^1.29.0",
     "flatpickr": "^4.5.1",
     "jquery": "^3.3.1",
     "ng-modal": "^1.0.2",

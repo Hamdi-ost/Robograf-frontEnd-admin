@@ -16,9 +16,11 @@ export class Representant {
             resultat.lastName = obj.last_name;
             resultat.email = obj.email;
             resultat.phone = obj.phone;
-            for (const company of companies) {
-                if (obj.entreprise_id === company.id) {
-                    resultat.company = company.name;
+            if (companies) {
+                for (const company of companies) {
+                    if (obj.entreprise_id === company.id) {
+                        resultat.company = company.name;
+                    }
                 }
             }
             resultats.push(resultat);

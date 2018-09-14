@@ -17,7 +17,9 @@ export class TemplatesComponent implements OnInit {
     this.templatesService.getTemplateNegotiations()
       .subscribe(data => {
         this.data = data.reverse();
-        this.keys = Object.keys(this.data[0]);
+        if (this.data.length !== 0) {
+          this.keys = Object.keys(this.data[0]);
+        }
       }
       );
   }

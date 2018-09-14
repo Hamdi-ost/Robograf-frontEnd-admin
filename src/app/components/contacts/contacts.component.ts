@@ -22,27 +22,32 @@ export class ContactsComponent implements OnInit {
   createLink = '/createRepresentant';
 
   constructor(private representantsService: RepresentantsService, private staticService: StaticService) {
+    this.fetchData();
+  }
+
+  fetchData() {
     // stat
     this.staticService.getTotalCompany().then(total => this.valStat[0] = total);
     this.staticService.getTotalRepresentant().then(total => this.valStat[1] = total);
     this.staticService.getTotalAccount().then(total => this.valStat[2] = total);
 
     this.representantsService.getRepresentant()
-    .subscribe(data => {
-       this.data = data.reverse();
+      .subscribe(data => {
+        this.data = data.reverse();
+        if (this.data.length !== 0) {
       this.keys = Object.keys(this.data[0]);
-
+    }
   });
 }
 
-  ngOnInit() {
-  }
+ngOnInit() {
+}
 
-  deleteRepresentant(id) {
-    this.representantsService.deleteRepresentant(id)
+deleteRepresentant(id) {
+  this.representantsService.deleteRepresentant(id)
     .subscribe(data => {
-      this.data.splice(this.data.indexOf(this.data.find(res => res.id === id)), 1);
+      this.fetchData();
     });
-  }
+}
 
 }

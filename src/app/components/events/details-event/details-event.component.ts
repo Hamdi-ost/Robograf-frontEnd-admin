@@ -14,6 +14,7 @@ import { ParticipantsService } from '../../../services/participants.service';
 import { PhotosService } from '../../../services/photos.service';
 import { StaticService } from '../../../services/static.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { MachinesService } from '../../../services/machines.service';
 
 
 @Component({
@@ -23,10 +24,12 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class DetailsEventComponent {
   @Output() sendEventId = new EventEmitter();
-
+  machinesDispo = [];
+  machines = [];
   title = 'sessions';
   titleForListDetails = 'events';
   titleForRepresentant = 'representants';
+  createLinkSession = '/createSessions';
   titleForAccount = 'accounts';
   createLinkEvent = '/createEvent';
   createLinkRepresentant = '/createRepresentant';
@@ -60,12 +63,20 @@ export class DetailsEventComponent {
   companies;
 
   AccountPermissions = [
-    {id: 1, value: 'view-basic-info', selected: false},
-    {id: 2, value: 'view-database', selected: false},
-    {id: 3, value: 'download-database', selected: false},
-    {id: 4, value: 'validate-template', selected: false}
+    { id: 1, value: 'view-basic-info', selected: false },
+    { id: 2, value: 'view-database', selected: false },
+    { id: 3, value: 'download-database', selected: false },
+    { id: 4, value: 'validate-template', selected: false }
   ];
-
+  session = {
+    number: null,
+    date: null,
+    start_time: null,
+    end_time: null,
+    description: null,
+    end_date: null,
+    event_id: null
+  };
   representant = {
     firstName: null,
     lastName: null,
@@ -81,19 +92,21 @@ export class DetailsEventComponent {
     event: null,
     author: null
   };
-
+  sessionId;
   constructor(
     private router: Router,
     private flashMessages: FlashMessagesService,
     private eventService: EventsService,
     private representantsService: RepresentantsService,
+    private sessionSerive: SessionsService,
     private accountService: AccountsService,
     private companiesService: CompaniesService,
     private sessionService: SessionsService,
     private usersService: UsersService,
     private staticService: StaticService,
-    private route: ActivatedRoute) {
-      this.companiesService.getCompany().subscribe(data => this.companies = data);
+    private route: ActivatedRoute,
+    private machineService: MachinesService) {
+    this.companiesService.getCompany().subscribe(data => this.companies = data);
     this.fetchData();
 
   }
@@ -104,7 +117,11 @@ export class DetailsEventComponent {
     this.staticService.getTotalSession().then(total => this.valStat[1] = total);
     this.staticService.getTotalParticipant().then(total => this.valStat[2] = total);
     this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
-
+    this.sessionSerive.getSessions().subscribe(data => {
+      if (data.length !== 0) {
+        this.sessionId = data[data.length - 1].id + 1;
+      }
+    });
     this.route.params.subscribe(params => {
       this.eventService.getEventDetails(params['id'])
         .subscribe(data => {
@@ -127,13 +144,11 @@ export class DetailsEventComponent {
                 this.keySessions = Object.keys(this.dataSessions[0]);
               }
               // Representatnts
-              console.log(data.representants);
               this.dataRepresentants = Representant.map(data.representants, companies);
               if (this.dataRepresentants.length > 0) {
                 this.keyRepresentatnts = Object.keys(this.dataRepresentants[0]);
               }
               // Accounts
-              console.log(data.accounts);
               this.dataAccounts = Account.map(data.accounts, data.events, users);
               if (this.dataAccounts.length > 0) {
                 this.keyAccounts = Object.keys(this.dataAccounts[0]);
@@ -148,9 +163,9 @@ export class DetailsEventComponent {
   addRepresentant() {
 
     const contact = {
-      first_name : this.representant.firstName,
-      last_name : this.representant.lastName,
-      email : this.representant.email,
+      first_name: this.representant.firstName,
+      last_name: this.representant.lastName,
+      email: this.representant.email,
       phone: this.representant.phone,
       entreprise_id: this.representant.entreprise_id,
       event_id: this.event_id
@@ -158,31 +173,31 @@ export class DetailsEventComponent {
 
     // get company name
     this.companiesService.getCompanyDetails(this.representant.entreprise_id)
-    .toPromise()
-    .then(data => {
-      this.representant.company = data.entreprises[0].name;
-    });
+      .toPromise()
+      .then(data => {
+        this.representant.company = data.entreprises[0].name;
+      });
     // Add representant
     this.representantsService.addRepresentant(contact)
-    .subscribe(res => {
-      this.fetchData();
-      this.dataRepresentants.push(this.representant);
-      this.flashMessages.show('Representant added', { cssClass: 'alert-success', timeout: 3000 });
-    });
+      .subscribe(res => {
+        this.fetchData();
+        this.dataRepresentants.push(this.representant);
+        this.flashMessages.show('Representant added', { cssClass: 'alert-success', timeout: 3000 });
+      });
   }
 
-  detachRepresentant (RepresentantId) {
-    this.eventService.detachRepresentant(this.event_id, RepresentantId).subscribe(res  => this.fetchData());
+  detachRepresentant(RepresentantId) {
+    this.eventService.detachRepresentant(this.event_id, RepresentantId).subscribe(res => this.fetchData());
   }
 
   addAccount() {
 
     const permissionId = [];
 
-    for (let i = 0 ; i < this.AccountPermissions.length ; i++) {
-        if (this.AccountPermissions[i].selected) {
-          permissionId.push(this.AccountPermissions[i].id);
-        }
+    for (let i = 0; i < this.AccountPermissions.length; i++) {
+      if (this.AccountPermissions[i].selected) {
+        permissionId.push(this.AccountPermissions[i].id);
+      }
     }
 
 
@@ -195,18 +210,40 @@ export class DetailsEventComponent {
       author_id: 1
     };
 
-   this.account.event = this.event_name;
+    this.account.event = this.event_name;
     this.account.author = this.author;
     // Add user
     this.accountService.addAccount(account)
-    .subscribe(data => {
-      this.fetchData();
-      this.dataAccounts.push(this.account);
-      this.flashMessages.show('Account Added', { cssClass: 'alert-success', timeout: 3000 });
+      .subscribe(data => {
+        this.fetchData();
+        this.dataAccounts.push(this.account);
+        this.flashMessages.show('Account Added', { cssClass: 'alert-success', timeout: 3000 });
       });
+  }
+
+  addSession() {
+    this.session.number = 1;
+    this.session.event_id = this.event_id;
+
+    const req = {
+      machines: []
+    };
+    for (let i = 0; i < this.machinesDispo.length; i++) {
+      if (this.machinesDispo[i].selected) {
+        req.machines.push({ machine_id: this.machines[i].id, session_id: null });
+      }
+    }
+
+    for (let i = 0; i < req.machines.length; i++) {
+      req.machines[i].session_id = this.sessionId;
+    }
 
 
-
+    this.sessionService.addSession(this.session).subscribe(null, null, () => {
+      this.sessionService.assignMachineAsync(this.sessionId, req).subscribe();
+      this.fetchData();
+    }
+    );
   }
 
 
@@ -234,6 +271,17 @@ export class DetailsEventComponent {
   deleteEvent(id) {
     this.eventService.deleteEvent(id)
       .subscribe(data => this.router.navigateByUrl('/events'));
+  }
+
+  onChange(newValue) {
+    this.machinesDispo = [];
+    this.machines = [];
+    this.machineService.getAvailableAsync(this.session).subscribe(data => {
+      for (let i = 0; i < Object.keys(data).length; i++) {
+        this.machines.push(data[i]);
+        this.machinesDispo.push({ id: data[i].id, value: data[i].name, selected: false });
+      }
+    });
   }
 
 }

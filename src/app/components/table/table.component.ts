@@ -22,6 +22,7 @@ export class TableComponent implements OnInit {
   @Output() open = new EventEmitter();
   @Output() close = new EventEmitter();
   @Output() detachMachine = new EventEmitter();
+  url;
 
   constructor() {}
 
@@ -51,6 +52,10 @@ export class TableComponent implements OnInit {
 
   detachX (row) {
     this.detachMachine.emit(row.id);
+  }
+
+  click(url) {
+    this.url = url;
   }
 
 }

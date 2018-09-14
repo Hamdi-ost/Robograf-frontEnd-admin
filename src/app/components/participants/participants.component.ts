@@ -32,18 +32,20 @@ export class ParticipantsComponent implements OnInit {
     this.staticService.getTotalPhoto().then(total => this.valStat[3] = total);
 
     this.participantsService.getParticipant()
-    .subscribe(data => {
-      this.data = data.reverse();
-      this.keys = Object.keys(this.data[0]);
+      .subscribe(data => {
+        this.data = data.reverse();
+        if (this.data.length !== 0) {
+          this.keys = Object.keys(this.data[0]);
         }
+      }
       );
   }
 
-  deleteParticipant (id) {
+  deleteParticipant(id) {
     this.participantsService.deleteParticipant(id)
-    .subscribe(data => {
-      this.fetchData();
-    });
+      .subscribe(data => {
+        this.fetchData();
+      });
   }
 
   ngOnInit() {

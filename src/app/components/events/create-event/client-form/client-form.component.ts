@@ -21,7 +21,9 @@ export class ClientFormComponent implements OnInit {
     .getCompany()
     .toPromise()
     .then(data => {
+      if (data.length) {
       this.newId = data[data.length - 1].id + 1;
+      }
     });
   }
   clinet = {
